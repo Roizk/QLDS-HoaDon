@@ -23,4 +23,7 @@ public abstract class HoaDonTienDien {
 
     public abstract double thanhTien();
 
+
+    
+
 }

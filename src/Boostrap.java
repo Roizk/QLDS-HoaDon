@@ -2,14 +2,14 @@
 
 import javax.swing.SwingUtilities;
 
-import Presentation.HoaDonTienDienGUI;
+import Presentation.HoaDonTienDienView;
 
 public class Boostrap {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new HoaDonTienDienGUI().setVisible(true);
+                new HoaDonTienDienView().setVisible(true);
             }
         });
     }
