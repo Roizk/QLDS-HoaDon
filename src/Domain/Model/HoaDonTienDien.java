@@ -1,7 +1,7 @@
 package Domain.Model;
 
 import java.util.Date;
-
+import Presentation.Publisher;
 
 public abstract class HoaDonTienDien {
 
