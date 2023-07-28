@@ -9,8 +9,8 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
     public HoaDonTienDienNN() {
     }
 
-    public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, String quocTich) {
-        super(idKh, hoTen, ngayHD, soLuong, donGia);
+    public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, String quocTich,double thanhTien) {
+        super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.quocTich = quocTich;
     }
 
@@ -52,7 +52,7 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         this.ngayHD = ngayHD;
     }
 
-    public int getSoLuong() {
+    public double getSoLuong() {
         return this.soLuong;
     }
 

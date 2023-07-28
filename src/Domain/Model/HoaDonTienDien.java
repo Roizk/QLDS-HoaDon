@@ -8,13 +8,13 @@ public abstract class HoaDonTienDien {
     protected int idKh;
     protected String hoTen;
     protected Date ngayHD;
-    protected int soLuong;
+    protected double soLuong;
     protected double donGia;
 
     public HoaDonTienDien() {
     }
 
-    public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia) {
+    public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, double thanhTien) {
         this.idKh = idKh;
         this.hoTen = hoTen;
         this.ngayHD = ngayHD;
