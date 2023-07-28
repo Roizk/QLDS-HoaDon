@@ -1,7 +1,7 @@
 package QLHoaDon.src.Domain;
 
 public interface HoaDonService {
-    public void add();
-    public void update();
-    public void delete();
+    public void add(HoaDon hoadon);
+    public void update(HoaDon hoadon);
+    public void delete(HoaDon hoadon);
 }
