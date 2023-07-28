@@ -1,10 +1,10 @@
-package Presentation;
+package src.Presentation;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import Domain.*;
-import Domain.Model.HoaDonTienDienNN;
+import src.Domain.*;
+import src.Domain.Model.HoaDonTienDienNN;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

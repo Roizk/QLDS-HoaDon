@@ -1,6 +1,8 @@
-package QLHoaDon.src.Persistence;
+package src.Persistence;
+
 import java.util.List;
 
+import src.Domain.Model.HoaDonTienDien;
 
 public class HoaDonDAOImpl implements HoaDonDAO{
 
@@ -11,25 +13,25 @@ public class HoaDonDAOImpl implements HoaDonDAO{
     }
 
     @Override
-    public void add(HoaDon hoadon) {
+    public void add(HoaDonTienDien hoadon) {
 
         hoaDonGateway.add(hoadon); 
     }
 
     @Override
-    public List<HoaDon> getAllsHoaDon(HoaDon hoadon) {
+    public List<HoaDonTienDien> getAllsHoaDon() {
         
-        return hoaDonGateway.getAllsHoaDon(hoadon);
+        return hoaDonGateway.getAllsHoaDon();
     }
 
     @Override
-    public HoaDon getHoaDonByma(int ma) {
+    public HoaDonTienDien getHoaDonByma(int ma) {
 
-        return hoaDonGateway.getHoaDonByma(ma);
+        return hoaDonGateway.getHoaDonByMa(ma);
     }
 
     @Override
-    public void update(HoaDon hoadon) {
+    public void update(HoaDonTienDien hoadon) {
 
         hoaDonGateway.update(hoadon);       
     }
@@ -41,3 +43,6 @@ public class HoaDonDAOImpl implements HoaDonDAO{
     }
 
 }
+    
+
+

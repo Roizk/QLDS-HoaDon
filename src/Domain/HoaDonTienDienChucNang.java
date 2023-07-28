@@ -1,8 +1,8 @@
-package Domain;
+package src.Domain;
 
 import java.util.List;
 
-import Domain.Model.HoaDonTienDien;
+import src.Domain.Model.HoaDonTienDien;
 
 public interface HoaDonTienDienChucNang {
 

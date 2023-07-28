@@ -1,4 +1,4 @@
-package Presentation;
+package src.Presentation;
 
 public interface Publisher {
     public void attach(Subcriber subscriber);
