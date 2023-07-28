@@ -1,8 +1,8 @@
-package src.Persistence;
+package Persistence;
 
 import java.util.List;
 
-import src.Domain.Model.HoaDonTienDien;
+import Domain.Model.HoaDonTienDien;
 
 public interface HoaDonGateway {
     public void add(HoaDonTienDien hoadon);
