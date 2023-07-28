@@ -11,17 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+
 import javax.swing.table.DefaultTableModel;
 
-public class HoaDonTienDienGUI extends JFrame {
+public class HoaDonTienDienView extends JFrame {
+
+    private HoaDonTienDienController hoaDonTienDienController;
 
     private DefaultTableModel tableModel;
     private JTable table;
@@ -30,24 +25,21 @@ public class HoaDonTienDienGUI extends JFrame {
     private JButton deleteButton;
     private JButton findButton;
     private JButton saveButton;
-    private JRadioButton VNButton;
-    private JRadioButton NNButton;
 
     private JTextField idTextField;
     private JTextField hoTenTextField;
     private JTextField ngayRaHoaDonTextField;
     private JTextField donGiaTextField;
     private JTextField dinhmucTextField;
-    private JTextField doiTuongTextField;
     private JTextField soLuongTextField;
     private JTextField thanhTienTextField;
     private JTextField quocTichTextField;
     private JComboBox<String> quoctichComboBox;
     private JComboBox<String> doiTuongKHComboBox;
 
-    public HoaDonTienDienGUI() {
-     
+    public HoaDonTienDienView() {
 
+        hoaDonTienDienController = new HoaDonTienDienController();
         // Set up JFrame
         setTitle("Hóa đơn tiền điện");
         setSize(1200, 600);
@@ -71,7 +63,7 @@ public class HoaDonTienDienGUI extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // Create JPanel for student details input and buttons
-        JPanel inputPanel = new JPanel(new GridLayout(14, 4));
+        JPanel inputPanel = new JPanel(new GridLayout(14, 2));
 
         quoctichComboBox = new JComboBox<>();
         doiTuongKHComboBox = new JComboBox<>();
@@ -86,7 +78,6 @@ public class HoaDonTienDienGUI extends JFrame {
         hoTenTextField = new JTextField();
         ngayRaHoaDonTextField = new JTextField();
         soLuongTextField = new JTextField();
-        doiTuongTextField = new JTextField();
         donGiaTextField = new JTextField();
         dinhmucTextField = new JTextField();
         thanhTienTextField = new JTextField();
@@ -128,18 +119,19 @@ public class HoaDonTienDienGUI extends JFrame {
         add(inputPanel, BorderLayout.SOUTH);
         quoctichComboBox.addActionListener(e -> check(e));
         setLocationRelativeTo(null);
-        
+
     }
 
     public void check(ActionEvent e) {
         if (quoctichComboBox.getSelectedItem() == "Việt Nam") {
             quocTichTextField.setEditable(false);
             dinhmucTextField.setEditable(true);
-            doiTuongTextField.setEditable(true);
+            doiTuongKHComboBox.setEditable(true);
         } else {
             quocTichTextField.setEditable(true);
             dinhmucTextField.setEditable(false);
-            doiTuongTextField.setEditable(false);
+            doiTuongKHComboBox.setEditable(false);
+
             if (soLuongTextField.getText() != null && donGiaTextField.getText() != null) {
                 HoaDonTienDienNN hoaDonTienDienNN = new HoaDonTienDienNN();
                 thanhTienTextField.setText(hoaDonTienDienNN.toString());
@@ -149,12 +141,28 @@ public class HoaDonTienDienGUI extends JFrame {
 
     }
 
+    public void addHD(ActionEvent e) {
+        Add addcommand = new Add();
+        hoaDonTienDienController.execute(addcommand);
+    }
+
+    public void updateHD(ActionEvent e) {
+        Update updatecommand = new Update();
+        hoaDonTienDienController.execute(updatecommand);
+    }
+
+    public void deleteHD(ActionEvent e) {
+        Delete deletecommand = new Delete();
+        hoaDonTienDienController.execute(deletecommand);
+    }
+
+    
+
     private void clearFields() {
         idTextField.setText("");
         hoTenTextField.setText("");
         ngayRaHoaDonTextField.setText("");
         soLuongTextField.setText("");
-        doiTuongTextField.setText("");
         donGiaTextField.setText("");
         dinhmucTextField.setText("");
         thanhTienTextField.setText("");
