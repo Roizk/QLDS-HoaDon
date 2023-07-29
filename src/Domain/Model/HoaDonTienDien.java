@@ -19,7 +19,7 @@ public abstract class HoaDonTienDien implements Publisher {
     public HoaDonTienDien() {
     }
 
-    public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, double thanhTien) {
+    public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, double soLuong, double donGia, double thanhTien) {
         this.idKH = idKh;
         this.hoTen = hoTen;
         this.ngayHD = ngayHD;
