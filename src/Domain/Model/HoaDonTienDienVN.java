@@ -2,29 +2,29 @@ package Domain.Model;
 
 import java.util.Date;
 
-enum doiTuongKH {
-    SINH_HOAT,
-    KINH_DOANH,
-    SAN_XUAT
-};
-
 public class HoaDonTienDienVN extends HoaDonTienDien {
 
     private double dinhMuc;
 
+    private enum doiTuongKH {
+        SINH_HOAT,
+        KINH_DOANH,
+        SAN_XUAT
+    };
+
     private doiTuongKH doiTuongkh;
 
-    private String doiTuong;
+    private int doiTuong;
 
     public HoaDonTienDienVN() {
     };
 
-    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, doiTuongKH doiTuong, double soLuong, double donGia,
+    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, int doiTuong, double soLuong, double donGia,
             double dinhMuc,
             double thanhTien) {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.dinhMuc = dinhMuc;
-        this.doiTuongkh = doiTuong;
+        this.doiTuong = doiTuong;
     }
 
     public double thanhTien() {
@@ -82,18 +82,32 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         return doiTuongkh;
     }
 
+    public void setDoiTuongkh(doiTuongKH doiTuongkh) {
+        this.doiTuongkh = doiTuongkh;
+    }
+
     public int getDoiTuongKHValue() {
         return doiTuongkh.ordinal();
     }
 
-    public static doiTuongKH fromvalue(int value) {
+    public int getDoiTuong() {
+        return doiTuong;
+    }
+
+    public void fromvalue(int value) {
         switch (value) {
-            case 0:
-                return doiTuongKH.SINH_HOAT;
-            case 1:
-                return doiTuongKH.KINH_DOANH;
-            case 2:
-                return doiTuongKH.SAN_XUAT;
+            case 0: {
+                doiTuongKH doiTuongkh = doiTuongKH.SINH_HOAT;
+                setDoiTuongkh(doiTuongkh);
+            }
+            case 1: {
+                doiTuongKH doiTuongkh = doiTuongKH.KINH_DOANH;
+                setDoiTuongkh(doiTuongkh);
+            }
+            case 2: {
+                doiTuongKH doiTuongkh = doiTuongKH.SAN_XUAT;
+                setDoiTuongkh(doiTuongkh);
+            }
             default:
                 throw new IllegalArgumentException("Invalid value for DoiTuongKH: " + value);
         }
