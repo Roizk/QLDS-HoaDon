@@ -1,5 +1,6 @@
 package Persistence;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import Domain.Model.HoaDonTienDien;
@@ -12,8 +13,8 @@ public interface HoaDonGateway {
     public void updateHoaDonTienDienNN(HoaDonTienDienNN hoadon);
     public void updateHoaDonTienDienVN(HoaDonTienDienVN hoadon);
     public void delete(int ma);   
-    HoaDonTienDienNN getHoaDonNNByMa(int ma);
-    HoaDonTienDienVN getHoaDonVNByMa(int ma);
+    HoaDonTienDienNN getHoaDonNNByMa(int ma) throws SQLException;
+    HoaDonTienDienVN getHoaDonVNByMa(int ma) throws SQLException;
     List<HoaDonTienDienNN> getAllsHoaDonNN();
     List<HoaDonTienDienVN> getAllsHoaDonVN();
 }
