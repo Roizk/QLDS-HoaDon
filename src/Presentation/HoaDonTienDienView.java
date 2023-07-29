@@ -21,7 +21,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private HoaDonTienDienController hoaDonTienDienController;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
     private HoaDonTienDien hoaDonTienDien;
-    private HoaDonTienDienVN hoaDonTienDienVN; 
+    private HoaDonTienDienVN hoaDonTienDienVN;
 
     private DefaultTableModel tableModelVN;
     private DefaultTableModel tableModelNN;
@@ -155,8 +155,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         }
     }
 
-    public void test()
-    {
+    public void test() {
         hoaDonTienDienVN = getHoaDonTienDienVN();
         hoaDonTienDienVN.fromvalue(hoaDonTienDienVN.getDoiTuong());
     }
@@ -164,6 +163,11 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     @Override
     public void update() {
 
+    }
+
+    public void thanhTien() {
+        ThanhTienVN thanhTienVNcommand = new ThanhTienVN(hoaDonTienDienVN);
+        hoaDonTienDienController.execute(thanhTienVNcommand);
     }
 
     public void addHD(ActionEvent e) {
@@ -199,8 +203,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         doiTuongKHComboBox.setSelectedItem("");
     }
 
-    
-
     private void clearFields() {
         idTextField.setText("");
         hoTenTextField.setText("");
@@ -218,8 +220,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public HoaDonTienDien getHoaDonTienDien() {
         return hoaDonTienDien;
     }
-    public HoaDonTienDienVN getHoaDonTienDienVN()
-    {
+
+    public HoaDonTienDienVN getHoaDonTienDienVN() {
         return hoaDonTienDienVN;
     }
 

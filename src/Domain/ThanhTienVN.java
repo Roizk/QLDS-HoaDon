@@ -12,11 +12,9 @@ public class ThanhTienVN extends Command {
 
     @Override
     public void execute() {
-        thanhTien(hoaDonTienDienVN);
-    }
-
-    public void thanhTien(HoaDonTienDienVN hoaDonTienDienVN) {
         hoaDonTienDienVN.thanhTien();
     }
+
+   
 
 }
