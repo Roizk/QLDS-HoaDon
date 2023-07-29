@@ -1,8 +1,11 @@
 package Persistence;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import Domain.Model.HoaDonTienDien;
+import Domain.Model.HoaDonTienDienNN;
+import Domain.Model.HoaDonTienDienVN;
 
 public class HoaDonDAOImpl implements HoaDonDAO{
 
@@ -13,27 +16,47 @@ public class HoaDonDAOImpl implements HoaDonDAO{
     }
 
     @Override
-    public void add(HoaDonTienDien hoadon) {
+    public void addHoaDonTienDienNN(HoaDonTienDienNN hoadon) {
 
-        hoaDonGateway.add(hoadon); 
+        hoaDonGateway.addHoaDonTienDienNN(hoadon); 
+    }
+    @Override
+    public void addHoaDonTienDienVN(HoaDonTienDienVN hoadon) {
+
+        hoaDonGateway.addHoaDonTienDienVN(hoadon); 
     }
 
     @Override
-    public List<HoaDonTienDien> getAllsHoaDon() {
+    public List<HoaDonTienDienNN> getAllsHoaDonNN() {
         
-        return hoaDonGateway.getAllsHoaDon();
+        return hoaDonGateway.getAllsHoaDonNN();
+    }
+    @Override
+    public List<HoaDonTienDienVN> getAllsHoaDonVN() {
+        
+        return hoaDonGateway.getAllsHoaDonVN();
     }
 
     @Override
-    public HoaDonTienDien getHoaDonByma(int ma) {
+    public HoaDonTienDienNN getHoaDonNNByMa(int ma) throws SQLException{
 
-        return hoaDonGateway.getHoaDonByMa(ma);
+        return hoaDonGateway.getHoaDonNNByMa(ma);
+    }
+    @Override
+    public HoaDonTienDienVN getHoaDonVNByMa(int ma) throws SQLException{
+
+        return hoaDonGateway.getHoaDonVNByMa(ma);
     }
 
     @Override
-    public void update(HoaDonTienDien hoadon) {
+    public void updateHoaDonTienDienNN(HoaDonTienDienNN hoadon) {
 
-        hoaDonGateway.update(hoadon);       
+        hoaDonGateway.updateHoaDonTienDienNN(hoadon);       
+    }
+    @Override
+    public void updateHoaDonTienDienVN(HoaDonTienDienVN hoadon) {
+
+        hoaDonGateway.updateHoaDonTienDienVN(hoadon);       
     }
     
     @Override
