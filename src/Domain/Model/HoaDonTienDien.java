@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
-public abstract class HoaDonTienDien {
-=======
 import Domain.Publisher;
 import Presentation.Subcriber;
 
 public abstract class HoaDonTienDien implements Publisher {
->>>>>>> 227f3b26c54e9412f221f778849950dc3c94043f
 
     protected int idKH;
     protected String hoTen;
