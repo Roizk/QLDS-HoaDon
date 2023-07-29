@@ -7,19 +7,23 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
     private double dinhMuc;
 
     private enum doiTuongKH {
-        sinhHoat,
-        kinhDoanh,
-        sanXuat
+        SINH_HOAT,
+        KINH_DOANH,
+        SAN_XUAT
     };
 
-    private doiTuongKH doiTuong;
-
-    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD,doiTuongKH doiTuong, double soLuong, double donGia, double dinhMuc,
+    private doiTuongKH doiTuong ;
+    
+    public HoaDonTienDienVN(){};
+    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, doiTuongKH doiTuong, double soLuong, double donGia,
+            double dinhMuc,
             double thanhTien) {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.dinhMuc = dinhMuc;
         this.doiTuong = doiTuong;
     }
+
+   
 
     public double thanhTien() {
         if (soLuong <= dinhMuc) {
@@ -76,8 +80,7 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         return doiTuong;
     }
 
-    public int getDoiTuongKHValue()
-    {
+    public int getDoiTuongKHValue() {
         return doiTuong.ordinal();
     }
 }
