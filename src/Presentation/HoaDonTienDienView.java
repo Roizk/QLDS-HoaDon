@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import Domain.*;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
+import Domain.Model.HoaDonTienDienVN;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private HoaDonTienDienController hoaDonTienDienController;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
     private HoaDonTienDien hoaDonTienDien;
+    private HoaDonTienDienVN hoaDonTienDienVN; 
 
     private DefaultTableModel tableModelVN;
     private DefaultTableModel tableModelNN;
@@ -153,6 +155,12 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         }
     }
 
+    public void test()
+    {
+        hoaDonTienDienVN = getHoaDonTienDienVN();
+        hoaDonTienDienVN.fromvalue(hoaDonTienDienVN.getDoiTuong());
+    }
+
     @Override
     public void update() {
 
@@ -191,6 +199,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         doiTuongKHComboBox.setSelectedItem("");
     }
 
+    
+
     private void clearFields() {
         idTextField.setText("");
         hoTenTextField.setText("");
@@ -207,6 +217,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public HoaDonTienDien getHoaDonTienDien() {
         return hoaDonTienDien;
+    }
+    public HoaDonTienDienVN getHoaDonTienDienVN()
+    {
+        return hoaDonTienDienVN;
     }
 
 }

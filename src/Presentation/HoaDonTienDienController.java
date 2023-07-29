@@ -2,6 +2,7 @@ package Presentation;
 
 import Domain.Command;
 
+
 public class HoaDonTienDienController {
 
     private HoaDonTienDienView viewRemote ;
@@ -12,6 +13,8 @@ public class HoaDonTienDienController {
     {
         this.viewRemote = viewRemote ; 
     }
+
+    
     
     public void execute(Command command)
     {
