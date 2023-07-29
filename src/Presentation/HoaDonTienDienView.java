@@ -18,7 +18,8 @@ public class HoaDonTienDienView extends JFrame {
 
     private HoaDonTienDienController hoaDonTienDienController;
 
-    private DefaultTableModel tableModel;
+    private DefaultTableModel tableModelVN;
+    private DefaultTableModel tableModelNN; 
     private JTable table;
     private JButton addButton;
     private JButton editButton;
@@ -46,18 +47,27 @@ public class HoaDonTienDienView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create JTable to display student list
-        tableModel = new DefaultTableModel();
-        tableModel.addColumn("Id khách hàng ");
-        tableModel.addColumn("Họ tên ");
-        tableModel.addColumn("quốc tịch nước ngoài");
-        tableModel.addColumn("Ngày ra hóa đơn ");
-        tableModel.addColumn("Số lượng ");
-        tableModel.addColumn("Đối tượng ");
-        tableModel.addColumn("Đơn giá");
-        tableModel.addColumn("Định mức ");
-        tableModel.addColumn("Thành tiền ");
-        table = new JTable(tableModel);
+        // Create JTable to display BillVN list
+        tableModelVN = new DefaultTableModel();
+        tableModelVN.addColumn("Id khách hàng ");
+        tableModelVN.addColumn("Họ tên ");
+        tableModelVN.addColumn("Ngày ra hóa đơn ");
+        tableModelVN.addColumn("Số lượng ");
+        tableModelVN.addColumn("Đối tượng ");
+        tableModelVN.addColumn("Đơn giá");
+        tableModelVN.addColumn("Định mức ");
+        tableModelVN.addColumn("Thành tiền ");
+        table= new JTable(tableModelVN);
+
+        // Create JTable to display BillNN list
+        tableModelNN = new DefaultTableModel();
+        tableModelNN.addColumn("Id khách hàng ");
+        tableModelNN.addColumn("Họ tên ");
+        tableModelNN.addColumn("quốc tịch nước ngoài");
+        tableModelNN.addColumn("Ngày ra hóa đơn ");
+        tableModelNN.addColumn("Số lượng ");
+        tableModelNN.addColumn("Đơn giá");
+        tableModelNN.addColumn("Thành tiền ");
 
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
@@ -123,14 +133,17 @@ public class HoaDonTienDienView extends JFrame {
     }
 
     public void check(ActionEvent e) {
+        
         if (quoctichComboBox.getSelectedItem() == "Việt Nam") {
+            table.setModel(tableModelVN);
             quocTichTextField.setEditable(false);
             dinhmucTextField.setEditable(true);
-            doiTuongKHComboBox.setEditable(true);
+            doiTuongKHComboBox.setEnabled(true);
         } else {
+            table.setModel(tableModelNN);
             quocTichTextField.setEditable(true);
             dinhmucTextField.setEditable(false);
-            doiTuongKHComboBox.setEditable(false);
+            doiTuongKHComboBox.setEnabled(false);
 
             if (soLuongTextField.getText() != null && donGiaTextField.getText() != null) {
                 HoaDonTienDienNN hoaDonTienDienNN = new HoaDonTienDienNN();
