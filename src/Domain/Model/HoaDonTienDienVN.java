@@ -14,8 +14,9 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
 
     private doiTuongKH doiTuong;
 
-    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, double dinhMuc,double thanhTien) {
-        super(idKh, hoTen, ngayHD, soLuong, donGia,thanhTien);
+    public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, double dinhMuc,
+            double thanhTien) {
+        super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.dinhMuc = dinhMuc;
     }
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import Domain.*;
+import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 
 import java.awt.*;
@@ -12,11 +13,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
 
-public class HoaDonTienDienView extends JFrame {
+
+public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     private HoaDonTienDienController hoaDonTienDienController;
+    private HoaDonTienDienChucNang hoaDonTienDienChucNang;
+    private HoaDonTienDien hoaDonTienDien;
 
     private DefaultTableModel tableModelVN;
     private DefaultTableModel tableModelNN;
@@ -40,7 +43,7 @@ public class HoaDonTienDienView extends JFrame {
 
     public HoaDonTienDienView() {
 
-        hoaDonTienDienController = new HoaDonTienDienController();
+        hoaDonTienDienController = new HoaDonTienDienController(this);
         // Set up JFrame
         setTitle("Hóa đơn tiền điện");
         setSize(1200, 600);
@@ -132,6 +135,7 @@ public class HoaDonTienDienView extends JFrame {
 
         add(inputPanel, BorderLayout.SOUTH);
         quoctichComboBox.addActionListener(this::KiemtraQT);
+        // hoaDonTienDien.attach(this);
         setLocationRelativeTo(null);
 
     }
@@ -146,25 +150,27 @@ public class HoaDonTienDienView extends JFrame {
                 HoaDonTienDienNN hoaDonTienDienNN = new HoaDonTienDienNN();
                 thanhTienTextField.setText(hoaDonTienDienNN.toString());
             }
-
         }
+    }
+
+    @Override
+    public void update() {
 
     }
 
     public void addHD(ActionEvent e) {
-        Add addcommand = new Add();
+        Add addcommand = new Add(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(addcommand);
         clearFields();
     }
 
     public void updateHD(ActionEvent e) {
-        Update updatecommand = new Update();
+        Update updatecommand = new Update(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(updatecommand);
-        clearFields();
     }
 
     public void deleteHD(ActionEvent e) {
-        Delete deletecommand = new Delete();
+        Delete deletecommand = new Delete(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
     }
@@ -193,6 +199,14 @@ public class HoaDonTienDienView extends JFrame {
         donGiaTextField.setText("");
         dinhmucTextField.setText("");
         thanhTienTextField.setText("");
+    }
+
+    public HoaDonTienDienChucNang getHoaDonTienDienChucNang() {
+        return hoaDonTienDienChucNang;
+    }
+
+    public HoaDonTienDien getHoaDonTienDien() {
+        return hoaDonTienDien;
     }
 
 }

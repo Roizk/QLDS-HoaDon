@@ -6,8 +6,13 @@ public class Delete extends Command {
     private HoaDonTienDien hoaDonTienDien;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
 
+    public Delete(HoaDonTienDienChucNang hoaDonTienDienChucNang )
+    {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    }
+
     @Override
-    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang)
+    public void execute()
     {
         delete(hoaDonTienDienChucNang);
     }

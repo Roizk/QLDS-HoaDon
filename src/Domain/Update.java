@@ -6,8 +6,13 @@ public class Update extends Command {
     private HoaDonTienDien hoaDonTienDien;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
 
+    public Update(HoaDonTienDienChucNang hoaDonTienDienChucNang )
+    {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    }
+
     @Override
-    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang)
+    public void execute()
     {
         update(hoaDonTienDienChucNang);
     }

@@ -6,9 +6,13 @@ import Domain.Model.HoaDonTienDien;
 public class Add extends Command{
     private HoaDonTienDien hoaDonTienDien;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
+    public Add(HoaDonTienDienChucNang hoaDonTienDienChucNang )
+    {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    }
 
     @Override
-    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang)
+    public void execute()
     {
         add(hoaDonTienDienChucNang);
     }

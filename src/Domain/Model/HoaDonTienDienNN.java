@@ -9,9 +9,11 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
     public HoaDonTienDienNN() {
     }
 
-    public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, String quocTich,double thanhTien) {
+    public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, String quocTich,
+            double thanhTien) {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.quocTich = quocTich;
+
     }
 
     public double thanhTien() {
@@ -22,7 +24,6 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
     public String toString() {
         return " " + thanhTien();
     }
-
 
     public String getQuocTich() {
         return this.quocTich;

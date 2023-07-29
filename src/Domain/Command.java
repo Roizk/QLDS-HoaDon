@@ -5,7 +5,7 @@ import Domain.Model.HoaDonTienDienVN;
 
 public abstract class Command {
 
-    public abstract void execute(HoaDonTienDienChucNang hoaDonTienDienChucNang);
+    public abstract void execute();
 
     // public abstract void thanhTienVNExecute(HoaDonTienDienVN hoaDonTienDienVN);
 
