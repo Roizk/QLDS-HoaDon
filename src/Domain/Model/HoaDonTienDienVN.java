@@ -76,4 +76,8 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         return doiTuong;
     }
 
+    public int geTuongKHValue()
+    {
+        return doiTuong.ordinal();
+    }
 }
