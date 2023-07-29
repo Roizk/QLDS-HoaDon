@@ -143,6 +143,8 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				
 				return new HoaDonTienDienNN(maKHInt,hoTenString,ngayHDDate,soLuongDouble,donGiaDouble,quocTichString,thanhTienDouble);
 			}
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -172,6 +174,8 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				return new HoaDonTienDienVN(maKHInt,hoTenString,ngayHDDate,doiTuongKHString,soLuongDouble,donGiaDouble,dinhMucDouble,thanhTienDouble);
 			}
 				
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
