@@ -11,7 +11,7 @@ public class ThanhTienVN extends Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
         thanhTien(hoaDonTienDienVN);
     }
 

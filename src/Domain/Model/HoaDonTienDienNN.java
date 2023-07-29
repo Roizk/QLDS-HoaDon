@@ -29,11 +29,11 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
     }
 
     public int getIdKh() {
-        return this.idKh;
+        return this.idKH;
     }
 
     public void setIdKh(int idKh) {
-        this.idKh = idKh;
+        this.idKH = idKh;
     }
 
     public String getHoTen() {

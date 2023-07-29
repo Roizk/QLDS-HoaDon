@@ -5,7 +5,7 @@ import java.util.Date;
 
 public abstract class HoaDonTienDien {
 
-    protected int idKh;
+    protected int idKH;
     protected String hoTen;
     protected Date ngayHD;
     protected double soLuong;
@@ -15,7 +15,7 @@ public abstract class HoaDonTienDien {
     }
 
     public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, int soLuong, double donGia, double thanhTien) {
-        this.idKh = idKh;
+        this.idKH = idKh;
         this.hoTen = hoTen;
         this.ngayHD = ngayHD;
         this.soLuong = soLuong;

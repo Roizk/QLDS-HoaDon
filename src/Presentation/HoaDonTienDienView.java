@@ -19,7 +19,7 @@ public class HoaDonTienDienView extends JFrame {
     private HoaDonTienDienController hoaDonTienDienController;
 
     private DefaultTableModel tableModelVN;
-    private DefaultTableModel tableModelNN; 
+    private DefaultTableModel tableModelNN;
     private JTable table;
     private JButton addButton;
     private JButton editButton;
@@ -57,7 +57,7 @@ public class HoaDonTienDienView extends JFrame {
         tableModelVN.addColumn("Đơn giá");
         tableModelVN.addColumn("Định mức ");
         tableModelVN.addColumn("Thành tiền ");
-        table= new JTable(tableModelVN);
+        table = new JTable(tableModelVN);
 
         // Create JTable to display BillNN list
         tableModelNN = new DefaultTableModel();
@@ -78,12 +78,17 @@ public class HoaDonTienDienView extends JFrame {
         quoctichComboBox = new JComboBox<>();
         doiTuongKHComboBox = new JComboBox<>();
 
+        // add item Quoctich combobox
         quoctichComboBox.addItem("");
         quoctichComboBox.addItem("Việt Nam");
         quoctichComboBox.addItem("Nước Ngoài");
+
+        // add item DoituongKH combobox
+        doiTuongKHComboBox.addItem("");
         doiTuongKHComboBox.addItem("sinh hoạt");
         doiTuongKHComboBox.addItem("Kinh doanh");
         doiTuongKHComboBox.addItem("Sản xuất");
+
         idTextField = new JTextField();
         hoTenTextField = new JTextField();
         ngayRaHoaDonTextField = new JTextField();
@@ -98,7 +103,6 @@ public class HoaDonTienDienView extends JFrame {
         findButton = new JButton("Tìm kiếm");
         saveButton = new JButton("Lưu");
 
-        // new GridLayout(7, 2)
         inputPanel.add(new JLabel("Quốc tịch"));
         inputPanel.add(quoctichComboBox);
         inputPanel.add(new JLabel("Tên quốc tịch"));
@@ -127,25 +131,18 @@ public class HoaDonTienDienView extends JFrame {
         inputPanel.add(saveButton);
 
         add(inputPanel, BorderLayout.SOUTH);
-        quoctichComboBox.addActionListener(e -> check(e));
+        quoctichComboBox.addActionListener(this::KiemtraQT);
         setLocationRelativeTo(null);
 
     }
 
-    public void check(ActionEvent e) {
-        
-        if (quoctichComboBox.getSelectedItem() == "Việt Nam") {
-            table.setModel(tableModelVN);
-            quocTichTextField.setEditable(false);
-            dinhmucTextField.setEditable(true);
-            doiTuongKHComboBox.setEnabled(true);
-        } else {
-            table.setModel(tableModelNN);
-            quocTichTextField.setEditable(true);
-            dinhmucTextField.setEditable(false);
-            doiTuongKHComboBox.setEnabled(false);
+    public void KiemtraQT(ActionEvent e) {
 
-            if (soLuongTextField.getText() != null && donGiaTextField.getText() != null) {
+        if (quoctichComboBox.getSelectedItem() == "Việt Nam") {
+            chooseVn();
+        } else {
+            chooseNN();
+            if (!soLuongTextField.getText().isEmpty() && !donGiaTextField.getText().isEmpty()) {
                 HoaDonTienDienNN hoaDonTienDienNN = new HoaDonTienDienNN();
                 thanhTienTextField.setText(hoaDonTienDienNN.toString());
             }
@@ -157,19 +154,36 @@ public class HoaDonTienDienView extends JFrame {
     public void addHD(ActionEvent e) {
         Add addcommand = new Add();
         hoaDonTienDienController.execute(addcommand);
+        clearFields();
     }
 
     public void updateHD(ActionEvent e) {
         Update updatecommand = new Update();
         hoaDonTienDienController.execute(updatecommand);
+        clearFields();
     }
 
     public void deleteHD(ActionEvent e) {
         Delete deletecommand = new Delete();
         hoaDonTienDienController.execute(deletecommand);
+        clearFields();
     }
 
-    
+    private void chooseVn() {
+        table.setModel(tableModelVN);
+        quocTichTextField.setEditable(false);
+        dinhmucTextField.setEditable(true);
+        doiTuongKHComboBox.setEnabled(true);
+        quocTichTextField.setText("");
+    }
+
+    private void chooseNN() {
+        table.setModel(tableModelNN);
+        quocTichTextField.setEditable(true);
+        dinhmucTextField.setEditable(false);
+        doiTuongKHComboBox.setEnabled(false);
+        doiTuongKHComboBox.setSelectedItem("");
+    }
 
     private void clearFields() {
         idTextField.setText("");

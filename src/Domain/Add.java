@@ -8,7 +8,7 @@ public class Add extends Command{
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
 
     @Override
-    public void execute()
+    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang)
     {
         add(hoaDonTienDienChucNang);
     }

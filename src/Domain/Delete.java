@@ -7,7 +7,7 @@ public class Delete extends Command {
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
 
     @Override
-    public void execute()
+    public void execute(HoaDonTienDienChucNang hoaDonTienDiencChucNang)
     {
         delete(hoaDonTienDienChucNang);
     }
