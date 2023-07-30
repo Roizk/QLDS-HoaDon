@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import Domain.*;
+import Domain.Command.AddHoaDonVN;
+import Domain.Command.Delete;
+import Domain.Command.ThanhTienVN;
+import Domain.Command.UpdateVN;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
@@ -171,13 +175,13 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void addHD(ActionEvent e) {
-        Add addcommand = new Add(getHoaDonTienDienChucNang());
+        AddHoaDonVN addcommand = new AddHoaDonVN(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(addcommand);
         clearFields();
     }
 
     public void updateHD(ActionEvent e) {
-        Update updatecommand = new Update(getHoaDonTienDienChucNang());
+        UpdateVN updatecommand = new UpdateVN(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(updatecommand);
     }
 

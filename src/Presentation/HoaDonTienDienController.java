@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.Command;
+import Domain.Command.Command;
 
 
 public class HoaDonTienDienController {

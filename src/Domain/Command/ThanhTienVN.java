@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Command;
 
 import Domain.Model.HoaDonTienDienVN;
 
@@ -14,7 +14,5 @@ public class ThanhTienVN extends Command {
     public void execute() {
         hoaDonTienDienVN.thanhTien();
     }
-
-   
 
 }
