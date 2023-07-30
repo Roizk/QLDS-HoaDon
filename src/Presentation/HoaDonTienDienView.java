@@ -145,6 +145,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(findButton);
         inputPanel.add(saveButton);
 
+        hoaDonTienDienVN = new HoaDonTienDienVN();
+        hoaDonTienDienNN = new HoaDonTienDienNN();
+        hoaDonTienDienChucNang = new HoaDonTienDienImp();
         add(inputPanel, BorderLayout.SOUTH);
         quoctichComboBox.addActionListener(this::KiemtraQT);
         // hoaDonTienDien.attach(this);
@@ -196,6 +199,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 clearFields();
             }
         }
+        JOptionPane.showMessageDialog(this,"Lưu thành công");
     }
 
     public void updateHD(ActionEvent e) {
@@ -214,12 +218,14 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 clearFields();
             }
         }
+        JOptionPane.showMessageDialog(this,"Lưu thành công");
     }
 
     public void deleteHD(ActionEvent e) {
         Delete deletecommand = new Delete(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
+        JOptionPane.showMessageDialog(this,"Sửa thành công");
     }
 
     private void chooseVn() {
