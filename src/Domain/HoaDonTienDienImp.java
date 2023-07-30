@@ -46,13 +46,13 @@ public class HoaDonTienDienImp implements HoaDonTienDienChucNang {
     @Override
     public HoaDonTienDienVN getHoaDonTienDienVNById(int idKh) throws SQLException {
 
-        return hoaDonDAO.getHoaDonVNByMa(idKh);
+        return hoaDonDAO.getHoaDonVNById(idKh);
     }
 
     @Override
     public HoaDonTienDienNN getHoaDonTienDienNNById(int idKh) throws SQLException {
 
-        return hoaDonDAO.getHoaDonNNByMa(idKh);
+        return hoaDonDAO.getHoaDonNNById(idKh);
     }
 
     @Override

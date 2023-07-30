@@ -4,13 +4,13 @@ import Domain.Command.Command;
 
 public class HoaDonTienDienController {
 
-    private HoaDonTienDienView viewRemote;
+    private HoaDonTienDienView hoaDonTienDienView;
 
     public HoaDonTienDienController() {
     }
 
     public HoaDonTienDienController(HoaDonTienDienView viewRemote) {
-        this.viewRemote = viewRemote;
+        this.hoaDonTienDienView = viewRemote;
     }
 
     public void execute(Command command) {

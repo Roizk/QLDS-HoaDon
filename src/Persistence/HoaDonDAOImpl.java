@@ -40,14 +40,14 @@ public class HoaDonDAOImpl implements HoaDonDAO{
     }
 
     @Override
-    public HoaDonTienDienNN getHoaDonNNByMa(int ma) throws SQLException{
+    public HoaDonTienDienNN getHoaDonNNById(int id) throws SQLException{
 
-        return hoaDonGateway.getHoaDonNNByMa(ma);
+        return hoaDonGateway.getHoaDonNNById(id);
     }
     @Override
-    public HoaDonTienDienVN getHoaDonVNByMa(int ma) throws SQLException{
+    public HoaDonTienDienVN getHoaDonVNById(int id) throws SQLException{
 
-        return hoaDonGateway.getHoaDonVNByMa(ma);
+        return hoaDonGateway.getHoaDonVNById(id);
     }
 
     @Override
@@ -62,9 +62,9 @@ public class HoaDonDAOImpl implements HoaDonDAO{
     }
     
     @Override
-    public void delete(int ma){
+    public void delete(int id){
 
-        hoaDonGateway.delete(ma);
+        hoaDonGateway.delete(id);
     }
 
 }

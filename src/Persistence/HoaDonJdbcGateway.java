@@ -113,10 +113,10 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 
 
 	@Override
-	public void delete(int ma) {
+	public void delete(int id) {
 		String sqlString="DELETE FROM HOADON WHERE maKH=?";
 		try(PreparedStatement statement = connection.prepareStatement(sqlString)){
-			statement.setInt(1, ma);
+			statement.setInt(1, id);
 			statement.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -124,11 +124,11 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 	}
 
 	@Override
-	public HoaDonTienDienNN getHoaDonNNByMa(int ma) {
+	public HoaDonTienDienNN getHoaDonNNById(int id) {
 		// TODO Auto-generated method stub
 		String sqlString="SELECT hoTen,quocTich,ngayHD,soLuong,donGia FROM HOADON WHERE maKH=?";
 		try(PreparedStatement statement = connection.prepareStatement(sqlString)){
-			statement.setInt(1, ma);
+			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				int maKHInt = resultSet.getInt("maKH");
@@ -149,11 +149,11 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 	}
 
 	@Override
-	public HoaDonTienDienVN getHoaDonVNByMa(int ma) {
+	public HoaDonTienDienVN getHoaDonVNById(int id) {
 		// TODO Auto-generated method stub
 		String sqlString="SELECT * FROM HOADON WHERE maKH=?";
 		try(PreparedStatement statement = connection.prepareStatement(sqlString)){
-			statement.setInt(1, ma);
+			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				int maKHInt = resultSet.getInt("maKH");

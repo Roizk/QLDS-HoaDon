@@ -1,11 +1,8 @@
 package Domain.Command;
 
 import Domain.HoaDonTienDienChucNang;
-import Domain.Model.HoaDonTienDien;
 
 public class Delete extends Command {
-    private HoaDonTienDien hoaDonTienDien;
-    private HoaDonTienDienChucNang hoaDonTienDienChucNang;
 
     public Delete(HoaDonTienDienChucNang hoaDonTienDienChucNang) {
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;

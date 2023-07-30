@@ -12,9 +12,9 @@ public interface HoaDonGateway {
     public void addHoaDonTienDienVN(HoaDonTienDienVN hoadon);
     public void updateHoaDonTienDienNN(HoaDonTienDienNN hoadon);
     public void updateHoaDonTienDienVN(HoaDonTienDienVN hoadon);
-    public void delete(int ma);   
-    HoaDonTienDienNN getHoaDonNNByMa(int ma) throws SQLException;
-    HoaDonTienDienVN getHoaDonVNByMa(int ma) throws SQLException;
+    public void delete(int id);   
+    HoaDonTienDienNN getHoaDonNNById(int id) throws SQLException;
+    HoaDonTienDienVN getHoaDonVNById(int id) throws SQLException;
     List<HoaDonTienDienNN> getAllsHoaDonNN();
     List<HoaDonTienDienVN> getAllsHoaDonVN();
 }
