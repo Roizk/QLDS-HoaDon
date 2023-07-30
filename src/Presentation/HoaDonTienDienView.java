@@ -53,6 +53,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public HoaDonTienDienView() {
 
         hoaDonTienDienController = new HoaDonTienDienController(this);
+
+    }
+
+    public void display() {
         // Set up JFrame
         setTitle("Hóa đơn tiền điện");
         setSize(1200, 600);
@@ -94,6 +98,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         quoctichComboBox.addItem("");
         quoctichComboBox.addItem("Việt Nam");
         quoctichComboBox.addItem("Nước Ngoài");
+        quoctichComboBox.addActionListener(this::KiemtraQT);
 
         // add item DoituongKH combobox
         doiTuongKHComboBox.addItem("");
@@ -145,14 +150,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(findButton);
         inputPanel.add(saveButton);
 
-        hoaDonTienDienVN = new HoaDonTienDienVN();
-        hoaDonTienDienNN = new HoaDonTienDienNN();
-        hoaDonTienDienChucNang = new HoaDonTienDienImp();
         add(inputPanel, BorderLayout.SOUTH);
-        quoctichComboBox.addActionListener(this::KiemtraQT);
+        this.setVisible(true);
         // hoaDonTienDien.attach(this);
         setLocationRelativeTo(null);
-
     }
 
     public void KiemtraQT(ActionEvent e) {
@@ -199,7 +200,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 clearFields();
             }
         }
-        JOptionPane.showMessageDialog(this,"Lưu thành công");
+        JOptionPane.showMessageDialog(this, "Lưu thành công");
     }
 
     public void updateHD(ActionEvent e) {
@@ -218,14 +219,14 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 clearFields();
             }
         }
-        JOptionPane.showMessageDialog(this,"Lưu thành công");
+        JOptionPane.showMessageDialog(this, "Lưu thành công");
     }
 
     public void deleteHD(ActionEvent e) {
         Delete deletecommand = new Delete(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
-        JOptionPane.showMessageDialog(this,"Sửa thành công");
+        JOptionPane.showMessageDialog(this, "Sửa thành công");
     }
 
     private void chooseVn() {
@@ -340,6 +341,18 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public HoaDonTienDienNN getHoaDonTienDienNN() {
         return hoaDonTienDienNN;
+    }
+
+    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
+        this.hoaDonTienDienVN = hoaDonTienDienVN;
+    }
+
+    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
+        this.hoaDonTienDienNN = hoaDonTienDienNN;
+    }
+
+    public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNang) {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
     }
 
 }
