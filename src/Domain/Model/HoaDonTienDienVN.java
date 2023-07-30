@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class HoaDonTienDienVN extends HoaDonTienDien {
 
-    private double dinhMuc;
-
     private enum doiTuongKH {
         SINH_HOAT,
         KINH_DOANH,
         SAN_XUAT
     };
+
+    private double dinhMuc;
 
     private doiTuongKH doiTuongkh;
 
@@ -36,6 +36,10 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
 
     public double getDinhMuc() {
         return this.dinhMuc;
+    }
+
+    public void setDinhMuc(double dinhMuc) {
+        this.dinhMuc = dinhMuc;
     }
 
     public int getIdKh() {
@@ -66,7 +70,7 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         return this.soLuong;
     }
 
-    public void setSoLuong(int soLuong) {
+    public void setSoLuong(double soLuong) {
         this.soLuong = soLuong;
     }
 
@@ -94,22 +98,25 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         return doiTuong;
     }
 
-    public void fromvalue(int value) {
+    public doiTuongKH fromvalue(int value) {
         switch (value) {
             case 0: {
                 doiTuongKH doiTuongkh = doiTuongKH.SINH_HOAT;
                 setDoiTuongkh(doiTuongkh);
+                return doiTuongkh;
             }
             case 1: {
                 doiTuongKH doiTuongkh = doiTuongKH.KINH_DOANH;
                 setDoiTuongkh(doiTuongkh);
+                return doiTuongkh;
             }
             case 2: {
                 doiTuongKH doiTuongkh = doiTuongKH.SAN_XUAT;
                 setDoiTuongkh(doiTuongkh);
+                return doiTuongkh;
             }
             default:
-                throw new IllegalArgumentException("Invalid value for DoiTuongKH: " + value);
+                throw new IllegalArgumentException("Invalid value for DoiTuongKH: " + value); 
         }
 
     }

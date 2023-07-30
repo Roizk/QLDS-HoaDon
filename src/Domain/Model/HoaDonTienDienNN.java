@@ -29,6 +29,11 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         return this.quocTich;
     }
 
+    public void setQuocTich(String qt) {
+        this.quocTich = qt;
+
+    }
+
     public int getIdKh() {
         return this.idKH;
     }
@@ -57,7 +62,7 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         return this.soLuong;
     }
 
-    public void setSoLuong(int soLuong) {
+    public void setSoLuong(double soLuong) {
         this.soLuong = soLuong;
     }
 

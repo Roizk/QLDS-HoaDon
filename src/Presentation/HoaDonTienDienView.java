@@ -97,7 +97,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
         // add item DoituongKH combobox
         doiTuongKHComboBox.addItem("");
-        doiTuongKHComboBox.addItem("sinh hoạt");
+        doiTuongKHComboBox.addItem("Sinh hoạt");
         doiTuongKHComboBox.addItem("Kinh doanh");
         doiTuongKHComboBox.addItem("Sản xuất");
 
@@ -182,25 +182,37 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public void addHD(ActionEvent e) {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
-            AddHoaDonVN addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(addHoaDonVNcommand);
-            clearFields();
+            if (isValidInputVN()) {
+                setHoaDonVN();
+                AddHoaDonVN addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(addHoaDonVNcommand);
+                clearFields();
+            }
         } else {
-            AddHoaDonNN addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(addHoaDonNNcommand);
-            clearFields();
+            if (isValidInputNN()) {
+                setHoaDonNN();
+                AddHoaDonNN addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(addHoaDonNNcommand);
+                clearFields();
+            }
         }
     }
 
     public void updateHD(ActionEvent e) {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
-            UpdateVN updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(updateHoaDonVNcommand);
-            clearFields();
+            if (isValidInputVN()) {
+                setHoaDonVN();
+                UpdateVN updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(updateHoaDonVNcommand);
+                clearFields();
+            }
         } else {
-            UpdateNN updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(updateHoaDonNNcommand);
-            clearFields();
+            if (isValidInputNN()) {
+                setHoaDonNN();
+                UpdateNN updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(updateHoaDonNNcommand);
+                clearFields();
+            }
         }
     }
 
@@ -224,6 +236,78 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         dinhmucTextField.setEditable(false);
         doiTuongKHComboBox.setEnabled(false);
         doiTuongKHComboBox.setSelectedItem("");
+    }
+
+    private void setHoaDonVN() {
+        hoaDonTienDienVN.setIdKh(Integer.parseInt(idTextField.getText()));
+        hoaDonTienDienVN.setHoTen(hoTenTextField.getText());
+        hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+        hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
+
+        if (0 == doiTuongKHComboBox.getSelectedIndex()) {
+            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(0));
+        } else if (1 == doiTuongKHComboBox.getSelectedIndex()) {
+            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(1));
+        } else {
+            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(2));
+        }
+
+        hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
+    }
+
+    private void setHoaDonNN() {
+        hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
+        hoaDonTienDienNN.setHoTen(hoTenTextField.getText());
+        hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+        hoaDonTienDienNN.setQuocTich(quocTichTextField.getText());
+        hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
+    }
+
+    private boolean isValidInputVN() {
+        // Kiểm tra hợp lệ cho các trường dữ liệu dành cho Việt Nam
+        try {
+            int id = Integer.parseInt(idTextField.getText());
+            String hoTen = hoTenTextField.getText();
+            String ngayRaHoaDon = ngayRaHoaDonTextField.getText();
+            double soLuong = Double.parseDouble(soLuongTextField.getText());
+            double donGia = Double.parseDouble(donGiaTextField.getText());
+            double dinhMuc = Double.parseDouble(dinhmucTextField.getText());
+
+            // Kiểm tra các điều kiện hợp lệ, ví dụ: không để trống và giá trị dương
+            if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng cho các trường dữ liệu!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Lỗi định dạng dữ liệu không hợp lệ
+        }
+
+        return true;
+    }
+
+    private boolean isValidInputNN() {
+        // Kiểm tra hợp lệ cho các trường dữ liệu dành cho Nước Ngoài
+        try {
+            int id = Integer.parseInt(idTextField.getText());
+            String hoTen = hoTenTextField.getText();
+            String ngayRaHoaDon = ngayRaHoaDonTextField.getText();
+            double soLuong = Double.parseDouble(soLuongTextField.getText());
+            double donGia = Double.parseDouble(donGiaTextField.getText());
+            String quocTich = quocTichTextField.getText();
+
+            // Kiểm tra các điều kiện hợp lệ, ví dụ: không để trống và giá trị dương
+            if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0
+                    || quocTich.isEmpty()) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng cho các trường dữ liệu!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Lỗi định dạng dữ liệu không hợp lệ
+        }
+
+        return true;
     }
 
     private void clearFields() {
