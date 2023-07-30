@@ -11,6 +11,8 @@ public class HoaDonDAOImpl implements HoaDonDAO{
 
     private HoaDonGateway hoaDonGateway;
 
+    
+
     public HoaDonDAOImpl(HoaDonGateway hoaDonGateway) {
         this.hoaDonGateway= hoaDonGateway;
     }

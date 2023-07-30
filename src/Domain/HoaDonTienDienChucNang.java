@@ -1,19 +1,30 @@
 package Domain;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import Domain.Model.HoaDonTienDien;
+import Domain.Model.HoaDonTienDienNN;
+import Domain.Model.HoaDonTienDienVN;
 
 public interface HoaDonTienDienChucNang {
 
-    void addHoaDon(HoaDonTienDien hoaDonTienDien);
+    void addHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN);
+
+    void addHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN);
+
+    void updateHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN);
+
+    void updateHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN);
 
     void deleteHoaDon(HoaDonTienDien hoaDonTienDien);
 
-    void updateHoaDon(HoaDonTienDien hoaDonTienDien);
+    HoaDonTienDien getHoaDonTienDienVNById(int idKh) throws SQLException;
 
-    HoaDonTienDien getHoaDonTienDienById(int idKh);
+    HoaDonTienDien getHoaDonTienDienNNById(int idKh) throws SQLException;
 
-    List<HoaDonTienDien> getAllHoaDonTienDien();
+    List<HoaDonTienDienVN> getAllHoaDonTienDienVN();
+
+    List<HoaDonTienDienNN> getAllHoaDonTienDienNN();
 
 }

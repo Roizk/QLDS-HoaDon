@@ -1,5 +1,4 @@
 
-
 import javax.swing.SwingUtilities;
 
 import Presentation.HoaDonTienDienView;
@@ -13,6 +12,5 @@ public class Boostrap {
             }
         });
     }
-    
-    
+
 }

@@ -1,23 +1,19 @@
 package Presentation;
 
-import Domain.Command;
-
+import Domain.Command.Command;
 
 public class HoaDonTienDienController {
 
-    private HoaDonTienDienView viewRemote ;
-    
-    public HoaDonTienDienController(){}
-    
-    public HoaDonTienDienController(HoaDonTienDienView viewRemote)
-    {
-        this.viewRemote = viewRemote ; 
+    private HoaDonTienDienView viewRemote;
+
+    public HoaDonTienDienController() {
     }
 
-    
-    
-    public void execute(Command command)
-    {
+    public HoaDonTienDienController(HoaDonTienDienView viewRemote) {
+        this.viewRemote = viewRemote;
+    }
+
+    public void execute(Command command) {
         command.execute();
     }
 
