@@ -58,6 +58,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public void display() {
         // Set up JFrame
+
         setTitle("Hóa đơn tiền điện");
         setSize(1200, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

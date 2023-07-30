@@ -1,6 +1,4 @@
 
-import javax.swing.SwingUtilities;
-
 import Domain.HoaDonTienDienChucNang;
 import Domain.HoaDonTienDienImp;
 import Domain.Model.HoaDonTienDienNN;
