@@ -7,7 +7,7 @@ import java.util.List;
 import Domain.Publisher;
 import Presentation.Subcriber;
 
-public abstract class HoaDonTienDien implements Publisher {
+public abstract class HoaDonTienDien implements Publisher  {
 
     protected int idKH;
     protected String hoTen;
@@ -17,6 +17,7 @@ public abstract class HoaDonTienDien implements Publisher {
     protected List<Subcriber> hoaDonTienDiensubcriber;
 
     public HoaDonTienDien() {
+        hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public HoaDonTienDien(int idKh, String hoTen, Date ngayHD, double soLuong, double donGia, double thanhTien) {
@@ -43,7 +44,7 @@ public abstract class HoaDonTienDien implements Publisher {
     @Override
     public void notifySubcriber() {
         for (Subcriber subcriber : hoaDonTienDiensubcriber) {
-            subcriber.notify();
+            subcriber.update();
         }
     }
 

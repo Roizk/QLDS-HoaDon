@@ -1,8 +1,11 @@
 package Domain.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class HoaDonTienDienVN extends HoaDonTienDien {
+import Presentation.Subcriber;
+
+public class HoaDonTienDienVN extends HoaDonTienDien  {
 
     private enum doiTuongKH {
         SINH_HOAT,
@@ -17,6 +20,7 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
     private int doiTuong;
 
     public HoaDonTienDienVN() {
+        hoaDonTienDiensubcriber = new ArrayList<>();
     };
 
     public HoaDonTienDienVN(int idKh, String hoTen, Date ngayHD, int doiTuong, double soLuong, double donGia,
@@ -25,6 +29,7 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.dinhMuc = dinhMuc;
         this.doiTuong = doiTuong;
+        //hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public double thanhTien() {
@@ -32,6 +37,12 @@ public class HoaDonTienDienVN extends HoaDonTienDien {
             return soLuong * donGia;
         } else
             return soLuong * donGia * dinhMuc + (soLuong - dinhMuc) * donGia * 2.5;
+    }
+
+    public void notifySubcriber() {
+        for (Subcriber subcriber : hoaDonTienDiensubcriber) {
+            subcriber.update();
+        }
     }
 
     public double getDinhMuc() {

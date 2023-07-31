@@ -3,6 +3,8 @@ package Presentation;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import Domain.HoaDonTienDienChucNang;
@@ -68,6 +71,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         // Create JTable to display BillVN list
         tableModelVN = new DefaultTableModel();
         tableModelVN.addColumn("Id khách hàng ");
@@ -89,7 +95,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         tableModelNN.addColumn("Số lượng ");
         tableModelNN.addColumn("Đơn giá");
         tableModelNN.addColumn("Thành tiền ");
-
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -157,8 +162,21 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
         add(inputPanel, BorderLayout.SOUTH);
         this.setVisible(true);
-        // hoaDonTienDien.attach(this);
         setLocationRelativeTo(null);
+
+        for (int i = 0; i < tableModelVN.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        for (int i = 0; i < tableModelNN.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        hoaDonTienDienVN.attach(this);
+        hoaDonTienDienNN.attach(this);
+        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
+
     }
 
     public void KiemtraQT(ActionEvent e) {
@@ -177,11 +195,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void test() {
         hoaDonTienDienVN = getHoaDonTienDienVN();
         hoaDonTienDienVN.fromvalue(hoaDonTienDienVN.getDoiTuong());
-    }
-
-    @Override
-    public void update() {
-
     }
 
     public void thanhTien() {
@@ -204,8 +217,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 hoaDonTienDienController.execute(addHoaDonNNcommand);
                 clearFields();
             }
+            JOptionPane.showMessageDialog(this, "Lưu thành công");
         }
-        JOptionPane.showMessageDialog(this, "Lưu thành công");
+        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
     }
 
     public void updateHD(ActionEvent e) {
@@ -223,8 +238,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 hoaDonTienDienController.execute(updateHoaDonNNcommand);
                 clearFields();
             }
+            JOptionPane.showMessageDialog(this, "Lưu thành công");
         }
-        JOptionPane.showMessageDialog(this, "Lưu thành công");
+        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
     }
 
     public void deleteHD(ActionEvent e) {
@@ -232,6 +249,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
         JOptionPane.showMessageDialog(this, "Sửa thành công");
+        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
     }
 
     private void chooseVn() {
@@ -322,6 +341,48 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         return true;
     }
 
+    @Override
+    public void update() {
+        // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
+        // HoaDonJdbcGateway)
+        List<HoaDonTienDienNN> hoaDonNNList = new ArrayList<>();
+        hoaDonNNList.add(new HoaDonTienDienNN(1, "Le Van Teo", null, 5, 5, "Phap", 5));
+
+        tableModelNN.setRowCount(0);
+
+        // Thêm dữ liệu vào bảng
+        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+            Object[] rowData = {
+                    hoaDonNN.getIdKh(),
+                    hoaDonNN.getHoTen(),
+                    hoaDonNN.getQuocTich(),
+                    hoaDonNN.getNgayHD(),
+                    hoaDonNN.getSoLuong(),
+                    hoaDonNN.getDonGia(),
+                    hoaDonNN.thanhTien()
+            };
+            tableModelNN.addRow(rowData);
+        }
+        List<HoaDonTienDienVN> hoaDonVNList = new ArrayList<>();
+        hoaDonVNList.add(new HoaDonTienDienVN(1, "Le Van Teo", null, 0, 5, 1, 1, 5));
+
+        tableModelVN.setRowCount(0);
+
+        for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
+            Object[] rowData = {
+                    hoaDonVN.getIdKh(),
+                    hoaDonVN.getHoTen(),
+                    hoaDonVN.getNgayHD(),
+                    hoaDonVN.getSoLuong(),
+                    hoaDonVN.fromvalue(hoaDonVN.getDoiTuong()),
+                    hoaDonVN.getDonGia(),
+                    hoaDonVN.getDinhMuc(),
+                    hoaDonVN.thanhTien()
+            };
+            tableModelVN.addRow(rowData);
+        }
+    }
+
     private void clearFields() {
         idTextField.setText("");
         hoTenTextField.setText("");
@@ -348,10 +409,13 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         return hoaDonTienDienNN;
     }
 
-    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
-        this.hoaDonTienDien = hoaDonTienDien;
+    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
+        this.hoaDonTienDienVN = hoaDonTienDienVN;
     }
 
+    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
+        this.hoaDonTienDienNN = hoaDonTienDienNN;
+    }
 
     public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNangImp) {
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNangImp;
