@@ -128,7 +128,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 	@Override
 	public HoaDonTienDienNN getHoaDonNNById(int id) {
 		// TODO Auto-generated method stub
-		String sqlString="SELECT hoTen,quocTich,ngayHD,soLuong,donGia FROM HOADON WHERE maKH=?";
+		String sqlString="SELECT hoTen,quocTich,ngayHD,soLuong,donGia,thanhTien FROM HOADON WHERE maKH=?";
 		try(PreparedStatement statement = connection.prepareStatement(sqlString)){
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
@@ -139,8 +139,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				java.util.Date ngayHDDate = resultSet.getDate("ngayHD");
 				double soLuongDouble = resultSet.getDouble("soLuong");
 				double donGiaDouble = resultSet.getDouble("donGia");
-
-				double thanhTienDouble=soLuongDouble*donGiaDouble;
+				double thanhTienDouble= resultSet.getDouble("thanhTien");
 				
 				return new HoaDonTienDienNN(maKHInt,hoTenString,ngayHDDate,soLuongDouble,donGiaDouble,quocTichString,thanhTienDouble);
 			}
@@ -165,13 +164,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				double soLuongDouble = resultSet.getDouble("soLuong");
 				double donGiaDouble = resultSet.getDouble("donGia");
 				double dinhMucDouble = resultSet.getDouble("dinhMuc");
-				
-				double thanhTienDouble;
-				if(soLuongDouble<=dinhMucDouble) {
-					thanhTienDouble = soLuongDouble*donGiaDouble;
-				}else {
-					thanhTienDouble = donGiaDouble*dinhMucDouble + (soLuongDouble-dinhMucDouble)*donGiaDouble*2.5;
-				}
+				double thanhTienDouble = resultSet.getDouble("thanhTien");
 				
 				return new HoaDonTienDienVN(maKHInt,hoTenString,ngayHDDate,doiTuongKHInt,soLuongDouble,donGiaDouble,dinhMucDouble,thanhTienDouble);
 			}
@@ -196,8 +189,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				java.util.Date ngayHDDate = resultSet.getDate("ngayHD");
 				double soLuongDouble = resultSet.getDouble("soLuong");
 				double donGiaDouble = resultSet.getDouble("donGia");
-				
-				double thanhTienDouble = soLuongDouble*donGiaDouble;
+				double thanhTienDouble = resultSet.getDouble("thanhTien");
 				
 				hoaDonTienDienNNs.add(new HoaDonTienDienNN(maKHInt,hoTenString,ngayHDDate,soLuongDouble,donGiaDouble,quocTichString,thanhTienDouble));
 			}
@@ -205,7 +197,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return hoaDonTienDienNNs;
 	}
 
 
@@ -224,20 +216,14 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 				double soLuongDouble = resultSet.getDouble("soLuong");
 				double donGiaDouble = resultSet.getDouble("donGia");
 				double dinhMucDouble = resultSet.getDouble("dinhMuc");
-				
-				double thanhTienDouble;
-				if(soLuongDouble<=dinhMucDouble) {
-					thanhTienDouble=soLuongDouble*donGiaDouble;
-				}else {
-					thanhTienDouble=dinhMucDouble*donGiaDouble+(soLuongDouble-dinhMucDouble)*donGiaDouble;
-				}
+				double thanhTienDouble = resultSet.getDouble("thanhTien");
 				
 				hoaDonTienDienVNs.add(new HoaDonTienDienVN(maKHInt, hoTenString, ngayHDDate, doiTuongKHInt, soLuongDouble, donGiaDouble, dinhMucDouble, thanhTienDouble));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return hoaDonTienDienVNs;
 	}
 }
 
