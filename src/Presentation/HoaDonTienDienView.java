@@ -1,9 +1,21 @@
 package Presentation;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import Domain.*;
+import Domain.HoaDonTienDienChucNang;
 import Domain.Command.AddHoaDonNN;
 import Domain.Command.AddHoaDonVN;
 import Domain.Command.Delete;
@@ -13,14 +25,6 @@ import Domain.Command.UpdateVN;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.DefaultTableModel;
 
 public class HoaDonTienDienView extends JFrame implements Subcriber {
 
@@ -344,16 +348,13 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         return hoaDonTienDienNN;
     }
 
-    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        this.hoaDonTienDienVN = hoaDonTienDienVN;
+    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
-    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        this.hoaDonTienDienNN = hoaDonTienDienNN;
-    }
 
-    public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNang) {
-        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNangImp) {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNangImp;
     }
 
 }
