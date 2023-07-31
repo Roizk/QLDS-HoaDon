@@ -227,7 +227,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         Delete deletecommand = new Delete(getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
-        JOptionPane.showMessageDialog(this, "Sửa thành công");
+        JOptionPane.showMessageDialog(this, "Xóa thành công");
     }
 
     private void chooseVn() {
@@ -344,16 +344,12 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         return hoaDonTienDienNN;
     }
 
-    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        this.hoaDonTienDienVN = hoaDonTienDienVN;
+    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
-    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        this.hoaDonTienDienNN = hoaDonTienDienNN;
-    }
-
-    public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNang) {
-        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNangImp) {
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNangImp;
     }
 
 }

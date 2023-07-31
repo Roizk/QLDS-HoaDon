@@ -2,7 +2,7 @@ package Domain.Command;
 
 import Domain.HoaDonTienDienChucNang;
 
-public class UpdateNN extends Command{
+public class UpdateNN extends Command {
 
     public UpdateNN(HoaDonTienDienChucNang hoaDonTienDienChucNang) {
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
@@ -13,6 +13,7 @@ public class UpdateNN extends Command{
         update(hoaDonTienDienChucNang);
     }
 
+   
     public void update(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
         hoaDonTienDiencChucNang.updateHoaDonTienDienNN(hoaDonTienDienNN);
     }
