@@ -23,11 +23,13 @@ public class HoaDonJdbcGateway implements HoaDonGateway{
 	private Connection connection;
 	
 	public HoaDonJdbcGateway() {
-		String dbURL="jdbc:sqlserver://localhost:1433;databaseName=quanlyhoadon;integratedSecurity=true";
+		String dbURL="jdbc:sqlserver://localhost:1433;databaseName=quanlyhoadon;integratedSecurity=true;trustServerCertificate=true";
 		
 		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); 
 			connection = DriverManager.getConnection(dbURL);
-		}catch(SQLException e) {
+			System.out.println("Thanh cong");
+		}catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
