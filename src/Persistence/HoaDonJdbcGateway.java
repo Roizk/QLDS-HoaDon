@@ -60,7 +60,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 			statement.setString(2, hoaDonTienDienVN.getHoTen());
 			statement.setInt(3, hoaDonTienDienVN.getDoiTuongKHValue());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienVN.getNgayHD().getTime());
-			statement.setDate(4, sqlNgayHD);
+			statement.setDate(4,sqlNgayHD);
 			statement.setDouble(5, hoaDonTienDienVN.getSoLuong());
 			statement.setDouble(6, hoaDonTienDienVN.getDonGia());
 			statement.setDouble(7, hoaDonTienDienVN.getDinhMuc());

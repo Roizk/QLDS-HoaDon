@@ -158,6 +158,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(deleteButton);
         deleteButton.addActionListener(this::deleteHD);
         inputPanel.add(findButton);
+        findButton.addActionListener(this::findByID);
         inputPanel.add(saveButton);
 
         add(inputPanel, BorderLayout.SOUTH);
@@ -192,13 +193,18 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         }
     }
 
+    public void findByID(ActionEvent e) {
+        JOptionPane.showInputDialog(this, "Nhập ID", "ID");
+    }
+
     public void test() {
         hoaDonTienDienVN = getHoaDonTienDienVN();
         hoaDonTienDienVN.fromvalue(hoaDonTienDienVN.getDoiTuong());
     }
 
     public void thanhTien() {
-        ThanhTienVN thanhTienVNcommand = new ThanhTienVN(hoaDonTienDienVN);
+        ThanhTienVN thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(thanhTienVNcommand);
     }
 
@@ -206,14 +212,16 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
             if (isValidInputVN()) {
                 setHoaDonVN();
-                AddHoaDonVN addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDienChucNang());
+                AddHoaDonVN addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(addHoaDonVNcommand);
                 clearFields();
             }
         } else {
             if (isValidInputNN()) {
                 setHoaDonNN();
-                AddHoaDonNN addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDienChucNang());
+                AddHoaDonNN addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(addHoaDonNNcommand);
                 clearFields();
             }
@@ -227,14 +235,16 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
             if (isValidInputVN()) {
                 setHoaDonVN();
-                UpdateVN updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDienChucNang());
+                UpdateVN updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(updateHoaDonVNcommand);
                 clearFields();
             }
         } else {
             if (isValidInputNN()) {
                 setHoaDonNN();
-                UpdateNN updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDienChucNang());
+                UpdateNN updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(updateHoaDonNNcommand);
                 clearFields();
             }
@@ -245,7 +255,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void deleteHD(ActionEvent e) {
-        Delete deletecommand = new Delete(getHoaDonTienDienChucNang());
+        Delete deletecommand = new Delete(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
+                getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
         JOptionPane.showMessageDialog(this, "Sửa thành công");
@@ -345,8 +356,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void update() {
         // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
         // HoaDonJdbcGateway)
-        List<HoaDonTienDienNN> hoaDonNNList = new ArrayList<>();
-        hoaDonNNList.add(new HoaDonTienDienNN(1, "Le Van Teo", null, 5, 5, "Phap", 5));
+        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienController.getAllsHoaDonNN();
 
         tableModelNN.setRowCount(0);
 
@@ -363,8 +373,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             };
             tableModelNN.addRow(rowData);
         }
-        List<HoaDonTienDienVN> hoaDonVNList = new ArrayList<>();
-        hoaDonVNList.add(new HoaDonTienDienVN(1, "Le Van Teo", null, 0, 5, 1, 1, 5));
+        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienController.getAllsHoaDonVN();
 
         tableModelVN.setRowCount(0);
 

@@ -1,4 +1,6 @@
 
+import javax.swing.SwingUtilities;
+
 import Domain.HoaDonTienDienChucNang;
 import Domain.HoaDonTienDienImp;
 import Domain.Model.HoaDonTienDienNN;
@@ -15,7 +17,13 @@ public class Boostrap {
         hoaDonTienDienView.setHoaDonTienDienChucNang(hoaDonTienDienChucNang);
         hoaDonTienDienView.setHoaDonTienDienNN(hoaDonTienDienNN);
         hoaDonTienDienView.setHoaDonTienDienVN(hoaDonTienDienVN);
-        hoaDonTienDienView.display();
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                hoaDonTienDienView.display();
+            }
+        });
+
     }
 
 }

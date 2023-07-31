@@ -11,5 +11,15 @@ public abstract class Command {
     protected HoaDonTienDienNN hoaDonTienDienNN;
     protected HoaDonTienDienVN hoaDonTienDienVN;
     protected HoaDonTienDienChucNang hoaDonTienDienChucNang;
+
+
+    public Command(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN, HoaDonTienDienVN hoaDonTienDienVN, HoaDonTienDienChucNang hoaDonTienDienChucNang) {
+        this.hoaDonTienDien = hoaDonTienDien;
+        this.hoaDonTienDienNN = hoaDonTienDienNN;
+        this.hoaDonTienDienVN = hoaDonTienDienVN;
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+    }
+    
+
     public abstract void execute();
 }
