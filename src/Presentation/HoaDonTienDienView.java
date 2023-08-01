@@ -215,9 +215,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         }
     
         JOptionPane.showMessageDialog(this,
-                "Tổng số lượng khách hàng Việt Nam: " + totalQuantityVN + "\n"
-                + "Tổng số lượng khách hàng Nước Ngoài: " + totalQuantityNN,
-                "Tổng số lượng khách hàng",
+                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + totalQuantityVN + "\n"
+                + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
+                "Tổng số lượng KW",
                 JOptionPane.INFORMATION_MESSAGE);
     }
     
