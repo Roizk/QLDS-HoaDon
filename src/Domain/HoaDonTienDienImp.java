@@ -29,8 +29,12 @@ public class HoaDonTienDienImp implements HoaDonTienDienChucNang {
     }
 
     @Override
-    public void deleteHoaDon(HoaDonTienDien hoaDonTienDien) {
+    public void deleteHoaDonVN(HoaDonTienDienVN hoaDonTienDienVN) {
+        hoaDonDAO.delete(hoaDonTienDienVN.getIdKh());
+    }
 
+    public void deleteHoaDonNN(HoaDonTienDienNN hoaDonTienDienNN) {
+        hoaDonDAO.delete(hoaDonTienDienNN.getIdKh());
     }
 
     @Override

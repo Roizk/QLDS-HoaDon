@@ -30,7 +30,8 @@ import Domain.HoaDonTienDienChucNang;
 import Domain.Command.AddHoaDonNN;
 import Domain.Command.AddHoaDonVN;
 import Domain.Command.Command;
-import Domain.Command.Delete;
+import Domain.Command.DeleteNN;
+import Domain.Command.DeleteVN;
 import Domain.Command.ThanhTienNN;
 import Domain.Command.ThanhTienVN;
 import Domain.Command.UpdateNN;
@@ -391,13 +392,25 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void deleteHD(ActionEvent e) {
-        Command deletecommand = new Delete(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
-                getHoaDonTienDienChucNang());
-        hoaDonTienDienController.execute(deletecommand);
-        clearFields();
-        JOptionPane.showMessageDialog(this, "Xóa thành công");
-        hoaDonTienDienVN.notifySubcriber();
-        hoaDonTienDienNN.notifySubcriber();
+        if ("Việt Nam".equals(quoctichComboBox.getSelectedItem().toString())) {
+            hoaDonTienDienVN.setIdKh(Integer.parseInt(idTextField.getText()));
+            Command deletecommand = new DeleteVN(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
+                    getHoaDonTienDienChucNang());
+            hoaDonTienDienController.execute(deletecommand);
+            clearFields();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+            hoaDonTienDienVN.notifySubcriber();
+            hoaDonTienDienNN.notifySubcriber();
+        } else {
+             hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
+            Command deletecommand = new DeleteNN(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
+                    getHoaDonTienDienChucNang());
+            hoaDonTienDienController.execute(deletecommand);
+            clearFields();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+            hoaDonTienDienVN.notifySubcriber();
+            hoaDonTienDienNN.notifySubcriber();
+        }
     }
 
     private void chooseVn() {
@@ -563,6 +576,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         donGiaTextField.setText("");
         dinhmucTextField.setText("");
         thanhTienTextField.setText("");
+        quocTichTextField.setText("");
+        doiTuongKHComboBox.setSelectedIndex(0);
     }
 
     public HoaDonTienDienChucNang getHoaDonTienDienChucNang() {

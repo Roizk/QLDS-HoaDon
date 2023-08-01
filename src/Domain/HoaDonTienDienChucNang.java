@@ -17,7 +17,8 @@ public interface HoaDonTienDienChucNang {
 
     void updateHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN);
 
-    void deleteHoaDon(HoaDonTienDien hoaDonTienDien);
+    void deleteHoaDonVN(HoaDonTienDienVN hoaDonTienDienVN);
+    void deleteHoaDonNN(HoaDonTienDienNN hoaDonTienDienNN);
 
     HoaDonTienDien getHoaDonTienDienVNById(int idKh) throws SQLException;
 
