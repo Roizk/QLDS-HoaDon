@@ -18,20 +18,26 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import javax.swing.event.DocumentEvent;
 
 import Domain.HoaDonTienDienChucNang;
 import Domain.Command.AddHoaDonNN;
 import Domain.Command.AddHoaDonVN;
 import Domain.Command.Command;
 import Domain.Command.Delete;
+import Domain.Command.ThanhTienNN;
 import Domain.Command.ThanhTienVN;
 import Domain.Command.UpdateNN;
 import Domain.Command.UpdateVN;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class HoaDonTienDienView extends JFrame implements Subcriber {
 
@@ -170,6 +176,78 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         for (int i = 0; i < tableModelVN.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        // đối tượng lắng nghe thanhtien
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                thanhTien();
+                ;
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // thanhTien();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // thanhTien();
+            }
+        };
+
+        quoctichComboBox.addActionListener(e -> {
+            String selectedQuocTich = (String) quoctichComboBox.getSelectedItem();
+            if ("Việt Nam".equals(selectedQuocTich)) {
+                // Nếu là khách hàng Việt Nam, thêm DocumentListener vào dinhmucTextField
+                dinhmucTextField.getDocument().addDocumentListener(documentListener);
+            } else {
+                // Nếu là khách hàng Nước Ngoài, thêm DocumentListener vào donGiaTextField
+                donGiaTextField.getDocument().addDocumentListener(documentListener);
+            }
+        });
+
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int row = table.getSelectedRow();
+                if (row >= 0) {
+                    if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
+                        // Lấy thông tin từ hóa đơn Việt Nam và gán vào các textfield tương ứng
+                        idTextField.setText(table.getValueAt(row, 0).toString());
+                        hoTenTextField.setText(table.getValueAt(row, 1).toString());
+                        ngayRaHoaDonTextField.setText(table.getValueAt(row, 2).toString());
+                        soLuongTextField.setText(table.getValueAt(row, 3).toString());
+                        switch (table.getValueAt(row, 4).toString()) {
+                            case "SINH_HOAT": {
+                                doiTuongKHComboBox.setSelectedIndex(1);
+                            }
+                                break;
+                            case "KINH_DOANH": {
+                                doiTuongKHComboBox.setSelectedIndex(2);
+                            }
+                                break;
+                            case "SAN_XUAT": {
+                                doiTuongKHComboBox.setSelectedIndex(3);
+                            }
+                        }
+                        donGiaTextField.setText(table.getValueAt(row, 5).toString());
+                        dinhmucTextField.setText(table.getValueAt(row, 6).toString());
+                        // Để gán thông tin thanh toán:
+                        thanhTienTextField.setText(table.getValueAt(row, 7).toString());
+                    } else if ("Nước Ngoài".equals(quoctichComboBox.getSelectedItem())) {
+                        // Lấy thông tin từ hóa đơn Nước Ngoài và gán vào các textfield tương ứng
+                        idTextField.setText(table.getValueAt(row, 0).toString());
+                        hoTenTextField.setText(table.getValueAt(row, 1).toString());
+                        ngayRaHoaDonTextField.setText(table.getValueAt(row, 3).toString());
+                        soLuongTextField.setText(table.getValueAt(row, 4).toString());
+                        quocTichTextField.setText(table.getValueAt(row, 2).toString());
+                        donGiaTextField.setText(table.getValueAt(row, 5).toString());
+
+                        // Để gán thông tin thanh toán:
+                        thanhTienTextField.setText(table.getValueAt(row, 6).toString());
+                    }
+                }
+            }
+        });
 
         hoaDonTienDienVN.attach(this);
         hoaDonTienDienNN.attach(this);
@@ -201,9 +279,34 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void thanhTien() {
-        Command thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
-                getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
-        hoaDonTienDienController.execute(thanhTienVNcommand);
+        if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
+            // Nếu là khách hàng Việt Nam, tính tổng số tiền cho Việt Nam
+            hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+            hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
+            hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
+            Command thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                    getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
+            hoaDonTienDienController.execute(thanhTienVNcommand);
+            String thanhTienStr = String.valueOf(getHoaDonTienDienVN().thanhTien());
+            if (!thanhTienStr.isEmpty()) {
+                thanhTienTextField.setText(thanhTienStr);
+            }
+        }
+
+        else {
+            // Nếu là khách hàng Nước Ngoài, tính tổng số tiền cho Nước Ngoài
+
+            hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+            hoaDonTienDienNN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
+            Command thanhTienNNcommand = new ThanhTienNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                    getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
+            hoaDonTienDienController.execute(thanhTienNNcommand);
+            String thanhTienStr = String.valueOf(getHoaDonTienDienNN().thanhTien());
+            if (!thanhTienStr.isEmpty()) {
+                thanhTienTextField.setText(thanhTienStr);
+            }
+        }
+
     }
 
     public void addHD(ActionEvent e) {
@@ -257,7 +360,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                 getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
-        JOptionPane.showMessageDialog(this, "Sửa thành công");
+        JOptionPane.showMessageDialog(this, "Xóa thành công");
         hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
     }
@@ -288,16 +391,17 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDienVN.setHoTen(hoTenTextField.getText());
         hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
         hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
-         // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng Date
-    String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    try {
-        Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
-        hoaDonTienDienVN.setNgayHD(ngayHoatDong);
-    } catch (ParseException e) {
-        e.printStackTrace();
-        // Xử lý nếu có lỗi định dạng ngày
-    }
+        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
+        // Date
+        String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
+            hoaDonTienDienVN.setNgayHD(ngayHoatDong);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Xử lý nếu có lỗi định dạng ngày
+        }
 
         if (0 == doiTuongKHComboBox.getSelectedIndex()) {
             hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(0));
@@ -316,16 +420,17 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
         hoaDonTienDienNN.setQuocTich(quocTichTextField.getText());
         hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
-         // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng Date
-    String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    try {
-        Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
-        hoaDonTienDienNN.setNgayHD(ngayHoatDong);
-    } catch (ParseException e) {
-        e.printStackTrace();
-        // Xử lý nếu có lỗi định dạng ngày
-    }
+        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
+        // Date
+        String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
+            hoaDonTienDienNN.setNgayHD(ngayHoatDong);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Xử lý nếu có lỗi định dạng ngày
+        }
     }
 
     private boolean isValidInputVN() {

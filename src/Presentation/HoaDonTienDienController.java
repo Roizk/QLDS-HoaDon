@@ -12,6 +12,7 @@ public class HoaDonTienDienController {
 
     public HoaDonTienDienController(HoaDonTienDienView viewRemote) {
         this.hoaDonTienDienView = viewRemote;
+        
     }
 
     public void execute(Command command) {
