@@ -356,7 +356,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void update() {
         // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
         // HoaDonJdbcGateway)
-        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienController.getAllsHoaDonNN();
+        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
 
         tableModelNN.setRowCount(0);
 
@@ -373,7 +373,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             };
             tableModelNN.addRow(rowData);
         }
-        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienController.getAllsHoaDonVN();
+        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
 
         tableModelVN.setRowCount(0);
 
