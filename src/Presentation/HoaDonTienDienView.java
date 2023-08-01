@@ -171,7 +171,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(findButton);
         findButton.addActionListener(this::findByID);
         inputPanel.add(updateButton);
-
+        updateButton.addActionListener(this::updateButton);
         inputPanel.add(calculateTotalButton);
         calculateTotalButton.addActionListener(this::calculateTotal);
 
@@ -279,26 +279,25 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void calculateTotal(ActionEvent e) {
         double totalQuantityVN = 0.0;
         double totalQuantityNN = 0.0;
-    
+
         // Calculate total quantity for HoaDonTienDienVN
         List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
         for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
             totalQuantityVN += hoaDonVN.getSoLuong();
         }
-    
+
         // Calculate total quantity for HoaDonTienDienNN
         List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
         for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
             totalQuantityNN += hoaDonNN.getSoLuong();
         }
-    
+
         JOptionPane.showMessageDialog(this,
                 "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + totalQuantityVN + "\n"
-                + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
+                        + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
                 "Tổng số lượng KW",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    
 
     public void findByID(ActionEvent e) {
         JOptionPane.showInputDialog(this, "Nhập ID", "ID");
@@ -382,6 +381,11 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             }
             JOptionPane.showMessageDialog(this, "Lưu thành công");
         }
+        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
+    }
+
+    public void updateButton(ActionEvent e) {
         hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
     }
