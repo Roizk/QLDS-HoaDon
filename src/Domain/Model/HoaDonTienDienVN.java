@@ -127,7 +127,9 @@ public class HoaDonTienDienVN extends HoaDonTienDien  {
                 return doiTuongkh;
             }
             default:
-                throw new IllegalArgumentException("Invalid value for DoiTuongKH: " + value); 
+                doiTuongKH doiTuongkh = null;
+                setDoiTuongkh(doiTuongkh);
+                return doiTuongkh;
         }
 
     }
