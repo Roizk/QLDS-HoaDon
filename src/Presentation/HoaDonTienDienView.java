@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import Domain.HoaDonTienDienChucNang;
 import Domain.Command.AddHoaDonNN;
 import Domain.Command.AddHoaDonVN;
+import Domain.Command.Command;
 import Domain.Command.Delete;
 import Domain.Command.ThanhTienVN;
 import Domain.Command.UpdateNN;
@@ -70,9 +71,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         setSize(1200, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Create JTable to display BillVN list
         tableModelVN = new DefaultTableModel();
@@ -164,12 +162,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         add(inputPanel, BorderLayout.SOUTH);
         this.setVisible(true);
         setLocationRelativeTo(null);
-
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tableModelVN.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-
-        for (int i = 0; i < tableModelNN.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
@@ -203,7 +198,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void thanhTien() {
-        ThanhTienVN thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+        Command thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
                 getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(thanhTienVNcommand);
     }
@@ -212,7 +207,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
             if (isValidInputVN()) {
                 setHoaDonVN();
-                AddHoaDonVN addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                Command addHoaDonVNcommand = new AddHoaDonVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
                         getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(addHoaDonVNcommand);
                 clearFields();
@@ -220,7 +215,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         } else {
             if (isValidInputNN()) {
                 setHoaDonNN();
-                AddHoaDonNN addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                Command addHoaDonNNcommand = new AddHoaDonNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
                         getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(addHoaDonNNcommand);
                 clearFields();
@@ -235,7 +230,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
             if (isValidInputVN()) {
                 setHoaDonVN();
-                UpdateVN updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                Command updateHoaDonVNcommand = new UpdateVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
                         getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(updateHoaDonVNcommand);
                 clearFields();
@@ -243,7 +238,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         } else {
             if (isValidInputNN()) {
                 setHoaDonNN();
-                UpdateNN updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                Command updateHoaDonNNcommand = new UpdateNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
                         getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
                 hoaDonTienDienController.execute(updateHoaDonNNcommand);
                 clearFields();
@@ -255,7 +250,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void deleteHD(ActionEvent e) {
-        Delete deletecommand = new Delete(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
+        Command deletecommand = new Delete(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
                 getHoaDonTienDienChucNang());
         hoaDonTienDienController.execute(deletecommand);
         clearFields();
@@ -273,11 +268,16 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     private void chooseNN() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.setModel(tableModelNN);
         quocTichTextField.setEditable(true);
         dinhmucTextField.setEditable(false);
         doiTuongKHComboBox.setEnabled(false);
         doiTuongKHComboBox.setSelectedItem("");
+        for (int i = 0; i < tableModelNN.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
 
     private void setHoaDonVN() {
