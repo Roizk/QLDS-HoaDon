@@ -34,7 +34,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 
 	@Override
 	public void addHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-		String sqlString = "INSERT INTO HOADON (maKH,hoTen,quocTich,ngayHD,soLuong,doGia,thanhTien) VALUES (?,?,?,?,?,?,?)";
+		String sqlString = "INSERT INTO HOADON (maKH,hoTen,quocTich,ngayHD,soLuong,donGia,thanhTien) VALUES (?,?,?,?,?,?,?)";
 		// 1 2 3 4 5 6 7 1 2 3 4 5 6 7
 		try (PreparedStatement statement = connection.prepareStatement(sqlString)) {
 			statement.setInt(1, hoaDonTienDienNN.getIdKh());

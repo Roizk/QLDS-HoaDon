@@ -3,7 +3,10 @@ package Presentation;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -285,6 +288,16 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDienVN.setHoTen(hoTenTextField.getText());
         hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
         hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
+         // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng Date
+    String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    try {
+        Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
+        hoaDonTienDienVN.setNgayHD(ngayHoatDong);
+    } catch (ParseException e) {
+        e.printStackTrace();
+        // Xử lý nếu có lỗi định dạng ngày
+    }
 
         if (0 == doiTuongKHComboBox.getSelectedIndex()) {
             hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(0));
@@ -303,6 +316,16 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
         hoaDonTienDienNN.setQuocTich(quocTichTextField.getText());
         hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
+         // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng Date
+    String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    try {
+        Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
+        hoaDonTienDienNN.setNgayHD(ngayHoatDong);
+    } catch (ParseException e) {
+        e.printStackTrace();
+        // Xử lý nếu có lỗi định dạng ngày
+    }
     }
 
     private boolean isValidInputVN() {

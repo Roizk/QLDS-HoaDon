@@ -111,17 +111,17 @@ public class HoaDonTienDienVN extends HoaDonTienDien  {
 
     public doiTuongKH fromvalue(int value) {
         switch (value) {
-            case 0: {
+            case 1: {
                 doiTuongKH doiTuongkh = doiTuongKH.SINH_HOAT;
                 setDoiTuongkh(doiTuongkh);
                 return doiTuongkh;
             }
-            case 1: {
+            case 2: {
                 doiTuongKH doiTuongkh = doiTuongKH.KINH_DOANH;
                 setDoiTuongkh(doiTuongkh);
                 return doiTuongkh;
             }
-            case 2: {
+            case 3: {
                 doiTuongKH doiTuongkh = doiTuongKH.SAN_XUAT;
                 setDoiTuongkh(doiTuongkh);
                 return doiTuongkh;
