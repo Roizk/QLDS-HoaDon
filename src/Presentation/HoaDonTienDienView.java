@@ -44,7 +44,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private JButton editButton;
     private JButton deleteButton;
     private JButton findButton;
-    private JButton saveButton;
+    private JButton updateButton;
 
     private JTextField idTextField;
     private JTextField hoTenTextField;
@@ -128,7 +128,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         editButton = new JButton("Sửa");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm kiếm");
-        saveButton = new JButton("Lưu");
+        updateButton = new JButton("Cập nhật");
 
         inputPanel.add(new JLabel("Quốc tịch"));
         inputPanel.add(quoctichComboBox);
@@ -159,7 +159,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         deleteButton.addActionListener(this::deleteHD);
         inputPanel.add(findButton);
         findButton.addActionListener(this::findByID);
-        inputPanel.add(saveButton);
+        inputPanel.add(updateButton);
 
         add(inputPanel, BorderLayout.SOUTH);
         this.setVisible(true);
@@ -315,7 +315,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             double donGia = Double.parseDouble(donGiaTextField.getText());
             double dinhMuc = Double.parseDouble(dinhmucTextField.getText());
 
-            // Kiểm tra các điều kiện hợp lệ, ví dụ: không để trống và giá trị dương
+            // Kiểm tra các điều kiện hợp le
             if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
                 return false;
             }
