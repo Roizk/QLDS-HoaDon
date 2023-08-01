@@ -1,8 +1,10 @@
 package Presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,6 +57,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private JButton deleteButton;
     private JButton findButton;
     private JButton updateButton;
+    private JButton calculateTotalButton;
 
     private JTextField idTextField;
     private JTextField hoTenTextField;
@@ -136,6 +139,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm kiếm");
         updateButton = new JButton("Cập nhật");
+        calculateTotalButton = new JButton("Tính tổng số lượng");
 
         inputPanel.add(new JLabel("Quốc tịch"));
         inputPanel.add(quoctichComboBox);
@@ -167,6 +171,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(findButton);
         findButton.addActionListener(this::findByID);
         inputPanel.add(updateButton);
+
+        inputPanel.add(calculateTotalButton);
+        calculateTotalButton.addActionListener(this::calculateTotal);
 
         add(inputPanel, BorderLayout.SOUTH);
         this.setVisible(true);
@@ -268,6 +275,30 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             }
         }
     }
+
+    public void calculateTotal(ActionEvent e) {
+        double totalQuantityVN = 0.0;
+        double totalQuantityNN = 0.0;
+    
+        // Calculate total quantity for HoaDonTienDienVN
+        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
+        for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
+            totalQuantityVN += hoaDonVN.getSoLuong();
+        }
+    
+        // Calculate total quantity for HoaDonTienDienNN
+        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
+        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+            totalQuantityNN += hoaDonNN.getSoLuong();
+        }
+    
+        JOptionPane.showMessageDialog(this,
+                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + totalQuantityVN + "\n"
+                + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
+                "Tổng số lượng KW",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    
 
     public void findByID(ActionEvent e) {
         JOptionPane.showInputDialog(this, "Nhập ID", "ID");
