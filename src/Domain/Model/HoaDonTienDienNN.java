@@ -8,7 +8,7 @@ import Presentation.Subcriber;
 public class HoaDonTienDienNN extends HoaDonTienDien {
 
     private String quocTich;
-
+   
     public HoaDonTienDienNN() {
         hoaDonTienDiensubcriber = new ArrayList<>();
     }
@@ -16,9 +16,9 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
     public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, double soLuong, double donGia, String quocTich,
             double thanhTien) {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
-        
+
         this.quocTich = quocTich;
-        //hoaDonTienDiensubcriber = new ArrayList<>();
+        // hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public double thanhTien() {
@@ -30,7 +30,7 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
             subcriber.update();
         }
     }
-    
+
     @Override
     public String toString() {
         return " " + thanhTien();

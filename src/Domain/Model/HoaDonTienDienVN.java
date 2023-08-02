@@ -5,7 +5,7 @@ import java.util.Date;
 
 import Presentation.Subcriber;
 
-public class HoaDonTienDienVN extends HoaDonTienDien  {
+public class HoaDonTienDienVN extends HoaDonTienDien {
 
     private enum doiTuongKH {
         SINH_HOAT,
@@ -29,7 +29,7 @@ public class HoaDonTienDienVN extends HoaDonTienDien  {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
         this.dinhMuc = dinhMuc;
         this.doiTuong = doiTuong;
-        //hoaDonTienDiensubcriber = new ArrayList<>();
+        // hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public double thanhTien() {
@@ -109,6 +109,11 @@ public class HoaDonTienDienVN extends HoaDonTienDien  {
         return doiTuong;
     }
 
+    public void setDoiTuong(int doituong)
+    {
+        this.doiTuong = doituong ; 
+    }
+
     public doiTuongKH fromvalue(int value) {
         switch (value) {
             case 0: {
@@ -127,9 +132,11 @@ public class HoaDonTienDienVN extends HoaDonTienDien  {
                 return doiTuongkh;
             }
             default:
+            {
                 doiTuongKH doiTuongkh = null;
                 setDoiTuongkh(doiTuongkh);
                 return doiTuongkh;
+            }
         }
 
     }

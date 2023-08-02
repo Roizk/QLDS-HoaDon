@@ -58,7 +58,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 		try (PreparedStatement statement = connection.prepareStatement(sqString)) {
 			statement.setInt(1, hoaDonTienDienVN.getIdKh());
 			statement.setString(2, hoaDonTienDienVN.getHoTen());
-			statement.setInt(3, hoaDonTienDienVN.getDoiTuongKHValue());
+			statement.setInt(3, hoaDonTienDienVN.getDoiTuong());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienVN.getNgayHD().getTime());
 			statement.setDate(4,sqlNgayHD);
 			statement.setDouble(5, hoaDonTienDienVN.getSoLuong());
@@ -96,7 +96,7 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 		// 1 2 3 4 5 6 7
 		try (PreparedStatement statement = connection.prepareStatement(sqlString)) {
 			statement.setString(1, hoaDonTienDienVN.getHoTen());
-			statement.setInt(2, hoaDonTienDienVN.getDoiTuongKHValue());
+			statement.setInt(2, hoaDonTienDienVN.getDoiTuong());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienVN.getNgayHD().getTime());
 			statement.setDate(3, sqlNgayHD);
 			statement.setDouble(4, hoaDonTienDienVN.getSoLuong());

@@ -3,7 +3,6 @@ package Domain;
 import java.sql.SQLException;
 import java.util.List;
 
-import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
 import Persistence.HoaDonDAO;
