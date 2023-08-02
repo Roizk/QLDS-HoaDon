@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -139,7 +140,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         editButton = new JButton("Sửa");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm kiếm");
-        updateButton = new JButton("Cập nhật");
+        updateButton = new JButton("Làm mới");
         calculateTotalButton = new JButton("Tính tổng số lượng");
 
         inputPanel.add(new JLabel("Quốc tịch"));
@@ -194,12 +195,12 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                // thanhTien();
+               //thanhTien();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                // thanhTien();
+                thanhTien();
             }
         };
 
@@ -218,41 +219,75 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             public void mouseClicked(MouseEvent e) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
-                    if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
-                        // Lấy thông tin từ hóa đơn Việt Nam và gán vào các textfield tương ứng
-                        idTextField.setText(table.getValueAt(row, 0).toString());
-                        hoTenTextField.setText(table.getValueAt(row, 1).toString());
-                        ngayRaHoaDonTextField.setText(table.getValueAt(row, 2).toString());
-                        soLuongTextField.setText(table.getValueAt(row, 3).toString());
-                        switch (table.getValueAt(row, 4).toString()) {
+                    String ngayHoatDongStrVN = table.getValueAt(row, 2).toString(); // Assuming the date is in the 3rd column (index 2) of the JTable
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String ngayHoatDongStrNN = table.getValueAt(row, 3).toString(); // Assuming the date is in the 3rd column (index 2) of the JTable
+                   
+                     // Thay đổi định dạng ở đây
+                    try {
+                        if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
+                            Date ngayHoatDongVN = null;
+                            if (ngayHoatDongStrVN.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                ngayHoatDongVN = dateFormat.parse(ngayHoatDongStrVN);
+                            }
+                            hoaDonTienDienVN.setNgayHD(ngayHoatDongVN);
+                    idTextField.setText(table.getValueAt(row, 0).toString());
+                    hoTenTextField.setText(table.getValueAt(row, 1).toString());
+                    ngayRaHoaDonTextField.setText(table.getValueAt(row, 2).toString());
+                    soLuongTextField.setText(table.getValueAt(row, 3).toString());
+                    String doiTuongKHStr = table.getValueAt(row, 4).toString();
+                    if (!doiTuongKHStr.isEmpty()) {
+                        switch (doiTuongKHStr) {
                             case "SINH_HOAT": {
                                 doiTuongKHComboBox.setSelectedIndex(1);
-                            }
                                 break;
+                            }
                             case "KINH_DOANH": {
                                 doiTuongKHComboBox.setSelectedIndex(2);
-                            }
                                 break;
+                            }
                             case "SAN_XUAT": {
                                 doiTuongKHComboBox.setSelectedIndex(3);
+                                break;
+                            }
+                            default: {
+                                doiTuongKHComboBox.setSelectedIndex(-1); // Không chọn mục nào
+                                break;
                             }
                         }
-                        donGiaTextField.setText(table.getValueAt(row, 5).toString());
-                        dinhmucTextField.setText(table.getValueAt(row, 6).toString());
-                        // Để gán thông tin thanh toán:
-                        thanhTienTextField.setText(table.getValueAt(row, 7).toString());
-                    } else if ("Nước Ngoài".equals(quoctichComboBox.getSelectedItem())) {
-                        // Lấy thông tin từ hóa đơn Nước Ngoài và gán vào các textfield tương ứng
-                        idTextField.setText(table.getValueAt(row, 0).toString());
-                        hoTenTextField.setText(table.getValueAt(row, 1).toString());
-                        ngayRaHoaDonTextField.setText(table.getValueAt(row, 3).toString());
-                        soLuongTextField.setText(table.getValueAt(row, 4).toString());
-                        quocTichTextField.setText(table.getValueAt(row, 2).toString());
-                        donGiaTextField.setText(table.getValueAt(row, 5).toString());
-
-                        // Để gán thông tin thanh toán:
-                        thanhTienTextField.setText(table.getValueAt(row, 6).toString());
+                    } else {
+                        doiTuongKHComboBox.setSelectedIndex(-1); // Không chọn mục nào
                     }
+                    donGiaTextField.setText(table.getValueAt(row, 5).toString());
+                    dinhmucTextField.setText(table.getValueAt(row, 6).toString());
+                    // Để gán thông tin thanh toán:
+                    thanhTienTextField.setText(table.getValueAt(row, 7).toString());
+                        } else if ("Nước Ngoài".equals(quoctichComboBox.getSelectedItem())) {
+                             Date ngayHoatDongNN = null;
+                            if (ngayHoatDongStrNN.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                ngayHoatDongNN = dateFormat.parse(ngayHoatDongStrNN);
+                            }
+                            hoaDonTienDienVN.setNgayHD(ngayHoatDongNN);
+                            hoaDonTienDienNN.setNgayHD(ngayHoatDongNN);
+                    idTextField.setText(table.getValueAt(row, 0).toString());
+                    hoTenTextField.setText(table.getValueAt(row, 1).toString());
+                    quocTichTextField.setText(table.getValueAt(row, 2).toString());
+                    ngayRaHoaDonTextField.setText(ngayHoatDongStrNN);
+                   
+
+                    soLuongTextField.setText(table.getValueAt(row, 4).toString());
+                 
+                    
+                    donGiaTextField.setText(table.getValueAt(row, 5).toString());
+                    // Để gán thông tin thanh toán:
+                    thanhTienTextField.setText(table.getValueAt(row, 6).toString());
+                        }
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    // Lấy thông tin từ JTable và gán vào các textfield tương ứng
+                   
                 }
             }
         });
@@ -301,8 +336,51 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void findByID(ActionEvent e) {
-        JOptionPane.showInputDialog(this, "Nhập ID", "ID");
+        String ID = JOptionPane.showInputDialog(this, "Nhập ID", "ID", JOptionPane.PLAIN_MESSAGE);
+        if (ID != null && !ID.isEmpty()) {
+            List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
+            
+            tableModelNN.setRowCount(0);
+            
+            // Tìm kiếm và thêm dữ liệu từ bảng HoaDonTienDienNN
+            for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+                if (hoaDonNN != null && Objects.equals(hoaDonNN.getIdKh(), ID)) {
+                    Object[] rowData = {
+                            hoaDonNN.getIdKh(),
+                            hoaDonNN.getHoTen(),
+                            hoaDonNN.getQuocTich(),
+                            hoaDonNN.getNgayHD() != null ? hoaDonNN.getNgayHD().toString() : "",
+                            hoaDonNN.getSoLuong(),
+                            hoaDonNN.getDonGia(),
+                            hoaDonNN.thanhTien()
+                        };
+                        tableModelNN.addRow(rowData);
+                }
+            }
+            
+            List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
+                        tableModelNN.setRowCount(0);
+            
+            // Tìm kiếm và thêm dữ liệu từ bảng HoaDonTienDienVN
+            for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
+                if (hoaDonVN != null && Objects.equals(hoaDonVN.getIdKh(), ID)) {
+                    Object[] rowData = {
+                        hoaDonVN.getIdKh(),
+                        hoaDonVN.getHoTen(),
+                        hoaDonVN.getNgayHD() != null ? hoaDonVN.getNgayHD().toString() : "",
+                        hoaDonVN.getSoLuong(),
+                        hoaDonVN.fromvalue(hoaDonVN.getDoiTuong()),
+                        hoaDonVN.getDonGia(),
+                        hoaDonVN.getDinhMuc(),
+                        hoaDonVN.thanhTien()
+                    };
+                    tableModelNN.addRow(rowData);
+                }
+            }
+        }
     }
+
+    
 
     public void test() {
         hoaDonTienDienVN = getHoaDonTienDienVN();
@@ -310,36 +388,39 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void thanhTien() {
-        if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
-            // Nếu là khách hàng Việt Nam, tính tổng số tiền cho Việt Nam
-            hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
-            hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
-            hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
-            Command thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
-                    getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(thanhTienVNcommand);
-            String thanhTienStr = String.valueOf(getHoaDonTienDienVN().thanhTien());
-            if (!thanhTienStr.isEmpty()) {
-                thanhTienTextField.setText(thanhTienStr);
+        String soLuongStr = soLuongTextField.getText();
+        String donGiaStr = donGiaTextField.getText();
+        String dinhMucStr = dinhmucTextField.getText();
+    
+        if (!soLuongStr.isEmpty() && !donGiaStr.isEmpty() && !dinhMucStr.isEmpty()) {
+            double soLuong = Double.parseDouble(soLuongStr);
+            double donGia = Double.parseDouble(donGiaStr);
+            double dinhMuc = Double.parseDouble(dinhMucStr);
+   
+            if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
+                hoaDonTienDienVN.setSoLuong(soLuong);
+                hoaDonTienDienVN.setDonGia(donGia);
+                hoaDonTienDienVN.setDinhMuc(dinhMuc);
+    
+                Command thanhTienVNcommand = new ThanhTienVN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(thanhTienVNcommand);
+    
+                double thanhTien = getHoaDonTienDienVN().thanhTien();
+                thanhTienTextField.setText(String.valueOf(thanhTien));
+            } else {
+                hoaDonTienDienNN.setSoLuong(soLuong);
+                hoaDonTienDienNN.setDonGia(donGia);
+    
+                Command thanhTienNNcommand = new ThanhTienNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
+                        getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
+                hoaDonTienDienController.execute(thanhTienNNcommand);
+    
+                double thanhTien = getHoaDonTienDienNN().thanhTien();
+                thanhTienTextField.setText(String.valueOf(thanhTien));
             }
         }
-
-        else {
-            // Nếu là khách hàng Nước Ngoài, tính tổng số tiền cho Nước Ngoài
-
-            hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
-            hoaDonTienDienNN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
-            Command thanhTienNNcommand = new ThanhTienNN(getHoaDonTienDien(), getHoaDonTienDienNN(),
-                    getHoaDonTienDienVN(), getHoaDonTienDienChucNang());
-            hoaDonTienDienController.execute(thanhTienNNcommand);
-            String thanhTienStr = String.valueOf(getHoaDonTienDienNN().thanhTien());
-            if (!thanhTienStr.isEmpty()) {
-                thanhTienTextField.setText(thanhTienStr);
-            }
-        }
-
     }
-
     public void addHD(ActionEvent e) {
         if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
             if (isValidInputVN()) {
@@ -387,8 +468,15 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     public void updateButton(ActionEvent e) {
-        hoaDonTienDienVN.notifySubcriber();
-        hoaDonTienDienNN.notifySubcriber();
+         idTextField.setText("");
+        hoTenTextField.setText("");
+        ngayRaHoaDonTextField.setText("");
+        soLuongTextField.setText("");
+        donGiaTextField.setText("");
+        dinhmucTextField.setText("");
+        thanhTienTextField.setText("");
+        quocTichTextField.setText("");
+        doiTuongKHComboBox.setSelectedIndex(0);
     }
 
     public void deleteHD(ActionEvent e) {
@@ -402,7 +490,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             hoaDonTienDienVN.notifySubcriber();
             hoaDonTienDienNN.notifySubcriber();
         } else {
-             hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
+            hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
             Command deletecommand = new DeleteNN(getHoaDonTienDien(), getHoaDonTienDienNN(), getHoaDonTienDienVN(),
                     getHoaDonTienDienChucNang());
             hoaDonTienDienController.execute(deletecommand);
@@ -435,14 +523,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     private void setHoaDonVN() {
-        hoaDonTienDienVN.setIdKh(Integer.parseInt(idTextField.getText()));
-        hoaDonTienDienVN.setHoTen(hoTenTextField.getText());
-        hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
-        hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
-        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
-        // Date
         String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try {
             Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
             hoaDonTienDienVN.setNgayHD(ngayHoatDong);
@@ -450,6 +532,12 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             e.printStackTrace();
             // Xử lý nếu có lỗi định dạng ngày
         }
+        hoaDonTienDienVN.setIdKh(Integer.parseInt(idTextField.getText()));
+        hoaDonTienDienVN.setHoTen(hoTenTextField.getText());
+        hoaDonTienDienVN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+        hoaDonTienDienVN.setDinhMuc(Double.parseDouble(dinhmucTextField.getText()));
+        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
+        // Date
 
         if (0 == doiTuongKHComboBox.getSelectedIndex()) {
             hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(0));
@@ -463,15 +551,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     }
 
     private void setHoaDonNN() {
-        hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
-        hoaDonTienDienNN.setHoTen(hoTenTextField.getText());
-        hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
-        hoaDonTienDienNN.setQuocTich(quocTichTextField.getText());
-        hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
-        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
-        // Date
         String ngayHoatDongStr = ngayRaHoaDonTextField.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try {
             Date ngayHoatDong = dateFormat.parse(ngayHoatDongStr);
             hoaDonTienDienNN.setNgayHD(ngayHoatDong);
@@ -479,6 +560,11 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             e.printStackTrace();
             // Xử lý nếu có lỗi định dạng ngày
         }
+        hoaDonTienDienNN.setIdKh(Integer.parseInt(idTextField.getText()));
+        hoaDonTienDienNN.setHoTen(hoTenTextField.getText());
+        hoaDonTienDienNN.setSoLuong(Double.parseDouble(soLuongTextField.getText()));
+        hoaDonTienDienNN.setQuocTich(quocTichTextField.getText());
+        hoaDonTienDienVN.setDonGia(Double.parseDouble(donGiaTextField.getText()));
     }
 
     private boolean isValidInputVN() {
@@ -495,6 +581,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
                 return false;
             }
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng cho các trường dữ liệu!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
