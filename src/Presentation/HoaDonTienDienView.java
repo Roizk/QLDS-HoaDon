@@ -338,50 +338,67 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void findByID(ActionEvent e) {
         String ID = JOptionPane.showInputDialog(this, "Nhập ID", "ID", JOptionPane.PLAIN_MESSAGE);
         if (ID != null && !ID.isEmpty()) {
-            List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
-            
-            tableModelNN.setRowCount(0);
-            
-            // Tìm kiếm và thêm dữ liệu từ bảng HoaDonTienDienNN
-            for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-                if (hoaDonNN != null && Objects.equals(hoaDonNN.getIdKh(), ID)) {
-                    Object[] rowData = {
-                            hoaDonNN.getIdKh(),
-                            hoaDonNN.getHoTen(),
-                            hoaDonNN.getQuocTich(),
-                            hoaDonNN.getNgayHD() != null ? hoaDonNN.getNgayHD().toString() : "",
-                            hoaDonNN.getSoLuong(),
-                            hoaDonNN.getDonGia(),
-                            hoaDonNN.thanhTien()
-                        };
-                        tableModelNN.addRow(rowData);
+            try {
+                
+                
+                boolean found = false; // Biến đánh dấu xem đã tìm thấy ID hay chưa
+                
+                if ("Việt Nam".equals(quoctichComboBox.getSelectedItem())) {
+                    List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
+                    tableModelVN.setRowCount(0); // Xóa toàn bộ dữ liệu trong bảng HoaDonTienDienVN
+        
+                    // Tìm kiếm và thêm chỉ hàng ID cần tìm vào bảng HoaDonTienDienVN
+                    for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
+                        if (hoaDonVN != null && Objects.equals(hoaDonVN.getIdKh(), Integer.parseInt(ID))) {
+                            Object[] rowData = {
+                                hoaDonVN.getIdKh(),
+                                hoaDonVN.getHoTen(),
+                                hoaDonVN.getNgayHD() != null ? hoaDonVN.getNgayHD().toString() : "",
+                                hoaDonVN.getSoLuong(),
+                                hoaDonVN.fromvalue(hoaDonVN.getDoiTuong()),
+                                hoaDonVN.getDonGia(),
+                                hoaDonVN.getDinhMuc(),
+                                hoaDonVN.thanhTien()
+                            };
+                            tableModelVN.addRow(rowData); // Thêm hàng cần tìm vào bảng
+                            found = true; // Đã tìm thấy ID
+                        break; // Dừng vòng lặp khi đã tìm thấy ID
+                        }
+                    }
+                } else {
+                    List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
+                    tableModelNN.setRowCount(0); // Xóa toàn bộ dữ liệu trong bảng HoaDonTienDienNN
+        
+                    // Tìm kiếm và thêm chỉ hàng ID cần tìm vào bảng HoaDonTienDienNN
+                    for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+                        if (hoaDonNN != null && Objects.equals(hoaDonNN.getIdKh(), Integer.parseInt(ID))) {
+                            Object[] rowData = {
+                                hoaDonNN.getIdKh(),
+                                hoaDonNN.getHoTen(),
+                                hoaDonNN.getQuocTich(),
+                                hoaDonNN.getNgayHD() != null ? hoaDonNN.getNgayHD().toString() : "",
+                                hoaDonNN.getSoLuong(),
+                                hoaDonNN.getDonGia(),
+                                hoaDonNN.thanhTien()
+                            };
+                            tableModelNN.addRow(rowData); // Thêm hàng cần tìm vào bảng
+                            found = true; // Đã tìm thấy ID
+                        break; // Dừng vòng lặp khi đã tìm thấy ID
+                        }
+                    }
                 }
-            }
             
-            List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
-                        tableModelNN.setRowCount(0);
-            
-            // Tìm kiếm và thêm dữ liệu từ bảng HoaDonTienDienVN
-            for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
-                if (hoaDonVN != null && Objects.equals(hoaDonVN.getIdKh(), ID)) {
-                    Object[] rowData = {
-                        hoaDonVN.getIdKh(),
-                        hoaDonVN.getHoTen(),
-                        hoaDonVN.getNgayHD() != null ? hoaDonVN.getNgayHD().toString() : "",
-                        hoaDonVN.getSoLuong(),
-                        hoaDonVN.fromvalue(hoaDonVN.getDoiTuong()),
-                        hoaDonVN.getDonGia(),
-                        hoaDonVN.getDinhMuc(),
-                        hoaDonVN.thanhTien()
-                    };
-                    tableModelNN.addRow(rowData);
+        
+                
+                if (!found) {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn với ID cần tìm!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập ID dưới dạng số nguyên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-
     
-
     public void test() {
         hoaDonTienDienVN = getHoaDonTienDienVN();
         hoaDonTienDienVN.fromvalue(hoaDonTienDienVN.getDoiTuong());
