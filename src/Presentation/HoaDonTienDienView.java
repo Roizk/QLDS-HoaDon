@@ -48,6 +48,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private JButton findButton;
     private JButton updateButton;
     private JButton calculateTotalButton;
+    private JButton tinhTrungBinhButton;
 
     private JTextField idTextField;
     private JTextField hoTenTextField;
@@ -129,6 +130,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         findButton = new JButton("Tìm kiếm");
         updateButton = new JButton("Làm mới");
         calculateTotalButton = new JButton("Tính tổng số lượng");
+        tinhTrungBinhButton = new JButton("Tính trung bình thành tiền");
 
         inputPanel.add(new JLabel("Quốc tịch"));
         inputPanel.add(quoctichComboBox);
@@ -150,6 +152,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(dinhmucTextField);
         inputPanel.add(new JLabel("Thành tiền:"));
         inputPanel.add(thanhTienTextField);
+        inputPanel.add(tinhTrungBinhButton);;
         thanhTienTextField.setEditable(false);
         inputPanel.add(addButton);
         addButton.addActionListener(hoaDonTienDienController::addHD);
@@ -164,6 +167,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(calculateTotalButton);
         doiTuongKHComboBox.addActionListener(hoaDonTienDienController::doiTuongKHCheck);
         calculateTotalButton.addActionListener(hoaDonTienDienController::calculateTotal);
+        tinhTrungBinhButton.addActionListener(hoaDonTienDienController::tinhTrungBinhThanhTienKhachNuocNgoai);
         dinhmucTextField.setEditable(false);
         donGiaTextField.setEditable(false);
         idTextField.setEditable(false);

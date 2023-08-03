@@ -2,6 +2,7 @@ package Domain.Model;
 
 
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -24,7 +25,24 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         return soLuong * donGia;
     }
 
+<<<<<<< HEAD
 
+=======
+    public double tinhTrungBinhThanhTienKhachNuocNgoai(List<HoaDonTienDienNN> hoaDonNNList) {
+        double tongThanhTien = 0;
+        int soLuongHoaDon = hoaDonNNList.size();
+        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+            tongThanhTien += hoaDonNN.thanhTien();
+        }
+        return soLuongHoaDon == 0 ? 0 : tongThanhTien / soLuongHoaDon;
+    }
+
+    public void notifySubcriber() {
+        for (Subcriber subcriber : hoaDonTienDiensubcriber) {
+            subcriber.update();
+        }
+    }
+>>>>>>> 8558afe819a3e1b81568f28cac8acb30064202d8
 
     @Override
     public String toString() {
@@ -78,6 +96,10 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
 
     public void setDonGia(double donGia) {
         this.donGia = donGia;
+    }
+
+    public double tinhTrungBinhThanhTienKhachNuocNgoai() {
+        return 0;
     }
 
 }
