@@ -34,18 +34,22 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 
 	@Override
 	public void addHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-		String sqlString = "INSERT INTO HOADON (maKH,hoTen,quocTich,ngayHD,soLuong,donGia,thanhTien) VALUES (?,?,?,?,?,?,?)";
-		// 1 2 3 4 5 6 7 1 2 3 4 5 6 7
-		try (PreparedStatement statement = connection.prepareStatement(sqlString)) {
-			statement.setInt(1, hoaDonTienDienNN.getIdKh());
-			statement.setString(2, hoaDonTienDienNN.getHoTen());
-			statement.setString(3, hoaDonTienDienNN.getQuocTich());
+		String sqlString = "INSERT INTO HOADON (hoTen,quocTich,ngayHD,soLuong,donGia,thanhTien) VALUES (?,?,?,?,?,?)";
+		// 1 2 3 4 5 6 
+		try (PreparedStatement statement = connection.prepareStatement(sqlString,Statement.RETURN_GENERATED_KEYS)) {
+			statement.setString(1, hoaDonTienDienNN.getHoTen());
+			statement.setString(2, hoaDonTienDienNN.getQuocTich());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienNN.getNgayHD().getTime());
-			statement.setDate(4, sqlNgayHD);
-			statement.setDouble(5, hoaDonTienDienNN.getSoLuong());
-			statement.setDouble(6, hoaDonTienDienNN.getDonGia());
-			statement.setDouble(7, hoaDonTienDienNN.thanhTien());
+			statement.setDate(3, sqlNgayHD);
+			statement.setDouble(4, hoaDonTienDienNN.getSoLuong());
+			statement.setDouble(5, hoaDonTienDienNN.getDonGia());
+			statement.setDouble(6, hoaDonTienDienNN.thanhTien());
 			statement.executeUpdate();
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+                int generatedId = generatedKeys.getInt(1);
+                hoaDonTienDienNN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -53,19 +57,23 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 
 	@Override
 	public void addHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-		String sqString = "INSERT INTO HOADON (makH,hoTen,doiTuongKH,ngayHD,soLuong,donGia,dinhMuc,thanhTien) VALUES (?,?,?,?,?,?,?,?)";
-		// 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
-		try (PreparedStatement statement = connection.prepareStatement(sqString)) {
-			statement.setInt(1, hoaDonTienDienVN.getIdKh());
-			statement.setString(2, hoaDonTienDienVN.getHoTen());
-			statement.setInt(3, hoaDonTienDienVN.getDoiTuong());
+		String sqString = "INSERT INTO HOADON (hoTen,doiTuongKH,ngayHD,soLuong,donGia,dinhMuc,thanhTien) VALUES (?,?,?,?,?,?,?)";
+		// 1 2 3 4 5 6 7 
+		try (PreparedStatement statement = connection.prepareStatement(sqString,Statement.RETURN_GENERATED_KEYS)) {
+			statement.setString(1, hoaDonTienDienVN.getHoTen());
+			statement.setInt(2, hoaDonTienDienVN.getDoiTuong());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienVN.getNgayHD().getTime());
-			statement.setDate(4,sqlNgayHD);
-			statement.setDouble(5, hoaDonTienDienVN.getSoLuong());
-			statement.setDouble(6, hoaDonTienDienVN.getDonGia());
-			statement.setDouble(7, hoaDonTienDienVN.getDinhMuc());
-			statement.setDouble(8, hoaDonTienDienVN.thanhTien());
+			statement.setDate(3,sqlNgayHD);
+			statement.setDouble(4, hoaDonTienDienVN.getSoLuong());
+			statement.setDouble(5, hoaDonTienDienVN.getDonGia());
+			statement.setDouble(6, hoaDonTienDienVN.getDinhMuc());
+			statement.setDouble(7, hoaDonTienDienVN.thanhTien());
 			statement.executeUpdate();
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int generatedId = generatedKeys.getInt(1);
+                hoaDonTienDienVN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

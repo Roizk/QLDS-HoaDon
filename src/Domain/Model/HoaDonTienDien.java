@@ -26,7 +26,6 @@ public abstract class HoaDonTienDien implements Publisher  {
         this.ngayHD = ngayHD;
         this.soLuong = soLuong;
         this.donGia = donGia;
-        hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public abstract double thanhTien();

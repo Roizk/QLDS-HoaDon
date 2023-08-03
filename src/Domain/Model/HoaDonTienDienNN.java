@@ -1,16 +1,16 @@
 package Domain.Model;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 
-import Presentation.Subcriber;
+
 
 public class HoaDonTienDienNN extends HoaDonTienDien {
 
     private String quocTich;
    
     public HoaDonTienDienNN() {
-        hoaDonTienDiensubcriber = new ArrayList<>();
+      
     }
 
     public HoaDonTienDienNN(int idKh, String hoTen, Date ngayHD, double soLuong, double donGia, String quocTich,
@@ -18,18 +18,13 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         super(idKh, hoTen, ngayHD, soLuong, donGia, thanhTien);
 
         this.quocTich = quocTich;
-        // hoaDonTienDiensubcriber = new ArrayList<>();
     }
 
     public double thanhTien() {
         return soLuong * donGia;
     }
 
-    public void notifySubcriber() {
-        for (Subcriber subcriber : hoaDonTienDiensubcriber) {
-            subcriber.update();
-        }
-    }
+
 
     @Override
     public String toString() {

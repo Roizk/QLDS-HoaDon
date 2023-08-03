@@ -45,7 +45,7 @@ public class HoaDonTienDienController extends JOptionPane {
     public boolean isValidInputVN() {
         // Kiểm tra hợp lệ cho các trường dữ liệu dành cho Việt Nam
         try {
-            int id = Integer.parseInt(hoaDonTienDienView.getIdTextField().getText());
+            // int id = Integer.parseInt(hoaDonTienDienView.getIdTextField().getText());
             String hoTen = hoaDonTienDienView.getHoTenTextField().getText();
             String ngayRaHoaDon = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             double soLuong = Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText());
@@ -53,7 +53,7 @@ public class HoaDonTienDienController extends JOptionPane {
             double dinhMuc = Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText());
 
             // Kiểm tra các điều kiện hợp le
-            if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
+            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
                 return false;
             }
 
@@ -69,7 +69,7 @@ public class HoaDonTienDienController extends JOptionPane {
     public boolean isValidInputNN() {
         // Kiểm tra hợp lệ cho các trường dữ liệu dành cho Nước Ngoài
         try {
-            int id = Integer.parseInt(hoaDonTienDienView.getIdTextField().getText());
+            // int id = Integer.parseInt(hoaDonTienDienView.getIdTextField().getText());
             String hoTen = hoaDonTienDienView.getHoTenTextField().getText();
             String ngayRaHoaDon = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             double soLuong = Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText());
@@ -77,7 +77,7 @@ public class HoaDonTienDienController extends JOptionPane {
             String quocTich = hoaDonTienDienView.getQuocTichTextField().getText();
 
             // Kiểm tra các điều kiện hợp lệ, ví dụ: không để trống và giá trị dương
-            if (id <= 0 || hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0
+            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0
                     || quocTich.isEmpty()) {
                 return false;
             }
@@ -94,7 +94,6 @@ public class HoaDonTienDienController extends JOptionPane {
         String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
         dateFormat(ngayHoatDongStr);
         hoaDonTienDienVN.setNgayHD(dateFormat(ngayHoatDongStr));
-        hoaDonTienDienVN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         hoaDonTienDienVN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
         hoaDonTienDienVN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
         hoaDonTienDienVN.setDinhMuc(Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText()));
@@ -129,7 +128,6 @@ public class HoaDonTienDienController extends JOptionPane {
         String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
         dateFormat(ngayHoatDongStr);
         hoaDonTienDienNN.setNgayHD(dateFormat(ngayHoatDongStr));
-        hoaDonTienDienNN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         hoaDonTienDienNN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
         hoaDonTienDienNN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
         hoaDonTienDienNN.setQuocTich(hoaDonTienDienView.getQuocTichTextField().getText());
@@ -145,7 +143,6 @@ public class HoaDonTienDienController extends JOptionPane {
                     hoaDonTienDienView, this);
 
             commandProcessor.execute(addHoaDonVNcommand);
-            JOptionPane.showMessageDialog(this, "Lưu thành công");
             clearFields();
 
         } else {
@@ -156,11 +153,10 @@ public class HoaDonTienDienController extends JOptionPane {
                     hoaDonTienDienView, this);
             commandProcessor.execute(addHoaDonNNcommand);
             clearFields();
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công");
         }
-        hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
+        hoaDonTienDienVN.notifySubcriber();
+
     }
 
     public void updateHD(ActionEvent e) {
@@ -181,11 +177,9 @@ public class HoaDonTienDienController extends JOptionPane {
                     hoaDonTienDienView, this);
             commandProcessor.execute(updateHoaDonNNcommand);
             clearFields();
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công");
         }
-        hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
+        hoaDonTienDienVN.notifySubcriber();
     }
 
     public void deleteHD(ActionEvent e) {
@@ -197,9 +191,14 @@ public class HoaDonTienDienController extends JOptionPane {
                         hoaDonTienDienNN,
                         hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
-                commandProcessor.execute(deletecommand);
+                try {
+
+                    commandProcessor.execute(deletecommand);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
+                }
+                
                 clearFields();
-                JOptionPane.showMessageDialog(this, "Xóa thành công");
             }
         } else {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
@@ -209,13 +208,19 @@ public class HoaDonTienDienController extends JOptionPane {
                         hoaDonTienDienNN,
                         hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
-                commandProcessor.execute(deletecommand);
+               try {
+
+                    commandProcessor.execute(deletecommand);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
+                }
+                
                 clearFields();
-                JOptionPane.showMessageDialog(this, "Xóa thành công");
             }
         }
-        hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
+        hoaDonTienDienVN.notifySubcriber();
+
     }
 
     public void thanhTien() {
@@ -273,20 +278,16 @@ public class HoaDonTienDienController extends JOptionPane {
 
     public void KiemtraQT(ActionEvent e) {
 
-        if (hoaDonTienDienView.getQuoctichComboBox().getSelectedItem() == "Việt Nam") {
+        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
             clearFields();
             chooseVn();
         } else {
             clearFields();
             chooseNN();
-            if (!hoaDonTienDienView.getSoLuongTextField().getText().isEmpty()
-                    && !hoaDonTienDienView.getDonGiaTextField().getText().isEmpty()) {
-                HoaDonTienDienNN hoaDonTienDienNN = new HoaDonTienDienNN();
-                hoaDonTienDienView.getThanhTienTextField().setText(hoaDonTienDienNN.toString());
-            }
         }
-        hoaDonTienDienNN.notifySubcriber();
+
         hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
 
     }
 

@@ -1,5 +1,7 @@
 package Domain.Command;
 
+import javax.swing.JOptionPane;
+
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
@@ -22,8 +24,9 @@ public class UpdateNN extends Command {
         if (hoaDonTienDienController.isValidInputNN()) 
         {
             hoaDonTienDienController.setHoaDonNN();
-
+            hoaDonTienDienNN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         update(hoaDonTienDienChucNang);
+                  JOptionPane.showMessageDialog(hoaDonTienDienView, "Sửa thành công");
         }
 }
 

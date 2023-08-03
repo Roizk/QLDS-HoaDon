@@ -1,5 +1,7 @@
 package Domain.Command;
 
+import javax.swing.JOptionPane;
+
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
@@ -20,6 +22,7 @@ public class AddHoaDonNN extends Command {
         if (hoaDonTienDienController.isValidInputNN()) {
             hoaDonTienDienController.setHoaDonNN();
             add(hoaDonTienDienChucNang);
+            JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
         }
     }
 

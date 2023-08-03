@@ -2,6 +2,8 @@ package Domain.Command;
 
 
 
+import javax.swing.JOptionPane;
+
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
@@ -23,6 +25,7 @@ public class DeleteNN extends Command {
     public void execute() {
         hoaDonTienDienNN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         delete(hoaDonTienDienChucNang);
+        JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
     }
 
     public void delete(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
