@@ -305,7 +305,7 @@ public class HoaDonTienDienController extends JOptionPane {
         hoaDonTienDienView.getQuocTichTextField().setEditable(true);
         hoaDonTienDienView.getDinhmucTextField().setText("");
         hoaDonTienDienView.getDoiTuongKHComboBox().setEnabled(false);
-        hoaDonTienDienView.getDonGiaTextField().setText("4.000");
+        hoaDonTienDienView.getDonGiaTextField().setText("4000");
         hoaDonTienDienView.getDoiTuongKHComboBox().setSelectedItem("");
         for (int i = 0; i < hoaDonTienDienView.getTableModelNN().getColumnCount(); i++) {
             hoaDonTienDienView.table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
@@ -315,18 +315,18 @@ public class HoaDonTienDienController extends JOptionPane {
     public void doiTuongKHCheck(ActionEvent e) {
         hoaDonTienDienVN = new HoaDonTienDienVN();
         if (hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex() == 0) {
-            hoaDonTienDienView.getDonGiaTextField().setText("3.000");
+            hoaDonTienDienView.getDonGiaTextField().setText("3000");
             hoaDonTienDienView.getDinhmucTextField().setText("350");
             hoaDonTienDienVN.setDonGia(3.000);
             hoaDonTienDienVN.setDinhMuc(350);
 
         } else if (hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex() == 1) {
-            hoaDonTienDienView.getDonGiaTextField().setText("4.000");
+            hoaDonTienDienView.getDonGiaTextField().setText("4000");
             hoaDonTienDienView.getDinhmucTextField().setText("450");
             hoaDonTienDienVN.setDonGia(4.000);
             hoaDonTienDienVN.setDinhMuc(450);
         } else {
-            hoaDonTienDienView.getDonGiaTextField().setText("5.000");
+            hoaDonTienDienView.getDonGiaTextField().setText("5000");
             hoaDonTienDienView.getDinhmucTextField().setText("550");
             hoaDonTienDienVN.setDonGia(5.000);
             hoaDonTienDienVN.setDinhMuc(550);
