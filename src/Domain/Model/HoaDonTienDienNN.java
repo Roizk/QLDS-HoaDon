@@ -25,9 +25,7 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         return soLuong * donGia;
     }
 
-<<<<<<< HEAD
 
-=======
     public double tinhTrungBinhThanhTienKhachNuocNgoai(List<HoaDonTienDienNN> hoaDonNNList) {
         double tongThanhTien = 0;
         int soLuongHoaDon = hoaDonNNList.size();
@@ -37,12 +35,6 @@ public class HoaDonTienDienNN extends HoaDonTienDien {
         return soLuongHoaDon == 0 ? 0 : tongThanhTien / soLuongHoaDon;
     }
 
-    public void notifySubcriber() {
-        for (Subcriber subcriber : hoaDonTienDiensubcriber) {
-            subcriber.update();
-        }
-    }
->>>>>>> 8558afe819a3e1b81568f28cac8acb30064202d8
 
     @Override
     public String toString() {
