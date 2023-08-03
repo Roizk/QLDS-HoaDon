@@ -93,6 +93,7 @@ public class HoaDonTienDienController extends JOptionPane {
     public void setHoaDonVN() {
         String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
         dateFormat(ngayHoatDongStr);
+        hoaDonTienDienVN.setNgayHD(dateFormat(ngayHoatDongStr));
         hoaDonTienDienVN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         hoaDonTienDienVN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
         hoaDonTienDienVN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
@@ -112,20 +113,22 @@ public class HoaDonTienDienController extends JOptionPane {
 
     }
 
-    public void dateFormat(String date) {
+    public Date dateFormat(String date) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date ngayHoatDong = dateFormat.parse(date);
-            hoaDonTienDienNN.setNgayHD(ngayHoatDong);
+            return ngayHoatDong ; 
         } catch (ParseException e) {
             e.printStackTrace();
+            return null ;
         }
     }
 
     public void setHoaDonNN() {
         String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
         dateFormat(ngayHoatDongStr);
+        hoaDonTienDienNN.setNgayHD(dateFormat(ngayHoatDongStr));
         hoaDonTienDienNN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
         hoaDonTienDienNN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
         hoaDonTienDienNN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
@@ -142,6 +145,7 @@ public class HoaDonTienDienController extends JOptionPane {
                     hoaDonTienDienView, this);
 
             commandProcessor.execute(addHoaDonVNcommand);
+            JOptionPane.showMessageDialog(this, "Lưu thành công");
             clearFields();
 
         } else {
