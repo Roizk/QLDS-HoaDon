@@ -167,7 +167,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(calculateTotalButton);
         doiTuongKHComboBox.addActionListener(hoaDonTienDienController::doiTuongKHCheck);
         calculateTotalButton.addActionListener(hoaDonTienDienController::calculateTotal);
-        tinhTrungBinhButton.addActionListener(hoaDonTienDienController::tinhTrungBinhThanhTienKhachNuocNgoai);
+        //tinhTrungBinhButton.addActionListener(hoaDonTienDienController::tinhTrungBinhThanhTienKhachNuocNgoai);
         dinhmucTextField.setEditable(false);
         donGiaTextField.setEditable(false);
         idTextField.setEditable(false);

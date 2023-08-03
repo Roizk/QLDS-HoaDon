@@ -1,4 +1,4 @@
-package Domain.Command;
+package Presentation.Command;
 
 import javax.swing.JOptionPane;
 
@@ -9,9 +9,9 @@ import Domain.Model.HoaDonTienDienVN;
 import Presentation.HoaDonTienDienController;
 import Presentation.HoaDonTienDienView;
 
-public class DeleteVN extends Command {
+public class UpdateVN extends Command {
 
-   public DeleteVN(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN,
+    public UpdateVN(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN,
             HoaDonTienDienVN hoaDonTienDienVN, HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienView hoaDonTienDienView, HoaDonTienDienController hoaDonTienDienController) {
         super(hoaDonTienDien, hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView,
@@ -21,12 +21,15 @@ public class DeleteVN extends Command {
 
     @Override
     public void execute() {
-        hoaDonTienDienVN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-        delete(hoaDonTienDienChucNang);
-        JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
+        if (hoaDonTienDienController.isValidInputVN()) {
+            hoaDonTienDienController.setHoaDonVN();
+            hoaDonTienDienVN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+            update(hoaDonTienDienChucNang);
+                      JOptionPane.showMessageDialog(hoaDonTienDienView, "Sửa thành công");
+        }
     }
 
-    public void delete(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
-        hoaDonTienDiencChucNang.deleteHoaDonVN(hoaDonTienDienVN);
+    public void update(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
+        hoaDonTienDiencChucNang.updateHoaDonTienDienVN(hoaDonTienDienVN);
     }
 }

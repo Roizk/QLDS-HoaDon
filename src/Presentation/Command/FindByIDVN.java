@@ -1,4 +1,4 @@
-package Domain.Command;
+package Presentation.Command;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,16 +28,16 @@ public class FindByIDVN extends Command {
     }
 
     public void findByID() {
-        String ID = JOptionPane.showInputDialog(hoaDonTienDienView, "Nhập ID", "ID", JOptionPane.PLAIN_MESSAGE);
+        String ten = JOptionPane.showInputDialog(hoaDonTienDienView, "Nhập ID", "ID", JOptionPane.PLAIN_MESSAGE);
 
-        if (ID != null && !ID.isEmpty()) {
+        if (ten != null && !ten.isEmpty()) {
             boolean found = false; //
             List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
             hoaDonTienDienView.getTableModelVN().setRowCount(0); // Xóa toàn bộ dữ liệu trong bảng HoaDonTienDienVN
 
             // Tìm kiếm và thêm chỉ hàng ID cần tìm vào bảng HoaDonTienDienVN
             for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
-                if (hoaDonVN != null && Objects.equals(hoaDonVN.getIdKh(), Integer.parseInt(ID))) {
+                if (hoaDonVN != null && Objects.equals(hoaDonVN.getHoTen().toLowerCase(),ten.toLowerCase())) {
                     Object[] rowData = {
                             hoaDonVN.getIdKh(),
                             hoaDonVN.getHoTen(),
@@ -50,7 +50,6 @@ public class FindByIDVN extends Command {
                     };
                     hoaDonTienDienView.getTableModelVN().addRow(rowData); // Thêm hàng cần tìm vào bảng
                     found = true; // Đã tìm thấy ID
-                    break; // Dừng vòng lặp khi đã tìm thấy ID
                 }
             }
             if (!found) {

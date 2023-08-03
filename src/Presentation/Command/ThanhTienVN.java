@@ -1,8 +1,4 @@
-package Domain.Command;
-
-
-
-import javax.swing.JOptionPane;
+package Presentation.Command;
 
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;
@@ -11,26 +7,19 @@ import Domain.Model.HoaDonTienDienVN;
 import Presentation.HoaDonTienDienController;
 import Presentation.HoaDonTienDienView;
 
-public class DeleteNN extends Command {
+public class ThanhTienVN extends Command {
 
-    public DeleteNN(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN,
+    public ThanhTienVN(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN,
             HoaDonTienDienVN hoaDonTienDienVN, HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienView hoaDonTienDienView, HoaDonTienDienController hoaDonTienDienController) {
         super(hoaDonTienDien, hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView,
                 hoaDonTienDienController);
-        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+        this.hoaDonTienDienVN = hoaDonTienDienVN;
     }
 
     @Override
     public void execute() {
-        hoaDonTienDienNN.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-        delete(hoaDonTienDienChucNang);
-        JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
+        hoaDonTienDienVN.thanhTien();
     }
 
-    public void delete(HoaDonTienDienChucNang hoaDonTienDiencChucNang) {
-        hoaDonTienDiencChucNang.deleteHoaDonNN(hoaDonTienDienNN);
-    }
 }
-
-    

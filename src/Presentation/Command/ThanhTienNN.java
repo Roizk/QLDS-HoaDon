@@ -1,4 +1,4 @@
-package Domain.Command;
+package Presentation.Command;
 
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;

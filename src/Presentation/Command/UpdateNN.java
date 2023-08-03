@@ -1,4 +1,4 @@
-package Domain.Command;
+package Presentation.Command;
 
 import javax.swing.JOptionPane;
 

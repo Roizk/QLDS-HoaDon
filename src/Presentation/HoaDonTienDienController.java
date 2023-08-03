@@ -10,21 +10,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import Domain.HoaDonTienDienChucNang;
-import Domain.Command.AddHoaDonNN;
-import Domain.Command.AddHoaDonVN;
-import Domain.Command.Command;
-import Domain.Command.CommandProcessor;
-import Domain.Command.DeleteNN;
-import Domain.Command.DeleteVN;
-import Domain.Command.FindByIDNN;
-import Domain.Command.FindByIDVN;
-import Domain.Command.ThanhTienNN;
-import Domain.Command.ThanhTienVN;
-import Domain.Command.UpdateNN;
-import Domain.Command.UpdateVN;
-
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
+import Presentation.Command.AddHoaDonNN;
+import Presentation.Command.AddHoaDonVN;
+import Presentation.Command.Command;
+import Presentation.Command.CommandProcessor;
+import Presentation.Command.DeleteNN;
+import Presentation.Command.DeleteVN;
+import Presentation.Command.FindByIDNN;
+import Presentation.Command.FindByIDVN;
+import Presentation.Command.ThanhTienNN;
+import Presentation.Command.ThanhTienVN;
+import Presentation.Command.UpdateNN;
+import Presentation.Command.UpdateVN;
 
 public class HoaDonTienDienController extends JOptionPane {
 
@@ -198,7 +197,7 @@ public class HoaDonTienDienController extends JOptionPane {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
                 }
-                
+
                 clearFields();
             }
         } else {
@@ -209,13 +208,13 @@ public class HoaDonTienDienController extends JOptionPane {
                         hoaDonTienDienNN,
                         hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
-               try {
+                try {
 
                     commandProcessor.execute(deletecommand);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
                 }
-                
+
                 clearFields();
             }
         }
@@ -229,12 +228,11 @@ public class HoaDonTienDienController extends JOptionPane {
         String donGiaStr = hoaDonTienDienView.getDonGiaTextField().getText();
         String dinhMucStr = hoaDonTienDienView.getDinhmucTextField().getText();
 
-        if (!soLuongStr.isEmpty() && !donGiaStr.isEmpty() && !dinhMucStr.isEmpty()) {
-            double soLuong = Double.parseDouble(soLuongStr);
-            double donGia = Double.parseDouble(donGiaStr);
-            double dinhMuc = Double.parseDouble(dinhMucStr);
-
-            if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
+        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
+            if (!soLuongStr.isEmpty() && !donGiaStr.isEmpty() && !dinhMucStr.isEmpty()) {
+                double soLuong = Double.parseDouble(soLuongStr);
+                double donGia = Double.parseDouble(donGiaStr);
+                double dinhMuc = Double.parseDouble(dinhMucStr);
                 hoaDonTienDienView.getHoaDonTienDienVN().setSoLuong(soLuong);
                 hoaDonTienDienView.getHoaDonTienDienVN().setDonGia(donGia);
                 hoaDonTienDienView.getHoaDonTienDienVN().setDinhMuc(dinhMuc);
@@ -248,13 +246,18 @@ public class HoaDonTienDienController extends JOptionPane {
 
                 double thanhTien = hoaDonTienDienView.getHoaDonTienDienVN().thanhTien();
                 hoaDonTienDienView.getThanhTienTextField().setText(String.valueOf(thanhTien));
-            } else {
-                hoaDonTienDienNN.setSoLuong(soLuong);
-                hoaDonTienDienNN.setDonGia(donGia);
+            }
+        } else {
+            if (!soLuongStr.isEmpty() && !donGiaStr.isEmpty()) {
+                double soLuong = Double.parseDouble(soLuongStr);
+                double donGia = Double.parseDouble(donGiaStr);
+
+                hoaDonTienDienView.getHoaDonTienDienNN().setSoLuong(soLuong);
+                hoaDonTienDienView.getHoaDonTienDienNN().setDonGia(donGia);
 
                 Command thanhTienNNcommand = new ThanhTienNN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienNN,
-                        hoaDonTienDienVN, hoaDonTienDienChucNang,
+                        hoaDonTienDienView.getHoaDonTienDienNN(),
+                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
                         hoaDonTienDienView, this);
                 CommandProcessor commandProcessor = new CommandProcessor();
                 commandProcessor.execute(thanhTienNNcommand);
@@ -358,14 +361,15 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
-        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())){
+        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())) {
             double trungBinhThanhTien = hoaDonTienDienChucNang.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienNN);
-            JOptionPane.showMessageDialog(this, "Trung bình thành tiền khách nước ngoài: " + trungBinhThanhTien, "Tổng trung bình",
-                JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Đây là chức năng chỉ dùng cho khách nước ngoài"+"\n"+"Xin vui lòng chọn lại quốc tịch",
-            "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Trung bình thành tiền khách nước ngoài: " + trungBinhThanhTien,
+                    "Tổng trung bình",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Đây là chức năng chỉ dùng cho khách nước ngoài" + "\n" + "Xin vui lòng chọn lại quốc tịch",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -394,7 +398,7 @@ public class HoaDonTienDienController extends JOptionPane {
 
     public void updateButton(ActionEvent e) {
         hoaDonTienDienVN.notifySubcriber();
-        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDienNN.notifySubcriber();
     }
 
     public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {

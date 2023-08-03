@@ -1,4 +1,4 @@
-package Domain.Command;
+package Presentation.Command;
 
 public class CommandProcessor {
 
