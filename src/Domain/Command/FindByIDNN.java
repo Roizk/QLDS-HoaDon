@@ -23,7 +23,7 @@ public class FindByIDNN extends Command {
 
     @Override
     public void execute() {
-
+        findByID();
     }
 
     public void findByID() {

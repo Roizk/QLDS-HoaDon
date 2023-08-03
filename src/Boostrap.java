@@ -26,7 +26,7 @@ public class Boostrap {
         hoaDonTienDienView.setHoaDonTienDienNN(hoaDonTienDienNN);
         hoaDonTienDienView.setHoaDonTienDienVN(hoaDonTienDienVN);
         hoaDonTienDienView.setHoaDonTienDienController(hoaDonTienDienController);
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 hoaDonTienDienView.display();

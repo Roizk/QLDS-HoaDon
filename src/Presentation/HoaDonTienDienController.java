@@ -118,10 +118,10 @@ public class HoaDonTienDienController extends JOptionPane {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date ngayHoatDong = dateFormat.parse(date);
-            return ngayHoatDong ; 
+            return ngayHoatDong;
         } catch (ParseException e) {
             e.printStackTrace();
-            return null ;
+            return null;
         }
     }
 
@@ -287,6 +287,7 @@ public class HoaDonTienDienController extends JOptionPane {
         }
         hoaDonTienDienNN.notifySubcriber();
         hoaDonTienDienVN.notifySubcriber();
+
     }
 
     private void chooseVn() {
@@ -367,7 +368,6 @@ public class HoaDonTienDienController extends JOptionPane {
                         hoaDonTienDienView.getHoaDonTienDienNN(),
                         hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
                         hoaDonTienDienView, this);
-
                 commandProcessor.execute(findNNCommand);
 
             }

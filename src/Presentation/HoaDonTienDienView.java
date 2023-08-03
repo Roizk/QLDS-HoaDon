@@ -281,6 +281,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
         hoaDonTienDienVN.attach(this);
         hoaDonTienDienNN.attach(this);
+
     }
 
     @Override
