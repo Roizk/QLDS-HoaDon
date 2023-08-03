@@ -22,6 +22,7 @@ import Presentation.Command.FindByIDNN;
 import Presentation.Command.FindByIDVN;
 import Presentation.Command.ThanhTienNN;
 import Presentation.Command.ThanhTienVN;
+import Presentation.Command.TinhTrungBinhThanhTien;
 import Presentation.Command.UpdateNN;
 import Presentation.Command.UpdateVN;
 
@@ -361,15 +362,16 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
-        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())) {
-            double trungBinhThanhTien = hoaDonTienDienChucNang.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienNN);
-            JOptionPane.showMessageDialog(this, "Trung bình thành tiền khách nước ngoài: " + trungBinhThanhTien,
-                    "Tổng trung bình",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Đây là chức năng chỉ dùng cho khách nước ngoài" + "\n" + "Xin vui lòng chọn lại quốc tịch",
-                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())){
+            Command tinhTrungBinhCommand = new TinhTrungBinhThanhTien(hoaDonTienDienView.getHoaDonTienDien(),
+                        hoaDonTienDienView.getHoaDonTienDienNN(),
+                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                        hoaDonTienDienView, this);
+        tinhTrungBinhCommand.execute();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Đây là chức năng chỉ dùng cho khách nước ngoài"+"\n"+"Xin vui lòng chọn lại quốc tịch",
+            "Thông báo",JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
