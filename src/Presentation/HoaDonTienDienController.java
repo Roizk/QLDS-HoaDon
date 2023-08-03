@@ -153,6 +153,7 @@ public class HoaDonTienDienController extends JOptionPane {
                     hoaDonTienDienView, this);
             commandProcessor.execute(addHoaDonNNcommand);
             clearFields();
+            chooseNN();
         }
         hoaDonTienDienNN.notifySubcriber();
         hoaDonTienDienVN.notifySubcriber();
