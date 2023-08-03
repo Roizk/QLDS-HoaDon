@@ -355,6 +355,18 @@ public class HoaDonTienDienController extends JOptionPane {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
+        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())){
+            double trungBinhThanhTien = hoaDonTienDienChucNang.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienNN);
+            JOptionPane.showMessageDialog(this, "Trung bình thành tiền khách nước ngoài: " + trungBinhThanhTien, "Tổng trung bình",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Đây là chức năng chỉ dùng cho khách nước ngoài"+"\n"+"Xin vui lòng chọn lại quốc tịch",
+            "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
     public void findByID(ActionEvent e) {
         try {
             if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
