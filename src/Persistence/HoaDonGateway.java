@@ -24,4 +24,6 @@ public interface HoaDonGateway {
     List<HoaDonTienDienNN> getAllsHoaDonNN();
 
     List<HoaDonTienDienVN> getAllsHoaDonVN();
+
+    public double tbThanhTien();
 }

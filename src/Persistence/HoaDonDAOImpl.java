@@ -67,6 +67,12 @@ public class HoaDonDAOImpl implements HoaDonDAO{
         hoaDonGateway.delete(id);
     }
 
+    @Override 
+    public double tbThanhTien()
+    {
+        return hoaDonGateway.tbThanhTien();
+    }
+
 }
     
 

@@ -35,8 +35,8 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 	@Override
 	public void addHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
 		String sqlString = "INSERT INTO HOADON (hoTen,quocTich,ngayHD,soLuong,donGia,thanhTien) VALUES (?,?,?,?,?,?)";
-		// 1 2 3 4 5 6 
-		try (PreparedStatement statement = connection.prepareStatement(sqlString,Statement.RETURN_GENERATED_KEYS)) {
+		// 1 2 3 4 5 6
+		try (PreparedStatement statement = connection.prepareStatement(sqlString, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, hoaDonTienDienNN.getHoTen());
 			statement.setString(2, hoaDonTienDienNN.getQuocTich());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienNN.getNgayHD().getTime());
@@ -47,9 +47,9 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 			if (generatedKeys.next()) {
-                int generatedId = generatedKeys.getInt(1);
-                hoaDonTienDienNN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
-            }
+				int generatedId = generatedKeys.getInt(1);
+				hoaDonTienDienNN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,22 +58,22 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 	@Override
 	public void addHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
 		String sqString = "INSERT INTO HOADON (hoTen,doiTuongKH,ngayHD,soLuong,donGia,dinhMuc,thanhTien) VALUES (?,?,?,?,?,?,?)";
-		// 1 2 3 4 5 6 7 
-		try (PreparedStatement statement = connection.prepareStatement(sqString,Statement.RETURN_GENERATED_KEYS)) {
+		// 1 2 3 4 5 6 7
+		try (PreparedStatement statement = connection.prepareStatement(sqString, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, hoaDonTienDienVN.getHoTen());
 			statement.setInt(2, hoaDonTienDienVN.getDoiTuong());
 			java.sql.Date sqlNgayHD = new java.sql.Date(hoaDonTienDienVN.getNgayHD().getTime());
-			statement.setDate(3,sqlNgayHD);
+			statement.setDate(3, sqlNgayHD);
 			statement.setDouble(4, hoaDonTienDienVN.getSoLuong());
 			statement.setDouble(5, hoaDonTienDienVN.getDonGia());
 			statement.setDouble(6, hoaDonTienDienVN.getDinhMuc());
 			statement.setDouble(7, hoaDonTienDienVN.thanhTien());
 			statement.executeUpdate();
 			ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int generatedId = generatedKeys.getInt(1);
-                hoaDonTienDienVN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
-            }
+			if (generatedKeys.next()) {
+				int generatedId = generatedKeys.getInt(1);
+				hoaDonTienDienVN.setIdKh(generatedId); // Gán giá trị ID mới cho đối tượng KH
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -229,5 +229,21 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 			e.printStackTrace();
 		}
 		return hoaDonTienDienVNs;
+	}
+
+	@Override
+	public double tbThanhTien() {
+		double tbThanhTien =0 ;
+		List<HoaDonTienDienNN> hoaDonNNList = getAllsHoaDonNN();
+		if (hoaDonNNList != null) {
+			double tongThanhTien = 0;
+			int soLuongHoaDon = hoaDonNNList.size();
+			for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
+				tongThanhTien += hoaDonNN.thanhTien();
+			}
+			tbThanhTien = soLuongHoaDon == 0 ? 0 : tongThanhTien / soLuongHoaDon;
+
+		}
+		return tbThanhTien;
 	}
 }

@@ -29,5 +29,6 @@ public interface HoaDonTienDienChucNang {
     List<HoaDonTienDienNN> getAllHoaDonTienDienNN();
 
     double tinhTrungBinhThanhTienKhachNuocNgoai(HoaDonTienDienNN hoaDonTienDienNN);
+    double tbThanhTien();
 
 }

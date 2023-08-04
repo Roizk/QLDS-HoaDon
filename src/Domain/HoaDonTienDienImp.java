@@ -75,4 +75,9 @@ public class HoaDonTienDienImp implements HoaDonTienDienChucNang {
         return hoaDonTienDienNN.tinhTrungBinhThanhTienKhachNuocNgoai(getAllHoaDonTienDienNN());
     }
 
+    @Override
+    public double tbThanhTien()
+    {
+        return hoaDonDAO.tbThanhTien();
+    }
 }

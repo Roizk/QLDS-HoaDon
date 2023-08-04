@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 
 import Domain.HoaDonTienDienChucNang;
-import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
 import Presentation.HoaDonTienDienController;
@@ -14,10 +13,10 @@ import Presentation.HoaDonTienDienView;
 
 public class FindByIDNN extends Command {
 
-    public FindByIDNN(HoaDonTienDien hoaDonTienDien, HoaDonTienDienNN hoaDonTienDienNN,
-            HoaDonTienDienVN hoaDonTienDienVN, HoaDonTienDienChucNang hoaDonTienDienChucNang,
+    public FindByIDNN(HoaDonTienDienNN hoaDonTienDienNN, HoaDonTienDienVN hoaDonTienDienVN,
+            HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienView hoaDonTienDienView, HoaDonTienDienController hoaDonTienDienController) {
-        super(hoaDonTienDien, hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView,
+        super(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView,
                 hoaDonTienDienController);
     }
 
@@ -36,7 +35,7 @@ public class FindByIDNN extends Command {
 
             // Tìm kiếm và thêm chỉ hàng ID cần tìm vào bảng HoaDonTienDienVN
             for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-                if (hoaDonNN != null && Objects.equals(hoaDonNN.getHoTen().toLowerCase(),ten.toLowerCase())) {
+                if (hoaDonNN != null && Objects.equals(hoaDonNN.getHoTen().toLowerCase(), ten.toLowerCase())) {
                     Object[] rowData = {
                             hoaDonNN.getIdKh(),
                             hoaDonNN.getHoTen(),

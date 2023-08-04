@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +22,7 @@ import Presentation.Command.FindByIDVN;
 import Presentation.Command.ThanhTienNN;
 import Presentation.Command.ThanhTienVN;
 import Presentation.Command.TinhTrungBinhThanhTien;
+import Presentation.Command.TotalQuantity;
 import Presentation.Command.UpdateNN;
 import Presentation.Command.UpdateVN;
 
@@ -62,7 +62,6 @@ public class HoaDonTienDienController extends JOptionPane {
                     JOptionPane.ERROR_MESSAGE);
             return false; // Lỗi định dạng dữ liệu không hợp lệ
         }
-
         return true;
     }
 
@@ -137,9 +136,7 @@ public class HoaDonTienDienController extends JOptionPane {
     public void addHD(ActionEvent e) {
 
         if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-            Command addHoaDonVNcommand = new AddHoaDonVN(hoaDonTienDienView.getHoaDonTienDien(),
-                    hoaDonTienDienNN,
-                    hoaDonTienDienVN, hoaDonTienDienChucNang,
+            Command addHoaDonVNcommand = new AddHoaDonVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                     hoaDonTienDienView, this);
 
             commandProcessor.execute(addHoaDonVNcommand);
@@ -147,9 +144,7 @@ public class HoaDonTienDienController extends JOptionPane {
 
         } else {
 
-            Command addHoaDonNNcommand = new AddHoaDonNN(hoaDonTienDienView.getHoaDonTienDien(),
-                    hoaDonTienDienNN,
-                    hoaDonTienDienVN, hoaDonTienDienChucNang,
+            Command addHoaDonNNcommand = new AddHoaDonNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                     hoaDonTienDienView, this);
             commandProcessor.execute(addHoaDonNNcommand);
             clearFields();
@@ -163,21 +158,18 @@ public class HoaDonTienDienController extends JOptionPane {
     public void updateHD(ActionEvent e) {
         if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
 
-            Command updateHoaDonVNcommand = new UpdateVN(hoaDonTienDienView.getHoaDonTienDien(),
-                    hoaDonTienDienNN,
-                    hoaDonTienDienVN, hoaDonTienDienChucNang,
+            Command updateHoaDonVNcommand = new UpdateVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                     hoaDonTienDienView, this);
             commandProcessor.execute(updateHoaDonVNcommand);
             clearFields();
 
         } else {
 
-            Command updateHoaDonNNcommand = new UpdateNN(hoaDonTienDienView.getHoaDonTienDien(),
-                    hoaDonTienDienNN,
-                    hoaDonTienDienVN, hoaDonTienDienChucNang,
+            Command updateHoaDonNNcommand = new UpdateNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                     hoaDonTienDienView, this);
             commandProcessor.execute(updateHoaDonNNcommand);
             clearFields();
+            chooseNN();
         }
         hoaDonTienDienNN.notifySubcriber();
         hoaDonTienDienVN.notifySubcriber();
@@ -188,9 +180,7 @@ public class HoaDonTienDienController extends JOptionPane {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
                     JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                Command deletecommand = new DeleteVN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienNN,
-                        hoaDonTienDienVN, hoaDonTienDienChucNang,
+                Command deletecommand = new DeleteVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
                 try {
 
@@ -205,9 +195,7 @@ public class HoaDonTienDienController extends JOptionPane {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
                     JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                Command deletecommand = new DeleteNN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienNN,
-                        hoaDonTienDienVN, hoaDonTienDienChucNang,
+                Command deletecommand = new DeleteNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
                 try {
 
@@ -221,7 +209,6 @@ public class HoaDonTienDienController extends JOptionPane {
         }
         hoaDonTienDienNN.notifySubcriber();
         hoaDonTienDienVN.notifySubcriber();
-
     }
 
     public void thanhTien() {
@@ -238,9 +225,7 @@ public class HoaDonTienDienController extends JOptionPane {
                 hoaDonTienDienView.getHoaDonTienDienVN().setDonGia(donGia);
                 hoaDonTienDienView.getHoaDonTienDienVN().setDinhMuc(dinhMuc);
 
-                Command thanhTienVNcommand = new ThanhTienVN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienNN,
-                        hoaDonTienDienVN, hoaDonTienDienChucNang,
+                Command thanhTienVNcommand = new ThanhTienVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
                 CommandProcessor commandProcessor = new CommandProcessor();
                 commandProcessor.execute(thanhTienVNcommand);
@@ -256,9 +241,7 @@ public class HoaDonTienDienController extends JOptionPane {
                 hoaDonTienDienView.getHoaDonTienDienNN().setSoLuong(soLuong);
                 hoaDonTienDienView.getHoaDonTienDienNN().setDonGia(donGia);
 
-                Command thanhTienNNcommand = new ThanhTienNN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienView.getHoaDonTienDienNN(),
-                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                Command thanhTienNNcommand = new ThanhTienNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
                         hoaDonTienDienView, this);
                 CommandProcessor commandProcessor = new CommandProcessor();
                 commandProcessor.execute(thanhTienNNcommand);
@@ -293,7 +276,6 @@ public class HoaDonTienDienController extends JOptionPane {
 
         hoaDonTienDienVN.notifySubcriber();
         hoaDonTienDienNN.notifySubcriber();
-
     }
 
     private void chooseVn() {
@@ -339,53 +321,33 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void calculateTotal(ActionEvent e) {
-        double totalQuantityVN = 0.0;
-        double totalQuantityNN = 0.0;
-
-        // Calculate total quantity for HoaDonTienDienVN
-        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
-        for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
-            totalQuantityVN += hoaDonVN.getSoLuong();
-        }
-
-        // Calculate total quantity for HoaDonTienDienNN
-        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
-        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-            totalQuantityNN += hoaDonNN.getSoLuong();
-        }
-
-        JOptionPane.showMessageDialog(this,
-                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + totalQuantityVN + "\n"
-                        + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
-                "Tổng số lượng KW",
-                JOptionPane.INFORMATION_MESSAGE);
+        Command TotalQuantity = new TotalQuantity(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
+                hoaDonTienDienView, this);
+        commandProcessor.execute(TotalQuantity);
     }
 
     public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
-        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())){
-            Command tinhTrungBinhCommand = new TinhTrungBinhThanhTien(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienView.getHoaDonTienDienNN(),
-                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                        hoaDonTienDienView, this);
-        tinhTrungBinhCommand.execute();
-        }
-        else {
-            JOptionPane.showMessageDialog(this, "Đây là chức năng chỉ dùng cho khách nước ngoài"+"\n"+"Xin vui lòng chọn lại quốc tịch",
-            "Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
+            Command tinhTrungBinhCommand = new TinhTrungBinhThanhTien(hoaDonTienDienView.getHoaDonTienDienNN(),
+                    hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                    hoaDonTienDienView, this);
+            tinhTrungBinhCommand.execute();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Đây là chức năng chỉ dùng cho khách nước ngoài" + "\n" + "Xin vui lòng chọn lại quốc tịch",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     public void findByID(ActionEvent e) {
         try {
             if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-                Command findVNCommand = new FindByIDVN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienView.getHoaDonTienDienNN(),
+                Command findVNCommand = new FindByIDVN(hoaDonTienDienView.getHoaDonTienDienNN(),
                         hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
                         hoaDonTienDienView, this);
                 commandProcessor.execute(findVNCommand);
             } else {
-                Command findNNCommand = new FindByIDNN(hoaDonTienDienView.getHoaDonTienDien(),
-                        hoaDonTienDienView.getHoaDonTienDienNN(),
+                Command findNNCommand = new FindByIDNN(hoaDonTienDienView.getHoaDonTienDienNN(),
                         hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
                         hoaDonTienDienView, this);
                 commandProcessor.execute(findNNCommand);

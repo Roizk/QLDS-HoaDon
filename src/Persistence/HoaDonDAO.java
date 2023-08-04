@@ -23,4 +23,6 @@ public interface HoaDonDAO {
     List<HoaDonTienDienNN> getAllsHoaDonNN();
 
     List<HoaDonTienDienVN> getAllsHoaDonVN();
+
+    public double tbThanhTien();
 }

@@ -63,8 +63,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public HoaDonTienDienView() {
 
-      
-
     }
 
     public void display() {
@@ -152,7 +150,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         inputPanel.add(dinhmucTextField);
         inputPanel.add(new JLabel("Thành tiền:"));
         inputPanel.add(thanhTienTextField);
-        inputPanel.add(tinhTrungBinhButton);;
+        inputPanel.add(tinhTrungBinhButton);
+        ;
         thanhTienTextField.setEditable(false);
         inputPanel.add(addButton);
         addButton.addActionListener(hoaDonTienDienController::addHD);
@@ -293,7 +292,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public void update() {
         // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
         // HoaDonJdbcGateway)
-       List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
+        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
         tableModelNN.setRowCount(0);
         // Thêm dữ liệu vào bảng
         for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
@@ -308,7 +307,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             };
             tableModelNN.addRow(rowData);
         }
-       List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
+        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
 
         tableModelVN.setRowCount(0);
 
