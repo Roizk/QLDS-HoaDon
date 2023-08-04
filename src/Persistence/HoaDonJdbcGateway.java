@@ -231,19 +231,4 @@ public class HoaDonJdbcGateway implements HoaDonGateway {
 		return hoaDonTienDienVNs;
 	}
 
-	@Override
-	public double tbThanhTien() {
-		double tbThanhTien =0 ;
-		List<HoaDonTienDienNN> hoaDonNNList = getAllsHoaDonNN();
-		if (hoaDonNNList != null) {
-			double tongThanhTien = 0;
-			int soLuongHoaDon = hoaDonNNList.size();
-			for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-				tongThanhTien += hoaDonNN.thanhTien();
-			}
-			tbThanhTien = soLuongHoaDon == 0 ? 0 : tongThanhTien / soLuongHoaDon;
-
-		}
-		return tbThanhTien;
-	}
 }

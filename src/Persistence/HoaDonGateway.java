@@ -25,5 +25,5 @@ public interface HoaDonGateway {
 
     List<HoaDonTienDienVN> getAllsHoaDonVN();
 
-    public double tbThanhTien();
+   
 }

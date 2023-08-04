@@ -2,8 +2,6 @@ package Persistence;
 
 import java.sql.SQLException;
 import java.util.List;
-
-import Domain.Model.HoaDonTienDien;
 import Domain.Model.HoaDonTienDienNN;
 import Domain.Model.HoaDonTienDienVN;
 
@@ -67,11 +65,7 @@ public class HoaDonDAOImpl implements HoaDonDAO{
         hoaDonGateway.delete(id);
     }
 
-    @Override 
-    public double tbThanhTien()
-    {
-        return hoaDonGateway.tbThanhTien();
-    }
+   
 
 }
     

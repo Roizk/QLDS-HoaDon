@@ -31,6 +31,6 @@ public class TinhTrungBinhThanhTien extends Command {
     }
 
     private double tinhTrungBinhThanhTien() {
-        return hoaDonTienDienChucNang.tbThanhTien();
+        return hoaDonTienDienNN.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienChucNang.getAllHoaDonTienDienNN());
     }
 }
