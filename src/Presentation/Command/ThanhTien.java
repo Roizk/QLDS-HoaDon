@@ -6,11 +6,11 @@ import Presentation.HoaDonTienDienController;
 
 public class ThanhTien extends Command {
 
-    public ThanhTien(HoaDonTienDien hoaDonTienDien, 
+    public ThanhTien(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
-        super(hoaDonTienDien,  hoaDonTienDienChucNang, hoaDonTienDienController);
-        this.hoaDonTienDien = hoaDonTienDien; 
+        super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     @Override

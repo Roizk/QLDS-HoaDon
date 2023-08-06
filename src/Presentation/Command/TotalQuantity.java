@@ -11,7 +11,7 @@ public class TotalQuantity extends Command {
     private HoaDonTienDien hoaDonTienDien;
     double totalQuantity = 0.0;
 
-    public TotalQuantity(HoaDonTienDien hoaDonTienDien, 
+    public TotalQuantity(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
         super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);

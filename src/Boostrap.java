@@ -19,7 +19,7 @@ public class Boostrap {
 
         HoaDonDAO hoaDonDAO = new HoaDonDAOImpl(new HoaDonJdbcGateway());
         HoaDonTienDienChucNang hoaDonTienDienChucNang = new HoaDonTienDienImp(hoaDonDAO);
-        
+
         HoaDonTienDien hoaDonTienDien = new HoaDonTienDien();
 
         CommandProcessor commandProcessor = new CommandProcessor();

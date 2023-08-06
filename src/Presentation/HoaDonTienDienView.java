@@ -42,7 +42,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private JButton editButton;
     private JButton deleteButton;
     private JButton findButton;
-    private JButton updateButton;
     private JButton calculateTotalButton;
     private JButton tinhTrungBinhButton;
 
@@ -124,7 +123,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         editButton = new JButton("Sửa");
         deleteButton = new JButton("Xóa");
         findButton = new JButton("Tìm kiếm");
-        updateButton = new JButton("Làm mới");
         calculateTotalButton = new JButton("Tính tổng số lượng");
         tinhTrungBinhButton = new JButton("Tính trung bình thành tiền");
 
@@ -161,11 +159,10 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         deleteButton.addActionListener(hoaDonTienDienController::deleteHD);
         inputPanel.add(findButton);
         findButton.addActionListener(hoaDonTienDienController::findByID);
-        inputPanel.add(updateButton);
-        updateButton.addActionListener(hoaDonTienDienController::updateButton);
         inputPanel.add(calculateTotalButton);
-        doiTuongKHComboBox.addActionListener(hoaDonTienDienController::doiTuongKHCheck);
         calculateTotalButton.addActionListener(hoaDonTienDienController::calculateTotal);
+
+        doiTuongKHComboBox.addActionListener(hoaDonTienDienController::doiTuongKHCheck);
         tinhTrungBinhButton.addActionListener(hoaDonTienDienController::tinhTrungBinhThanhTienKhachNuocNgoai);
         dinhmucTextField.setEditable(false);
         donGiaTextField.setEditable(false);
@@ -233,24 +230,24 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                             ngayRaHoaDonTextField.setText(table.getValueAt(row, 2).toString());
                             soLuongTextField.setText(table.getValueAt(row, 3).toString());
                             String doiTuongKHStr = table.getValueAt(row, 4).toString();
-                                switch (doiTuongKHStr) {
-                                    case "SINH_HOAT": {
-                                        doiTuongKHComboBox.setSelectedIndex(0);
-                                        break;
-                                    }
-                                    case "KINH_DOANH": {
-                                        doiTuongKHComboBox.setSelectedIndex(1);
-                                        break;
-                                    }
-                                    case "SAN_XUAT": {
-                                        doiTuongKHComboBox.setSelectedIndex(2);
-                                        break;
-                                    }
-                                    default: {
-                                        doiTuongKHComboBox.setSelectedIndex(-1); // Không chọn mục nào
-                                        break;
-                                    }
+                            switch (doiTuongKHStr) {
+                                case "SINH_HOAT": {
+                                    doiTuongKHComboBox.setSelectedIndex(0);
+                                    break;
                                 }
+                                case "KINH_DOANH": {
+                                    doiTuongKHComboBox.setSelectedIndex(1);
+                                    break;
+                                }
+                                case "SAN_XUAT": {
+                                    doiTuongKHComboBox.setSelectedIndex(2);
+                                    break;
+                                }
+                                default: {
+                                    doiTuongKHComboBox.setSelectedIndex(-1); // Không chọn mục nào
+                                    break;
+                                }
+                            }
                             donGiaTextField.setText(table.getValueAt(row, 5).toString());
                             dinhmucTextField.setText(table.getValueAt(row, 6).toString());
                             // Để gán thông tin thanh toán:
@@ -282,30 +279,29 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         hoaDonTienDien.attach(this);
 
     }
+
     @Override
     public void update() {
         // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
         // HoaDonJdbcGateway)
-        List<HoaDonTienDien> hoaDonList = hoaDonTienDienChucNang.getAllHoaDonTienDien(quoctichComboBox.getSelectedItem().toString());
-        if("Nước Ngoài".equals(quoctichComboBox.getSelectedItem()))
-        {
+        List<HoaDonTienDien> hoaDonList = hoaDonTienDienChucNang
+                .getAllHoaDonTienDien(quoctichComboBox.getSelectedItem().toString());
+        if ("Nước Ngoài".equals(quoctichComboBox.getSelectedItem())) {
             tableModelNN.setRowCount(0);
             // Thêm dữ liệu vào bảng
             for (HoaDonTienDien hoaDon : hoaDonList) {
                 Object[] rowData = {
-                    hoaDon.getIdKh(),
-                    hoaDon.getHoTen(),
-                    hoaDon.getQuocTich(),
-                    hoaDon.getNgayHD(),
-                    hoaDon.getSoLuong(),
-                    hoaDon.getDonGia(),
-                    hoaDon.thanhTien()
+                        hoaDon.getIdKh(),
+                        hoaDon.getHoTen(),
+                        hoaDon.getQuocTich(),
+                        hoaDon.getNgayHD(),
+                        hoaDon.getSoLuong(),
+                        hoaDon.getDonGia(),
+                        hoaDon.thanhTien()
                 };
                 tableModelNN.addRow(rowData);
             }
-        }
-        else
-        {
+        } else {
             tableModelVN.setRowCount(0);
             for (HoaDonTienDien hoaDon : hoaDonList) {
                 Object[] rowData = {
@@ -330,7 +326,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     public HoaDonTienDien getHoaDonTienDien() {
         return hoaDonTienDien;
     }
-
 
     public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
         this.hoaDonTienDien = hoaDonTienDien;
@@ -374,14 +369,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public JButton getFindButton() {
         return this.findButton;
-    }
-
-    public JButton getUpdateButton() {
-        return this.updateButton;
-    }
-
-    public void setUpdateButton(JButton updateButton) {
-        this.updateButton = updateButton;
     }
 
     public JButton getCalculateTotalButton() {

@@ -47,7 +47,7 @@ public class HoaDonTienDienController extends JOptionPane {
             double soLuong = Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText());
 
             // Kiểm tra các điều kiện hợp le
-            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 ) {
+            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0) {
                 return false;
             }
 
@@ -83,11 +83,11 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void setHoaDon() {
-        if("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString()))
-        {
+        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())) {
             String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             dateFormat(ngayHoatDongStr);
             hoaDonTienDien.setNgayHD(dateFormat(ngayHoatDongStr));
+            hoaDonTienDien.setQuocTich(null);
             hoaDonTienDien.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
             hoaDonTienDien.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
             hoaDonTienDien.setDinhMuc(Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText()));
@@ -98,13 +98,11 @@ public class HoaDonTienDienController extends JOptionPane {
                 hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(0));
             } else if (1 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
                 hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(1));
-            } else if(2 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()){
+            } else if (2 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
                 hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(2));
             }
             hoaDonTienDien.setDoiTuong(hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex());
-        }
-        else 
-        {
+        } else {
             String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             dateFormat(ngayHoatDongStr);
             hoaDonTienDien.setNgayHD(dateFormat(ngayHoatDongStr));
@@ -128,89 +126,46 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void addHD(ActionEvent e) {
-
-        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-            if (isValidInputVN()) {
-                setHoaDon();
-                Command addHoaDoncommand = new AddHoaDon(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                commandProcessor.execute(addHoaDoncommand);
-                JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
-                clearFields();
-            }
-
-        } else {
-            if (isValidInputNN()) {
-                setHoaDon();
-                Command addHoaDoncommand = new AddHoaDon(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                commandProcessor.execute(addHoaDoncommand);
-                JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
-                clearFields();
-                chooseNN();
-            }
+        if (isValidInputVN()) {
+            setHoaDon();
+            Command addHoaDoncommand = new AddHoaDon(hoaDonTienDien, hoaDonTienDienChucNang,
+                    this);
+            commandProcessor.execute(addHoaDoncommand);
+            JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
+            clearFields();
         }
         hoaDonTienDien.notifySubcriber();
 
     }
 
     public void updateHD(ActionEvent e) {
-        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
 
-            if (isValidInputVN()) {
-                setHoaDon();
-                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-                Command updateHoaDoncommand = new Update(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                commandProcessor.execute(updateHoaDoncommand);
-                clearFields();
-            }
-
-        } else {
-            if (isValidInputNN()) {
-                setHoaDon();
-                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-                Command updateHoaDoncommand = new Update(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                commandProcessor.execute(updateHoaDoncommand);
-                clearFields();
-                chooseNN();
-            }
+        if (isValidInputVN()) {
+            setHoaDon();
+            hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+            Command updateHoaDoncommand = new Update(hoaDonTienDien, hoaDonTienDienChucNang,
+                    this);
+            commandProcessor.execute(updateHoaDoncommand);
+            JOptionPane.showMessageDialog(hoaDonTienDienView, "Sửa thành công");
+            clearFields();
         }
         hoaDonTienDien.notifySubcriber();
     }
 
     public void deleteHD(ActionEvent e) {
-        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString())) {
-            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
-                    JOptionPane.YES_NO_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
-                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-                Command deletecommand = new Delete(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                try {
-                    commandProcessor.execute(deletecommand);
-                    JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
-                }
-                clearFields();
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
+                JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+            Command deletecommand = new Delete(hoaDonTienDien, hoaDonTienDienChucNang,
+                    this);
+            try {
+                commandProcessor.execute(deletecommand);
+                JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
             }
-        } else {
-            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
-                    JOptionPane.YES_NO_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
-                Command deletecommand = new Delete(hoaDonTienDien, hoaDonTienDienChucNang,
-                        this);
-                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
-                try {
-                    commandProcessor.execute(deletecommand);
-                    JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
-                }
-                clearFields();
-            }
+            clearFields();
         }
         hoaDonTienDien.notifySubcriber();
     }
@@ -308,7 +263,7 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void doiTuongKHCheck(ActionEvent e) {
-        //hoaDonTienDien = new HoaDonTienDien();
+        // hoaDonTienDien = new HoaDonTienDien();
         if (hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex() == 0) {
             hoaDonTienDienView.getDonGiaTextField().setText("3000");
             hoaDonTienDienView.getDinhmucTextField().setText("350");
@@ -344,7 +299,7 @@ public class HoaDonTienDienController extends JOptionPane {
         if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
             TinhTrungBinhThanhTien tinhTrungBinhCommand = new TinhTrungBinhThanhTien(
                     hoaDonTienDienView.getHoaDonTienDien(),
-                     hoaDonTienDienView.getHoaDonTienDienChucNang(), this);
+                    hoaDonTienDienView.getHoaDonTienDienChucNang(), this);
             tinhTrungBinhCommand.execute();
             if (tinhTrungBinhCommand.getTBThanhTien() != 0) {
                 JOptionPane.showMessageDialog(hoaDonTienDienView,
@@ -367,33 +322,18 @@ public class HoaDonTienDienController extends JOptionPane {
 
             hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
             hoaDonTienDien.setHoTen(hoaDonTienDienView.getTimKiemTextField().getText());
-            if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-                FindByID findCommand = new FindByID(hoaDonTienDien,
-                        hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                        this);
-                commandProcessor.execute(findCommand);
-                hoaDonTienDienView.getTableModelVN().setRowCount(0);
-                hoaDonTienDienView.table.setModel(findCommand.getTable());
-                formatCenterCell(findCommand.getTable());
-            } else {
-                FindByID findCommand = new FindByID(hoaDonTienDien, 
-                        hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                        this);
-                commandProcessor.execute(findCommand);
-                hoaDonTienDienView.getTableModelNN().setRowCount(0);
-                hoaDonTienDienView.table.setModel(findCommand.getTable());
-                formatCenterCell(findCommand.getTable());
-
-            }
+            FindByID findCommand = new FindByID(hoaDonTienDien,
+                    hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                    this);
+            commandProcessor.execute(findCommand);
+            hoaDonTienDienView.getTableModelVN().setRowCount(0);
+            hoaDonTienDienView.table.setModel(findCommand.getTable());
+            formatCenterCell(findCommand.getTable());
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập ID dưới dạng số nguyên!", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public void updateButton(ActionEvent e) {
-        hoaDonTienDien.notifySubcriber();
     }
 
     public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {

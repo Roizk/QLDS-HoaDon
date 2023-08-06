@@ -13,7 +13,7 @@ public class FindByID extends Command {
 
     private DefaultTableModel table;
 
-    public FindByID(HoaDonTienDien hoaDonTienDien, 
+    public FindByID(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
         super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);
@@ -37,36 +37,33 @@ public class FindByID extends Command {
         List<HoaDonTienDien> danhSachHoaDon = hoaDonTienDienChucNang.getHoaDonTienDienByTen(hoaDonTienDien.getHoTen());
         // Thêm dữ liệu từ danhSachHoaDon vào bảng
         for (HoaDonTienDien hoaDon : danhSachHoaDon) {
-            if(hoaDonTienDien.getQuocTich()=="Việt Nam")
-            {
-                if(hoaDon.getQuocTich() ==null){
+            if (hoaDonTienDien.getQuocTich() == "Việt Nam") {
+                if (hoaDon.getQuocTich() == null) {
                     Object[] rowData = {
-                        hoaDon.getIdKh(),
-                        hoaDon.getHoTen(),
-                        hoaDon.getQuocTich(),
-                        hoaDon.getNgayHD() != null ? hoaDon.getNgayHD().toString() : "",
-                        hoaDon.getSoLuong(),
-                        hoaDon.fromvalue(hoaDon.getDoiTuong()),
-                        hoaDon.getDonGia(),
-                        hoaDon.getDinhMuc(),
-                        hoaDon.thanhTien()
+                            hoaDon.getIdKh(),
+                            hoaDon.getHoTen(),
+                            hoaDon.getQuocTich(),
+                            hoaDon.getNgayHD() != null ? hoaDon.getNgayHD().toString() : "",
+                            hoaDon.getSoLuong(),
+                            hoaDon.fromvalue(hoaDon.getDoiTuong()),
+                            hoaDon.getDonGia(),
+                            hoaDon.getDinhMuc(),
+                            hoaDon.thanhTien()
                     };
                     table.addRow(rowData);
                 }
-            }
-            else if( hoaDonTienDien.getQuocTich()=="Nước Ngoài")
-            {
-                if(hoaDon.getQuocTich()!=null){
+            } else if (hoaDonTienDien.getQuocTich() == "Nước Ngoài") {
+                if (hoaDon.getQuocTich() != null) {
                     Object[] rowData = {
-                        hoaDon.getIdKh(),
-                        hoaDon.getHoTen(),
-                        hoaDon.getQuocTich(),
-                        hoaDon.getNgayHD() != null ? hoaDon.getNgayHD().toString() : "",
-                        hoaDon.getSoLuong(),
-                        hoaDon.fromvalue(hoaDon.getDoiTuong()),
-                        hoaDon.getDonGia(),
-                        hoaDon.getDinhMuc(),
-                        hoaDon.thanhTien()
+                            hoaDon.getIdKh(),
+                            hoaDon.getHoTen(),
+                            hoaDon.getQuocTich(),
+                            hoaDon.getNgayHD() != null ? hoaDon.getNgayHD().toString() : "",
+                            hoaDon.getSoLuong(),
+                            hoaDon.fromvalue(hoaDon.getDoiTuong()),
+                            hoaDon.getDonGia(),
+                            hoaDon.getDinhMuc(),
+                            hoaDon.thanhTien()
                     };
                     table.addRow(rowData);
                 }

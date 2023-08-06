@@ -6,7 +6,7 @@ import Presentation.HoaDonTienDienController;
 
 public class AddHoaDon extends Command {
 
-    public AddHoaDon(HoaDonTienDien hoaDonTienDien, 
+    public AddHoaDon(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
         super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);

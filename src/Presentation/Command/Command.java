@@ -11,7 +11,7 @@ public abstract class Command {
     protected HoaDonTienDienChucNang hoaDonTienDienChucNang;
     protected HoaDonTienDienController hoaDonTienDienController;
 
-    public Command(HoaDonTienDien hoaDonTienDien, 
+    public Command(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang, HoaDonTienDienController hoaDonTienDienController) {
         this.hoaDonTienDien = hoaDonTienDien;
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;

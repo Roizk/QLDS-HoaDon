@@ -6,10 +6,10 @@ import Presentation.HoaDonTienDienController;
 
 public class Delete extends Command {
 
-    public Delete(HoaDonTienDien hoaDonTienDien, 
+    public Delete(HoaDonTienDien hoaDonTienDien,
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
-        super(hoaDonTienDien,  hoaDonTienDienChucNang, hoaDonTienDienController);
+        super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);
 
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
     }
