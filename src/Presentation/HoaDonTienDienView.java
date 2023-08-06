@@ -26,8 +26,6 @@ import javax.swing.event.DocumentEvent;
 
 import Domain.HoaDonTienDienChucNang;
 import Domain.Model.HoaDonTienDien;
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -36,8 +34,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private HoaDonTienDienController hoaDonTienDienController;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
     private HoaDonTienDien hoaDonTienDien;
-    private HoaDonTienDienVN hoaDonTienDienVN;
-    private HoaDonTienDienNN hoaDonTienDienNN;
 
     private DefaultTableModel tableModelVN;
     private DefaultTableModel tableModelNN;
@@ -58,6 +54,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
     private JTextField soLuongTextField;
     private JTextField thanhTienTextField;
     private JTextField quocTichTextField;
+    private JTextField timKiemTextField;
     private JComboBox<String> quoctichComboBox;
     private JComboBox<String> doiTuongKHComboBox;
 
@@ -98,7 +95,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         add(scrollPane, BorderLayout.CENTER);
 
         // Create JPanel for student details input and buttons
-        JPanel inputPanel = new JPanel(new GridLayout(14, 2));
+        JPanel inputPanel = new JPanel(new GridLayout(16, 2));
 
         quoctichComboBox = new JComboBox<>();
         doiTuongKHComboBox = new JComboBox<>();
@@ -122,6 +119,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         dinhmucTextField = new JTextField();
         thanhTienTextField = new JTextField();
         quocTichTextField = new JTextField();
+        timKiemTextField = new JTextField();
         addButton = new JButton("Thêm");
         editButton = new JButton("Sửa");
         deleteButton = new JButton("Xóa");
@@ -130,6 +128,8 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         calculateTotalButton = new JButton("Tính tổng số lượng");
         tinhTrungBinhButton = new JButton("Tính trung bình thành tiền");
 
+        inputPanel.add(new JLabel("Tìm kiếm"));
+        inputPanel.add(timKiemTextField);
         inputPanel.add(new JLabel("Quốc tịch"));
         inputPanel.add(quoctichComboBox);
         inputPanel.add(new JLabel("Tên quốc tịch"));
@@ -176,6 +176,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         setLocationRelativeTo(null);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         for (int i = 0; i < tableModelVN.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -226,13 +227,12 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                             if (ngayHoatDongStrVN.matches("\\d{4}-\\d{2}-\\d{2}")) {
                                 ngayHoatDongVN = dateFormat.parse(ngayHoatDongStrVN);
                             }
-                            hoaDonTienDienVN.setNgayHD(ngayHoatDongVN);
+                            hoaDonTienDien.setNgayHD(ngayHoatDongVN);
                             idTextField.setText(table.getValueAt(row, 0).toString());
                             hoTenTextField.setText(table.getValueAt(row, 1).toString());
                             ngayRaHoaDonTextField.setText(table.getValueAt(row, 2).toString());
                             soLuongTextField.setText(table.getValueAt(row, 3).toString());
                             String doiTuongKHStr = table.getValueAt(row, 4).toString();
-                            if (!doiTuongKHStr.isEmpty()) {
                                 switch (doiTuongKHStr) {
                                     case "SINH_HOAT": {
                                         doiTuongKHComboBox.setSelectedIndex(0);
@@ -251,9 +251,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                                         break;
                                     }
                                 }
-                            } else {
-                                doiTuongKHComboBox.setSelectedIndex(-1); // Không chọn mục nào
-                            }
                             donGiaTextField.setText(table.getValueAt(row, 5).toString());
                             dinhmucTextField.setText(table.getValueAt(row, 6).toString());
                             // Để gán thông tin thanh toán:
@@ -263,8 +260,7 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
                             if (ngayHoatDongStrNN.matches("\\d{4}-\\d{2}-\\d{2}")) {
                                 ngayHoatDongNN = dateFormat.parse(ngayHoatDongStrNN);
                             }
-                            hoaDonTienDienVN.setNgayHD(ngayHoatDongNN);
-                            hoaDonTienDienNN.setNgayHD(ngayHoatDongNN);
+                            hoaDonTienDien.setNgayHD(ngayHoatDongNN);
                             idTextField.setText(table.getValueAt(row, 0).toString());
                             hoTenTextField.setText(table.getValueAt(row, 1).toString());
                             quocTichTextField.setText(table.getValueAt(row, 2).toString());
@@ -283,46 +279,47 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
             }
         });
 
-        hoaDonTienDienVN.attach(this);
-        hoaDonTienDienNN.attach(this);
+        hoaDonTienDien.attach(this);
 
     }
-
     @Override
     public void update() {
         // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng phương thức thích hợp từ
         // HoaDonJdbcGateway)
-        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
-        tableModelNN.setRowCount(0);
-        // Thêm dữ liệu vào bảng
-        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-            Object[] rowData = {
-                    hoaDonNN.getIdKh(),
-                    hoaDonNN.getHoTen(),
-                    hoaDonNN.getQuocTich(),
-                    hoaDonNN.getNgayHD(),
-                    hoaDonNN.getSoLuong(),
-                    hoaDonNN.getDonGia(),
-                    hoaDonNN.thanhTien()
-            };
-            tableModelNN.addRow(rowData);
+        List<HoaDonTienDien> hoaDonList = hoaDonTienDienChucNang.getAllHoaDonTienDien(quoctichComboBox.getSelectedItem().toString());
+        if("Nước Ngoài".equals(quoctichComboBox.getSelectedItem()))
+        {
+            tableModelNN.setRowCount(0);
+            // Thêm dữ liệu vào bảng
+            for (HoaDonTienDien hoaDon : hoaDonList) {
+                Object[] rowData = {
+                    hoaDon.getIdKh(),
+                    hoaDon.getHoTen(),
+                    hoaDon.getQuocTich(),
+                    hoaDon.getNgayHD(),
+                    hoaDon.getSoLuong(),
+                    hoaDon.getDonGia(),
+                    hoaDon.thanhTien()
+                };
+                tableModelNN.addRow(rowData);
+            }
         }
-        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
-
-        tableModelVN.setRowCount(0);
-
-        for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
-            Object[] rowData = {
-                    hoaDonVN.getIdKh(),
-                    hoaDonVN.getHoTen(),
-                    hoaDonVN.getNgayHD(),
-                    hoaDonVN.getSoLuong(),
-                    hoaDonVN.fromvalue(hoaDonVN.getDoiTuong()),
-                    hoaDonVN.getDonGia(),
-                    hoaDonVN.getDinhMuc(),
-                    hoaDonVN.thanhTien()
-            };
-            tableModelVN.addRow(rowData);
+        else
+        {
+            tableModelVN.setRowCount(0);
+            for (HoaDonTienDien hoaDon : hoaDonList) {
+                Object[] rowData = {
+                        hoaDon.getIdKh(),
+                        hoaDon.getHoTen(),
+                        hoaDon.getNgayHD(),
+                        hoaDon.getSoLuong(),
+                        hoaDon.fromvalue(hoaDon.getDoiTuong()),
+                        hoaDon.getDonGia(),
+                        hoaDon.getDinhMuc(),
+                        hoaDon.thanhTien()
+                };
+                tableModelVN.addRow(rowData);
+            }
         }
     }
 
@@ -334,20 +331,9 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
         return hoaDonTienDien;
     }
 
-    public HoaDonTienDienVN getHoaDonTienDienVN() {
-        return hoaDonTienDienVN;
-    }
 
-    public HoaDonTienDienNN getHoaDonTienDienNN() {
-        return hoaDonTienDienNN;
-    }
-
-    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        this.hoaDonTienDienVN = hoaDonTienDienVN;
-    }
-
-    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        this.hoaDonTienDienNN = hoaDonTienDienNN;
+    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNangImp) {
@@ -360,10 +346,6 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public void setHoaDonTienDienController(HoaDonTienDienController hoaDonTienDienController) {
         this.hoaDonTienDienController = hoaDonTienDienController;
-    }
-
-    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
-        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     public DefaultTableModel getTableModelVN() {
@@ -468,6 +450,14 @@ public class HoaDonTienDienView extends JFrame implements Subcriber {
 
     public void setQuocTichTextField(JTextField quocTichTextField) {
         this.quocTichTextField = quocTichTextField;
+    }
+
+    public void setTimKiemTextField(JTextField timKiemTextField) {
+        this.timKiemTextField = timKiemTextField;
+    }
+
+    public JTextField getTimKiemTextField() {
+        return timKiemTextField;
     }
 
     public JComboBox<String> getQuoctichComboBox() {

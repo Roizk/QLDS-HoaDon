@@ -1,36 +1,39 @@
 package Presentation.Command;
 
 import Domain.HoaDonTienDienChucNang;
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
-import Presentation.HoaDonTienDienController;
-import Presentation.HoaDonTienDienView;
+import Domain.Model.HoaDonTienDien;
 
-import javax.swing.JOptionPane;
+import Presentation.HoaDonTienDienController;
 
 public class TinhTrungBinhThanhTien extends Command {
 
-    public TinhTrungBinhThanhTien(HoaDonTienDienNN hoaDonTienDienNN, HoaDonTienDienVN hoaDonTienDienVN,
-            HoaDonTienDienChucNang hoaDonTienDienChucNang, HoaDonTienDienView hoaDonTienDienView,
+    double tBThanhTien ;
+    private HoaDonTienDien hoaDonTienDien; 
+    public TinhTrungBinhThanhTien(HoaDonTienDien hoaDonTienDien, 
+            HoaDonTienDienChucNang hoaDonTienDienChucNang,
             HoaDonTienDienController hoaDonTienDienController) {
-        super(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView, hoaDonTienDienController);
+        super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);
         this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     @Override
     public void execute() {
+        
+        tinhTrungBinhThanhTien();
 
-        if (tinhTrungBinhThanhTien() != 0) {
-            JOptionPane.showMessageDialog(hoaDonTienDienView,
-                    "Trung bình thành tiền khách nước ngoài: " + tinhTrungBinhThanhTien(), "Tổng trung bình",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(hoaDonTienDienView, "Thiếu dữ liệu", "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
-    private double tinhTrungBinhThanhTien() {
-        return hoaDonTienDienNN.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienChucNang.getAllHoaDonTienDienNN());
+    private void tinhTrungBinhThanhTien() {
+       setTBThanhTien( hoaDonTienDien.tinhTrungBinhThanhTienKhachNuocNgoai(hoaDonTienDienChucNang.getAllHoaDonTienDien(hoaDonTienDien.getQuocTich())));
     }
+
+    public double getTBThanhTien() {
+        return this.tBThanhTien;
+    }
+
+    public void setTBThanhTien(double tBThanhTien) {
+        this.tBThanhTien = tBThanhTien;
+    }
+
 }

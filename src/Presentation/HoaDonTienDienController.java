@@ -8,29 +8,24 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import Domain.HoaDonTienDienChucNang;
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
-import Presentation.Command.AddHoaDonNN;
-import Presentation.Command.AddHoaDonVN;
+import Domain.Model.HoaDonTienDien;
+import Presentation.Command.AddHoaDon;
 import Presentation.Command.Command;
 import Presentation.Command.CommandProcessor;
-import Presentation.Command.DeleteNN;
-import Presentation.Command.DeleteVN;
-import Presentation.Command.FindByIDNN;
-import Presentation.Command.FindByIDVN;
-import Presentation.Command.ThanhTienNN;
-import Presentation.Command.ThanhTienVN;
+import Presentation.Command.Delete;
+import Presentation.Command.FindByID;
+import Presentation.Command.ThanhTien;
 import Presentation.Command.TinhTrungBinhThanhTien;
 import Presentation.Command.TotalQuantity;
-import Presentation.Command.UpdateNN;
-import Presentation.Command.UpdateVN;
+import Presentation.Command.Update;
 
 public class HoaDonTienDienController extends JOptionPane {
 
     private HoaDonTienDienView hoaDonTienDienView;
-    private HoaDonTienDienVN hoaDonTienDienVN;
-    private HoaDonTienDienNN hoaDonTienDienNN;
+    private HoaDonTienDien hoaDonTienDien;
     private HoaDonTienDienChucNang hoaDonTienDienChucNang;
     private CommandProcessor commandProcessor;
 
@@ -39,8 +34,9 @@ public class HoaDonTienDienController extends JOptionPane {
 
     public HoaDonTienDienController(HoaDonTienDienView viewRemote) {
         this.hoaDonTienDienView = viewRemote;
-
     }
+
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
     public boolean isValidInputVN() {
         // Kiểm tra hợp lệ cho các trường dữ liệu dành cho Việt Nam
@@ -49,11 +45,9 @@ public class HoaDonTienDienController extends JOptionPane {
             String hoTen = hoaDonTienDienView.getHoTenTextField().getText();
             String ngayRaHoaDon = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             double soLuong = Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText());
-            double donGia = Double.parseDouble(hoaDonTienDienView.getDonGiaTextField().getText());
-            double dinhMuc = Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText());
 
             // Kiểm tra các điều kiện hợp le
-            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0 || dinhMuc < 0) {
+            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 ) {
                 return false;
             }
 
@@ -72,11 +66,10 @@ public class HoaDonTienDienController extends JOptionPane {
             String hoTen = hoaDonTienDienView.getHoTenTextField().getText();
             String ngayRaHoaDon = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
             double soLuong = Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText());
-            double donGia = Double.parseDouble(hoaDonTienDienView.getDonGiaTextField().getText());
             String quocTich = hoaDonTienDienView.getQuocTichTextField().getText();
 
             // Kiểm tra các điều kiện hợp lệ, ví dụ: không để trống và giá trị dương
-            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0 || donGia <= 0
+            if (hoTen.isEmpty() || ngayRaHoaDon.isEmpty() || soLuong <= 0
                     || quocTich.isEmpty()) {
                 return false;
             }
@@ -89,25 +82,36 @@ public class HoaDonTienDienController extends JOptionPane {
         return true;
     }
 
-    public void setHoaDonVN() {
-        String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
-        dateFormat(ngayHoatDongStr);
-        hoaDonTienDienVN.setNgayHD(dateFormat(ngayHoatDongStr));
-        hoaDonTienDienVN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
-        hoaDonTienDienVN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
-        hoaDonTienDienVN.setDinhMuc(Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText()));
-        // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
-        // Date
-        hoaDonTienDienVN.setDonGia(Double.parseDouble(hoaDonTienDienView.getDonGiaTextField().getText()));
-
-        if (0 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
-            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(0));
-        } else if (1 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
-            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(1));
-        } else {
-            hoaDonTienDienVN.setDoiTuongkh(hoaDonTienDienVN.fromvalue(2));
+    public void setHoaDon() {
+        if("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString()))
+        {
+            String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
+            dateFormat(ngayHoatDongStr);
+            hoaDonTienDien.setNgayHD(dateFormat(ngayHoatDongStr));
+            hoaDonTienDien.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
+            hoaDonTienDien.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
+            hoaDonTienDien.setDinhMuc(Double.parseDouble(hoaDonTienDienView.getDinhmucTextField().getText()));
+            // Lấy giá trị ngày hoạt động từ trường nhập liệu và chuyển đổi sang định dạng
+            // Date
+            hoaDonTienDien.setDonGia(Double.parseDouble(hoaDonTienDienView.getDonGiaTextField().getText()));
+            if (0 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
+                hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(0));
+            } else if (1 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()) {
+                hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(1));
+            } else if(2 == hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex()){
+                hoaDonTienDien.setDoiTuongkh(hoaDonTienDien.fromvalue(2));
+            }
+            hoaDonTienDien.setDoiTuong(hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex());
         }
-        hoaDonTienDienVN.setDoiTuong(hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex());
+        else 
+        {
+            String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
+            dateFormat(ngayHoatDongStr);
+            hoaDonTienDien.setNgayHD(dateFormat(ngayHoatDongStr));
+            hoaDonTienDien.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
+            hoaDonTienDien.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
+            hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuocTichTextField().getText());
+        }
 
     }
 
@@ -123,56 +127,57 @@ public class HoaDonTienDienController extends JOptionPane {
         }
     }
 
-    public void setHoaDonNN() {
-        String ngayHoatDongStr = hoaDonTienDienView.getNgayRaHoaDonTextField().getText();
-        dateFormat(ngayHoatDongStr);
-        hoaDonTienDienNN.setNgayHD(dateFormat(ngayHoatDongStr));
-        hoaDonTienDienNN.setHoTen(hoaDonTienDienView.getHoTenTextField().getText());
-        hoaDonTienDienNN.setSoLuong(Double.parseDouble(hoaDonTienDienView.getSoLuongTextField().getText()));
-        hoaDonTienDienNN.setQuocTich(hoaDonTienDienView.getQuocTichTextField().getText());
-        hoaDonTienDienNN.setDonGia(Double.parseDouble(hoaDonTienDienView.getDonGiaTextField().getText()));
-    }
-
     public void addHD(ActionEvent e) {
 
         if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-            Command addHoaDonVNcommand = new AddHoaDonVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                    hoaDonTienDienView, this);
-
-            commandProcessor.execute(addHoaDonVNcommand);
-            clearFields();
+            if (isValidInputVN()) {
+                setHoaDon();
+                Command addHoaDoncommand = new AddHoaDon(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
+                commandProcessor.execute(addHoaDoncommand);
+                JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
+                clearFields();
+            }
 
         } else {
-
-            Command addHoaDonNNcommand = new AddHoaDonNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                    hoaDonTienDienView, this);
-            commandProcessor.execute(addHoaDonNNcommand);
-            clearFields();
-            chooseNN();
+            if (isValidInputNN()) {
+                setHoaDon();
+                Command addHoaDoncommand = new AddHoaDon(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
+                commandProcessor.execute(addHoaDoncommand);
+                JOptionPane.showMessageDialog(hoaDonTienDienView, "Lưu thành công");
+                clearFields();
+                chooseNN();
+            }
         }
-        hoaDonTienDienNN.notifySubcriber();
-        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDien.notifySubcriber();
 
     }
 
     public void updateHD(ActionEvent e) {
         if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
 
-            Command updateHoaDonVNcommand = new UpdateVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                    hoaDonTienDienView, this);
-            commandProcessor.execute(updateHoaDonVNcommand);
-            clearFields();
+            if (isValidInputVN()) {
+                setHoaDon();
+                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+                Command updateHoaDoncommand = new Update(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
+                commandProcessor.execute(updateHoaDoncommand);
+                clearFields();
+            }
 
         } else {
-
-            Command updateHoaDonNNcommand = new UpdateNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                    hoaDonTienDienView, this);
-            commandProcessor.execute(updateHoaDonNNcommand);
-            clearFields();
-            chooseNN();
+            if (isValidInputNN()) {
+                setHoaDon();
+                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+                Command updateHoaDoncommand = new Update(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
+                commandProcessor.execute(updateHoaDoncommand);
+                clearFields();
+                chooseNN();
+            }
         }
-        hoaDonTienDienNN.notifySubcriber();
-        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDien.notifySubcriber();
     }
 
     public void deleteHD(ActionEvent e) {
@@ -180,35 +185,34 @@ public class HoaDonTienDienController extends JOptionPane {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
                     JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                Command deletecommand = new DeleteVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                        hoaDonTienDienView, this);
+                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
+                Command deletecommand = new Delete(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
                 try {
-
                     commandProcessor.execute(deletecommand);
+                    JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
                 }
-
                 clearFields();
             }
         } else {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
                     JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                Command deletecommand = new DeleteNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                        hoaDonTienDienView, this);
+                Command deletecommand = new Delete(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
+                hoaDonTienDien.setIdKh(Integer.parseInt(hoaDonTienDienView.getIdTextField().getText()));
                 try {
-
                     commandProcessor.execute(deletecommand);
+                    JOptionPane.showMessageDialog(hoaDonTienDienView, "Xóa thành công");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn xóa");
                 }
-
                 clearFields();
             }
         }
-        hoaDonTienDienNN.notifySubcriber();
-        hoaDonTienDienVN.notifySubcriber();
+        hoaDonTienDien.notifySubcriber();
     }
 
     public void thanhTien() {
@@ -221,16 +225,16 @@ public class HoaDonTienDienController extends JOptionPane {
                 double soLuong = Double.parseDouble(soLuongStr);
                 double donGia = Double.parseDouble(donGiaStr);
                 double dinhMuc = Double.parseDouble(dinhMucStr);
-                hoaDonTienDienView.getHoaDonTienDienVN().setSoLuong(soLuong);
-                hoaDonTienDienView.getHoaDonTienDienVN().setDonGia(donGia);
-                hoaDonTienDienView.getHoaDonTienDienVN().setDinhMuc(dinhMuc);
+                hoaDonTienDienView.getHoaDonTienDien().setSoLuong(soLuong);
+                hoaDonTienDienView.getHoaDonTienDien().setDonGia(donGia);
+                hoaDonTienDienView.getHoaDonTienDien().setDinhMuc(dinhMuc);
 
-                Command thanhTienVNcommand = new ThanhTienVN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                        hoaDonTienDienView, this);
+                Command thanhTiencommand = new ThanhTien(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
                 CommandProcessor commandProcessor = new CommandProcessor();
-                commandProcessor.execute(thanhTienVNcommand);
+                commandProcessor.execute(thanhTiencommand);
 
-                double thanhTien = hoaDonTienDienView.getHoaDonTienDienVN().thanhTien();
+                double thanhTien = hoaDonTienDienView.getHoaDonTienDien().thanhTien();
                 hoaDonTienDienView.getThanhTienTextField().setText(String.valueOf(thanhTien));
             }
         } else {
@@ -238,15 +242,15 @@ public class HoaDonTienDienController extends JOptionPane {
                 double soLuong = Double.parseDouble(soLuongStr);
                 double donGia = Double.parseDouble(donGiaStr);
 
-                hoaDonTienDienView.getHoaDonTienDienNN().setSoLuong(soLuong);
-                hoaDonTienDienView.getHoaDonTienDienNN().setDonGia(donGia);
+                hoaDonTienDienView.getHoaDonTienDien().setSoLuong(soLuong);
+                hoaDonTienDienView.getHoaDonTienDien().setDonGia(donGia);
 
-                Command thanhTienNNcommand = new ThanhTienNN(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                        hoaDonTienDienView, this);
+                Command thanhTiencommand = new ThanhTien(hoaDonTienDien, hoaDonTienDienChucNang,
+                        this);
                 CommandProcessor commandProcessor = new CommandProcessor();
-                commandProcessor.execute(thanhTienNNcommand);
+                commandProcessor.execute(thanhTiencommand);
 
-                double thanhTien = hoaDonTienDienView.getHoaDonTienDienNN().thanhTien();
+                double thanhTien = hoaDonTienDienView.getHoaDonTienDien().thanhTien();
                 hoaDonTienDienView.getThanhTienTextField().setText(String.valueOf(thanhTien));
             }
         }
@@ -274,19 +278,25 @@ public class HoaDonTienDienController extends JOptionPane {
             chooseNN();
         }
 
-        hoaDonTienDienVN.notifySubcriber();
-        hoaDonTienDienNN.notifySubcriber();
+        hoaDonTienDien.notifySubcriber();
     }
 
     private void chooseVn() {
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         hoaDonTienDienView.table.setModel(hoaDonTienDienView.getTableModelVN());
         hoaDonTienDienView.getQuocTichTextField().setEditable(false);
         hoaDonTienDienView.getDoiTuongKHComboBox().setEnabled(true);
         hoaDonTienDienView.getQuocTichTextField().setText("");
+        formatCenterCell(hoaDonTienDienView.getTableModelVN());
+    }
+
+    public void formatCenterCell(DefaultTableModel tableModel) {
+        for (int i = 0; i < tableModel.getColumnCount() - 1; i++) {
+            hoaDonTienDienView.table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
 
     private void chooseNN() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         hoaDonTienDienView.table.setModel(hoaDonTienDienView.getTableModelNN());
         hoaDonTienDienView.getQuocTichTextField().setEditable(true);
@@ -294,44 +304,57 @@ public class HoaDonTienDienController extends JOptionPane {
         hoaDonTienDienView.getDoiTuongKHComboBox().setEnabled(false);
         hoaDonTienDienView.getDonGiaTextField().setText("4000");
         hoaDonTienDienView.getDoiTuongKHComboBox().setSelectedItem("");
-        for (int i = 0; i < hoaDonTienDienView.getTableModelNN().getColumnCount(); i++) {
-            hoaDonTienDienView.table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        formatCenterCell(hoaDonTienDienView.getTableModelNN());
     }
 
     public void doiTuongKHCheck(ActionEvent e) {
-        hoaDonTienDienVN = new HoaDonTienDienVN();
+        //hoaDonTienDien = new HoaDonTienDien();
         if (hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex() == 0) {
             hoaDonTienDienView.getDonGiaTextField().setText("3000");
             hoaDonTienDienView.getDinhmucTextField().setText("350");
-            hoaDonTienDienVN.setDonGia(3.000);
-            hoaDonTienDienVN.setDinhMuc(350);
+            hoaDonTienDien.setDonGia(3.000);
+            hoaDonTienDien.setDinhMuc(350);
 
         } else if (hoaDonTienDienView.getDoiTuongKHComboBox().getSelectedIndex() == 1) {
             hoaDonTienDienView.getDonGiaTextField().setText("4000");
             hoaDonTienDienView.getDinhmucTextField().setText("450");
-            hoaDonTienDienVN.setDonGia(4.000);
-            hoaDonTienDienVN.setDinhMuc(450);
+            hoaDonTienDien.setDonGia(4.000);
+            hoaDonTienDien.setDinhMuc(450);
         } else {
             hoaDonTienDienView.getDonGiaTextField().setText("5000");
             hoaDonTienDienView.getDinhmucTextField().setText("550");
-            hoaDonTienDienVN.setDonGia(5.000);
-            hoaDonTienDienVN.setDinhMuc(550);
+            hoaDonTienDien.setDonGia(5.000);
+            hoaDonTienDien.setDinhMuc(550);
         }
     }
 
     public void calculateTotal(ActionEvent e) {
-        Command TotalQuantity = new TotalQuantity(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang,
-                hoaDonTienDienView, this);
+        TotalQuantity TotalQuantity = new TotalQuantity(hoaDonTienDien, hoaDonTienDienChucNang,
+                this);
+        hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
         commandProcessor.execute(TotalQuantity);
+        JOptionPane.showMessageDialog(this,
+                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + TotalQuantity.getTotalQuantity() + "\n"
+                        + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + TotalQuantity.getTotalQuantity(),
+                "Tổng số lượng KW",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
         if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-            Command tinhTrungBinhCommand = new TinhTrungBinhThanhTien(hoaDonTienDienView.getHoaDonTienDienNN(),
-                    hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                    hoaDonTienDienView, this);
+            TinhTrungBinhThanhTien tinhTrungBinhCommand = new TinhTrungBinhThanhTien(
+                    hoaDonTienDienView.getHoaDonTienDien(),
+                     hoaDonTienDienView.getHoaDonTienDienChucNang(), this);
             tinhTrungBinhCommand.execute();
+            if (tinhTrungBinhCommand.getTBThanhTien() != 0) {
+                JOptionPane.showMessageDialog(hoaDonTienDienView,
+                        "Trung bình thành tiền khách nước ngoài: " + tinhTrungBinhCommand.getTBThanhTien(),
+                        "Tổng trung bình",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(hoaDonTienDienView, "Thiếu dữ liệu", "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this,
                     "Đây là chức năng chỉ dùng cho khách nước ngoài" + "\n" + "Xin vui lòng chọn lại quốc tịch",
@@ -341,16 +364,25 @@ public class HoaDonTienDienController extends JOptionPane {
 
     public void findByID(ActionEvent e) {
         try {
+
+            hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
+            hoaDonTienDien.setHoTen(hoaDonTienDienView.getTimKiemTextField().getText());
             if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())) {
-                Command findVNCommand = new FindByIDVN(hoaDonTienDienView.getHoaDonTienDienNN(),
-                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                        hoaDonTienDienView, this);
-                commandProcessor.execute(findVNCommand);
+                FindByID findCommand = new FindByID(hoaDonTienDien,
+                        hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                        this);
+                commandProcessor.execute(findCommand);
+                hoaDonTienDienView.getTableModelVN().setRowCount(0);
+                hoaDonTienDienView.table.setModel(findCommand.getTable());
+                formatCenterCell(findCommand.getTable());
             } else {
-                Command findNNCommand = new FindByIDNN(hoaDonTienDienView.getHoaDonTienDienNN(),
-                        hoaDonTienDienView.getHoaDonTienDienVN(), hoaDonTienDienView.getHoaDonTienDienChucNang(),
-                        hoaDonTienDienView, this);
-                commandProcessor.execute(findNNCommand);
+                FindByID findCommand = new FindByID(hoaDonTienDien, 
+                        hoaDonTienDienView.getHoaDonTienDienChucNang(),
+                        this);
+                commandProcessor.execute(findCommand);
+                hoaDonTienDienView.getTableModelNN().setRowCount(0);
+                hoaDonTienDienView.table.setModel(findCommand.getTable());
+                formatCenterCell(findCommand.getTable());
 
             }
 
@@ -361,16 +393,11 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void updateButton(ActionEvent e) {
-        hoaDonTienDienVN.notifySubcriber();
-        hoaDonTienDienNN.notifySubcriber();
+        hoaDonTienDien.notifySubcriber();
     }
 
-    public void setHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        this.hoaDonTienDienVN = hoaDonTienDienVN;
-    }
-
-    public void setHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        this.hoaDonTienDienNN = hoaDonTienDienNN;
+    public void setHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     public void setHoaDonTienDienChucNang(HoaDonTienDienChucNang hoaDonTienDienChucNangImp) {
