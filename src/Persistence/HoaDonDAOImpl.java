@@ -1,73 +1,46 @@
 package Persistence;
 
-import java.sql.SQLException;
-import java.util.List;
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
 
-public class HoaDonDAOImpl implements HoaDonDAO{
+import java.util.List;
+import Domain.Model.HoaDonTienDien;
+
+public class HoaDonDAOImpl implements HoaDonDAO {
 
     private HoaDonGateway hoaDonGateway;
 
-    
-
     public HoaDonDAOImpl(HoaDonGateway hoaDonGateway) {
-        this.hoaDonGateway= hoaDonGateway;
+        this.hoaDonGateway = hoaDonGateway;
     }
 
     @Override
-    public void addHoaDonTienDienNN(HoaDonTienDienNN hoadon) {
+    public void addHoaDonTienDien(HoaDonTienDien hoadon) {
 
-        hoaDonGateway.addHoaDonTienDienNN(hoadon); 
-    }
-    @Override
-    public void addHoaDonTienDienVN(HoaDonTienDienVN hoadon) {
-
-        hoaDonGateway.addHoaDonTienDienVN(hoadon); 
+        hoaDonGateway.addHoaDonTienDien(hoadon);
     }
 
     @Override
-    public List<HoaDonTienDienNN> getAllsHoaDonNN() {
-        
-        return hoaDonGateway.getAllsHoaDonNN();
-    }
-    @Override
-    public List<HoaDonTienDienVN> getAllsHoaDonVN() {
-        
-        return hoaDonGateway.getAllsHoaDonVN();
+    public List<HoaDonTienDien> getAllsHoaDon(String quocTich) {
+
+        return hoaDonGateway.getAllsHoaDon(quocTich);
     }
 
-    @Override
-    public HoaDonTienDienNN getHoaDonNNById(int id) throws SQLException{
 
-        return hoaDonGateway.getHoaDonNNById(id);
-    }
     @Override
-    public HoaDonTienDienVN getHoaDonVNById(int id) throws SQLException{
+    public List<HoaDonTienDien> getHoaDonByTen(String hoTen) {
 
-        return hoaDonGateway.getHoaDonVNById(id);
+        return hoaDonGateway.getHoaDonByTen(hoTen);
     }
 
     @Override
-    public void updateHoaDonTienDienNN(HoaDonTienDienNN hoadon) {
+    public void updateHoaDonTienDien(HoaDonTienDien hoadon) {
 
-        hoaDonGateway.updateHoaDonTienDienNN(hoadon);       
+        hoaDonGateway.updateHoaDonTienDien(hoadon);
     }
-    @Override
-    public void updateHoaDonTienDienVN(HoaDonTienDienVN hoadon) {
 
-        hoaDonGateway.updateHoaDonTienDienVN(hoadon);       
-    }
-    
     @Override
-    public void delete(int id){
+    public void delete(int id) {
 
         hoaDonGateway.delete(id);
     }
 
-   
-
 }
-    
-
-

@@ -2,53 +2,46 @@ package Presentation.Command;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import Domain.HoaDonTienDienChucNang;
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
+import Domain.Model.HoaDonTienDien;
+
 import Presentation.HoaDonTienDienController;
-import Presentation.HoaDonTienDienView;
 
 public class TotalQuantity extends Command {
+    private HoaDonTienDien hoaDonTienDien;
+    double totalQuantity = 0.0;
 
-    public TotalQuantity(HoaDonTienDienNN hoaDonTienDienNN, HoaDonTienDienVN hoaDonTienDienVN,
+    public TotalQuantity(HoaDonTienDien hoaDonTienDien, 
             HoaDonTienDienChucNang hoaDonTienDienChucNang,
-            HoaDonTienDienView hoaDonTienDienView, HoaDonTienDienController hoaDonTienDienController) {
-        super(hoaDonTienDienNN, hoaDonTienDienVN, hoaDonTienDienChucNang, hoaDonTienDienView,
-                hoaDonTienDienController);
+            HoaDonTienDienController hoaDonTienDienController) {
+        super(hoaDonTienDien, hoaDonTienDienChucNang, hoaDonTienDienController);
+        this.hoaDonTienDienChucNang = hoaDonTienDienChucNang;
+        this.hoaDonTienDien = hoaDonTienDien;
     }
 
     @Override
-    public void execute()
-    {
+    public void execute() {
         calTotal();
     }
 
+    public void calTotal() {
 
-    public void calTotal()
-    {
-         double totalQuantityVN = 0.0;
-        double totalQuantityNN = 0.0;
-
-        // Calculate total quantity for HoaDonTienDienVN
-        List<HoaDonTienDienVN> hoaDonVNList = hoaDonTienDienChucNang.getAllHoaDonTienDienVN();
-        for (HoaDonTienDienVN hoaDonVN : hoaDonVNList) {
-            totalQuantityVN += hoaDonVN.getSoLuong();
+        // Calculate total quantity for HoaDonTienDien
+        List<HoaDonTienDien> hoaDonList = hoaDonTienDienChucNang.getAllHoaDonTienDien(hoaDonTienDien.getQuocTich());
+        for (HoaDonTienDien hoaDon : hoaDonList) {
+            totalQuantity += hoaDon.getSoLuong();
         }
 
-        // Calculate total quantity for HoaDonTienDienNN
-        List<HoaDonTienDienNN> hoaDonNNList = hoaDonTienDienChucNang.getAllHoaDonTienDienNN();
-        for (HoaDonTienDienNN hoaDonNN : hoaDonNNList) {
-            totalQuantityNN += hoaDonNN.getSoLuong();
-        }
+        setTotalQuantity(totalQuantity);
 
-        JOptionPane.showMessageDialog(hoaDonTienDienView,
-                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + totalQuantityVN + "\n"
-                        + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + totalQuantityNN,
-                "Tổng số lượng KW",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
     }
 
+    public double getTotalQuantity() {
+        return this.totalQuantity;
+    }
 
+    public void setTotalQuantity(double totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+
+}

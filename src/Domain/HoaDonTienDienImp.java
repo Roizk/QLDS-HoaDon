@@ -1,72 +1,46 @@
 package Domain;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
+import Domain.Model.HoaDonTienDien;
+
 import Persistence.HoaDonDAO;
-import Persistence.HoaDonDAOImpl;
-import Persistence.HoaDonJdbcGateway;
 
 public class HoaDonTienDienImp implements HoaDonTienDienChucNang {
 
     private HoaDonDAO hoaDonDAO;
 
-    public HoaDonTienDienImp() {
-        hoaDonDAO = new HoaDonDAOImpl(new HoaDonJdbcGateway());
+    public HoaDonTienDienImp(HoaDonDAO hoaDonDAO) {
+        this.hoaDonDAO = hoaDonDAO;
     }
 
     @Override
-    public void addHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        hoaDonDAO.addHoaDonTienDienVN(hoaDonTienDienVN);
+    public void addHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        hoaDonDAO.addHoaDonTienDien(hoaDonTienDien);
+    }
+
+
+    @Override
+    public void deleteHoaDon(HoaDonTienDien hoaDonTienDien) {
+        hoaDonDAO.delete(hoaDonTienDien.getIdKh());
+    }
+
+
+
+    @Override
+    public void updateHoaDonTienDien(HoaDonTienDien hoaDonTienDien) {
+        hoaDonDAO.updateHoaDonTienDien(hoaDonTienDien);
     }
 
     @Override
-    public void addHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        hoaDonDAO.addHoaDonTienDienNN(hoaDonTienDienNN);
-    }
+    public List<HoaDonTienDien> getHoaDonTienDienByTen(String ten){
 
+        return hoaDonDAO.getHoaDonByTen(ten);
+    }
     @Override
-    public void deleteHoaDonVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        hoaDonDAO.delete(hoaDonTienDienVN.getIdKh());
-    }
-
-    public void deleteHoaDonNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        hoaDonDAO.delete(hoaDonTienDienNN.getIdKh());
-    }
-
-    @Override
-    public void updateHoaDonTienDienVN(HoaDonTienDienVN hoaDonTienDienVN) {
-        hoaDonDAO.updateHoaDonTienDienVN(hoaDonTienDienVN);
-    }
-
-    @Override
-    public void updateHoaDonTienDienNN(HoaDonTienDienNN hoaDonTienDienNN) {
-        hoaDonDAO.updateHoaDonTienDienNN(hoaDonTienDienNN);
-    }
-
-    @Override
-    public HoaDonTienDienVN getHoaDonTienDienVNById(int idKh) throws SQLException {
-
-        return hoaDonDAO.getHoaDonVNById(idKh);
-    }
-
-    @Override
-    public HoaDonTienDienNN getHoaDonTienDienNNById(int idKh) throws SQLException {
-
-        return hoaDonDAO.getHoaDonNNById(idKh);
-    }
-
-    @Override
-    public List<HoaDonTienDienVN> getAllHoaDonTienDienVN() {
-        return hoaDonDAO.getAllsHoaDonVN();
-
-    }
-
-    @Override
-    public List<HoaDonTienDienNN> getAllHoaDonTienDienNN() {
-        return hoaDonDAO.getAllsHoaDonNN();
+    public List<HoaDonTienDien> getAllHoaDonTienDien(String quocTich) {
+        return hoaDonDAO.getAllsHoaDon(quocTich);
 
     }
 

@@ -1,29 +1,21 @@
 package Persistence;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
-import Domain.Model.HoaDonTienDienNN;
-import Domain.Model.HoaDonTienDienVN;
+import Domain.Model.HoaDonTienDien;
 
 public interface HoaDonGateway {
-    public void addHoaDonTienDienNN(HoaDonTienDienNN hoadon);
 
-    public void addHoaDonTienDienVN(HoaDonTienDienVN hoadon);
+    public void addHoaDonTienDien(HoaDonTienDien hoadon);
 
-    public void updateHoaDonTienDienNN(HoaDonTienDienNN hoadon);
-
-    public void updateHoaDonTienDienVN(HoaDonTienDienVN hoadon);
+    public void updateHoaDonTienDien(HoaDonTienDien hoadon);
 
     public void delete(int id);
 
-    HoaDonTienDienNN getHoaDonNNById(int id) throws SQLException;
+    List<HoaDonTienDien> getHoaDonByTen(String hoTen);
 
-    HoaDonTienDienVN getHoaDonVNById(int id) throws SQLException;
-
-    List<HoaDonTienDienNN> getAllsHoaDonNN();
-
-    List<HoaDonTienDienVN> getAllsHoaDonVN();
+    List<HoaDonTienDien> getAllsHoaDon(String quocTich);
 
    
 }
