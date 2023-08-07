@@ -284,15 +284,21 @@ public class HoaDonTienDienController extends JOptionPane {
     }
 
     public void calculateTotal(ActionEvent e) {
-        TotalQuantity TotalQuantity = new TotalQuantity(hoaDonTienDien, hoaDonTienDienChucNang,
-                this);
-        hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
-        commandProcessor.execute(TotalQuantity);
-        JOptionPane.showMessageDialog(this,
-                "Tổng số lượng KW khách hàng Việt Nam đã dùng: " + TotalQuantity.getTotalQuantity() + "\n"
-                        + "Tổng số lượng khách hàng Nước Ngoài đã dùng: " + TotalQuantity.getTotalQuantity(),
-                "Tổng số lượng KW",
-                JOptionPane.INFORMATION_MESSAGE);
+        if ("Việt Nam".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())){
+            TotalQuantity TotalQuantity = new TotalQuantity(hoaDonTienDien, hoaDonTienDienChucNang,this);
+            hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
+            commandProcessor.execute(TotalQuantity);
+            JOptionPane.showMessageDialog(this,"Tổng số lượng KW khách hàng Việt Nam đã dùng: " + TotalQuantity.getTotalQuantity(),
+            "Tổng số lượng KW", JOptionPane.INFORMATION_MESSAGE);
+        }else if ("Nước Ngoài".equals(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem())){
+            TotalQuantity TotalQuantity = new TotalQuantity(hoaDonTienDien, hoaDonTienDienChucNang,this);
+            hoaDonTienDien.setQuocTich(hoaDonTienDienView.getQuoctichComboBox().getSelectedItem().toString());
+            commandProcessor.execute(TotalQuantity);
+            JOptionPane.showMessageDialog(this,"Tổng số lượng KW khách hàng nước ngoài đã dùng: " + TotalQuantity.getTotalQuantity(),
+            "Tổng số lượng KW", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            JOptionPane.showMessageDialog(this,"Xin chọn quốc tịch ", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void tinhTrungBinhThanhTienKhachNuocNgoai(ActionEvent e) {
